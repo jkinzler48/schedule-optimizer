@@ -36,3 +36,109 @@
     transform: rotate(360deg);
   }
 }
+
+body {
+	font-family: "Arial", sans-serif;
+	background-color: #8282dc; /* Light background to contrast */
+	color: #0c2340; /* Notre Dame Blue */
+	margin: 0;
+	padding: 0;
+  }
+  
+  h1,
+  h2 {
+	text-align: center;
+	color: #c99700; /* Standard Dome Gold */
+  }
+  
+  h1 {
+	font-size: 2.5em;
+	margin-top: 20px;
+	color: #c99700; /* Standard Dome Gold */
+  }
+  
+  h2 {
+	font-size: 1.8em;
+	margin-top: 0px;
+	color: #0c2340; /* Notre Dame Blue */
+  }
+  
+  div {
+	margin: 20px 20px 40px 20px;
+	padding: 20px;
+	background-color: #ffffff;
+	border-radius: 5px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	display: flex;
+	flex-flow: column;
+  }
+  
+  .module {
+	background-color: #efefff;
+  }
+  
+  ol {
+	padding-left: 40px;
+	list-style-type: decimal;
+	color: #0c2340; /* Notre Dame Blue */
+  }
+  
+  li {
+	margin-bottom: 10px;
+  }
+  
+  li:hover {
+	color: #c99700;
+  }
+  
+  #highlighter {
+	background-color: #0f0f0f;
+	display: none;
+  }
+  
+  .dayList {
+	padding: 0px;
+	margin: 0px;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-evenly;
+	list-style: none;
+  }
+  
+  .dayList button {
+  }
+  
+  input {
+	padding: 5px;
+	margin: 5px;
+  }
+  
+  input[type="text"] {
+	margin: 10px;
+  }
+  
+  input[type="checkbox"] {
+	margin: 8px;
+  }
+  
+  input[type="submit"] {
+	padding: 12px;
+	background-color: #8282fc;
+	border-radius: 6px;
+  }
+  
+  input[type="submit"]:hover {
+	background-color: #8282dc;
+  }
+  input[type="radio"] {
+	transform: scale(1.7);
+  }
+  
+  input[type="checkbox"] {
+	transform: scale(1.7);
+  }
+  
+  select {
+	height: 35px;
+  }
+  
