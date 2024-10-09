@@ -56,7 +56,7 @@ export const getNextClass = async (classes) => {
 
   const dayEvents = classes
     .filter((c) => c.days.includes(currentDay.substring(0, 2)))
-    .sort((a, b) => parseTime(a.get('time')) - parseTime(b.get('time')));
+    .sort((a, b) => parseTime(a.time) - parseTime(b.time));
 
   let nextClass;
 
@@ -68,7 +68,7 @@ export const getNextClass = async (classes) => {
       const nextDay = currentDate.toLocaleString("en-US", { weekday: "long" }).slice(0, 2);
       dayEvents.push(...classes
         .filter((c) => c.days.includes(nextDay))
-        .sort((a, b) => parseTime(a.get('time')) - parseTime(b.get('time'))));
+        .sort((a, b) => parseTime(a.time) - parseTime(b.time)));
       dayInc++;
     } while (dayEvents.length === 0 && dayInc <= 7);
 
