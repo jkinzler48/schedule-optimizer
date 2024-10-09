@@ -2,6 +2,7 @@
 // import logo from './logo.svg';
 import React from 'react';
 import './App.css';
+import Parse from 'parse';
 import Main from './Components/Main.js'; // Import the Main component
 
 function App() {
