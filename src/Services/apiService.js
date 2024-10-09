@@ -1,10 +1,10 @@
 import Parse from 'parse';
 
 // Initialize Parse
-Parse.initialize("YOUR_APP_ID", "YOUR_JS_KEY");
-Parse.serverURL = 'https://parseapi.back4app.com/';
+Parse.initialize("8zNslYsXGEbTSYz55lVFZy43rh5J1gAcblczxFJy", "z65bQOfZOLeIblbRRXbXX9w7HYgwK1pLbSi87L3n");
+Parse.serverURL = 'https://parseapi.back4app.com';
 
-const CLASS_SCHEDULE = 'ClassSchedule';
+const CLASS_SCHEDULE = 'test';
 
 export const addClass = async (code, name, instructor, time, days, building, coords, room) => {
   const ClassSchedule = new Parse.Object(CLASS_SCHEDULE);
@@ -55,19 +55,19 @@ export const getNextClass = async (classes) => {
   const currentTime = currentDate.toTimeString().slice(0, 5);
 
   const dayEvents = classes
-    .filter((c) => c.get('days').includes(currentDay.substring(0, 2)))
+    .filter((c) => c.days.includes(currentDay.substring(0, 2)))
     .sort((a, b) => parseTime(a.get('time')) - parseTime(b.get('time')));
 
   let nextClass;
 
-  if (dayEvents.length === 0 || dayEvents[dayEvents.length - 1].get('time').substring(6, 11) < currentTime) {
+  if (dayEvents.length === 0 || (dayEvents.length > 0 && dayEvents[dayEvents.length - 1].time.substring(6, 11) < currentTime)) {
     let dayInc = 1;
 
     do {
       currentDate.setDate(currentDate.getDate() + 1);
       const nextDay = currentDate.toLocaleString("en-US", { weekday: "long" }).slice(0, 2);
       dayEvents.push(...classes
-        .filter((c) => c.get('days').includes(nextDay))
+        .filter((c) => c.days.includes(nextDay))
         .sort((a, b) => parseTime(a.get('time')) - parseTime(b.get('time'))));
       dayInc++;
     } while (dayEvents.length === 0 && dayInc <= 7);
