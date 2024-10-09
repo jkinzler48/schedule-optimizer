@@ -18,7 +18,7 @@ const Optimizer = ({ classes, nextClass, selectedMapId, selectFunction }) => {
           classes
             .sort((a, b) => getStartTime(a.time) - getStartTime(b.time))
             .map((c) => (
-              <option key={c.mapId} value={c.mapId}>
+              <option key={c.coords} value={c.mapId}>
                 {`${c.name} - ${c.building} ${c.room} (${c.days} | ${c.time})`}
               </option>
             ))}
