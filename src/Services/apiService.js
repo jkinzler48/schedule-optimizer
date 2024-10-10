@@ -78,7 +78,7 @@ export const getNextClass = async (classes) => {
   } else {
     let i = dayEvents.length - 1;
     nextClass = dayEvents[i];
-    while (i > 0 && dayEvents[i - 1].get('time').substring(6, 11) > currentTime) {
+    while (i > 0 && dayEvents[i - 1].time.substring(6, 11) > currentTime) {
       i--;
       nextClass = dayEvents[i];
     }
