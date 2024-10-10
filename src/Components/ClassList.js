@@ -81,7 +81,7 @@ const ClassList = ({ classes, day, selectFunction }) => {
         <h4>Remove event from Schedule</h4>
         <form className="removeFrom" id="removeForm" action="#stayhere" style={{ margin: '10px' }}>
           <p>Select class to remove:</p>
-          <input type="radio" name="removes" value="none" style={{ margin: '10px' }} checked />
+          <input type="radio" name="removes" value="none" style={{ margin: '10px' }} defaultChecked />
           I don't want to drop any classes
           <br />
           {/* Creates radio button option for every class in the classes list */}
