@@ -18,13 +18,14 @@ const Optimizer = ({ classes, nextClass, selectedMapId, selectFunction }) => {
           classes
             .sort((a, b) => getStartTime(a.time) - getStartTime(b.time))
             .map((c) => (
-              <option key={c.coords} value={c.mapId}>
+              <option key={c.code} value={c.coords}>
                 {`${c.name} - ${c.building} ${c.room} (${c.days} | ${c.time})`}
               </option>
             ))}
       </select>
       <iframe
         src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1814.7798247622434!2d-86.23881703909602!3d41.70043978720793!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s${selectedMapId}!2sNotre%20Dame%2C%20IN%2046556!5e0!3m2!1sen!2sus!4v1727830026873!5m2!1sen!2sus`}
+        title="Class Map"
         height="450"
         style={{ border: 0, padding: '10px' }}
         allowFullScreen

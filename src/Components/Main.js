@@ -90,7 +90,7 @@ const Main = () => {
   // update classSelected when nextClass is updated
   useEffect(() => {
     if (nextClass) {
-      setClassSelected(nextClass.mapId);
+      setClassSelected(nextClass.coords);
     }
   }, [nextClass]);
 
