@@ -3,23 +3,23 @@ import React from 'react';
 const getStartTime = (time) =>
   parseInt(time.split("-")[0].replace(":", ""), 10);
 
-const Optimizer = ({ classes, nextClass, selectedMapId, selectFunction }) => {
+const OptimizerMap = ({ classes, nextClass, selectedMapId, selectFunction }) => {
   return (
     <div>
       <h4>
-        {classes.length === 0 || !nextClass
+        {(classes.length === 0 || nextClass === null)
           ? "You do not have any classes scheduled."
-          : `Your Next Event is ${nextClass.name} in ${nextClass.building} ${nextClass.room} at ${nextClass.time} (${nextClass.days})`}
+          : `Your Next Event is ${nextClass.get('name')} in ${nextClass.get('building')} ${nextClass.get('room')} at ${nextClass.get('time')} (${nextClass.get('days').join(',')})`}
       </h4>
       <p>Select Event to Display</p>
       <select id="classSelect" className="classSelect" onChange={selectFunction}>
         <option value="next">Next Event</option>
         {classes.length > 0 &&
           classes
-            .sort((a, b) => getStartTime(a.time) - getStartTime(b.time))
+            .sort((a, b) => getStartTime(a.get('time')) - getStartTime(b.get('time')))
             .map((c) => (
-              <option key={c.code} value={c.coords}>
-                {`${c.name} - ${c.building} ${c.room} (${c.days} | ${c.time})`}
+              <option key={c.get('code')} value={c.get('coords')}>
+                {`${c.get('name')} - ${c.get('building')} ${c.get('room')} (${c.get('days')} | ${c.get('time')})`}
               </option>
             ))}
       </select>
@@ -36,4 +36,4 @@ const Optimizer = ({ classes, nextClass, selectedMapId, selectFunction }) => {
   );
 };
 
-export default Optimizer;
+export default OptimizerMap;

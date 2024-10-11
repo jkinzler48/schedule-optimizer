@@ -2,7 +2,8 @@
 // import logo from './logo.svg';
 import React from 'react';
 import './App.css';
-import Main from './Components/Main.js'; // Import the Main component
+import Planner from './Components/Planner/Planner.js'; // Import the Main component
+import Optimizer from "./Components/Optimizer/Optimizer.js"
 import * as Env from "./environments";
 import Parse from "parse";
 
@@ -13,7 +14,8 @@ Parse.serverURL = Env.SERVER_URL;
 function App() {
   return (
     <div className="App">
-      <Main />
+      <Planner />
+      <Optimizer /> 
     </div>
   );
 }

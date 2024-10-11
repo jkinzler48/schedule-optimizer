@@ -106,6 +106,7 @@ body {
   }
   
   .dayList button {
+    display: flex;
   }
   
   input {
