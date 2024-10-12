@@ -9,7 +9,7 @@ const OptimizerMap = ({ classes, nextClass, selectedMapId, selectFunction }) => 
       <h4>
         {(classes.length === 0 || nextClass === null)
           ? "You do not have any classes scheduled."
-          : `Your Next Event is ${nextClass.get('name')} in ${nextClass.get('building')} ${nextClass.get('room')} at ${nextClass.get('time')} (${nextClass.get('days').join(',')})`}
+          : `Your Next Event is ${nextClass.get('name')} in ${nextClass.get('building').get('name')} ${nextClass.get('room')} at ${nextClass.get('time')} (${nextClass.get('days').join(',')})`}
       </h4>
       <p>Select Event to Display</p>
       <select id="classSelect" className="classSelect" onChange={selectFunction}>
@@ -18,8 +18,8 @@ const OptimizerMap = ({ classes, nextClass, selectedMapId, selectFunction }) => 
           classes
             .sort((a, b) => getStartTime(a.get('time')) - getStartTime(b.get('time')))
             .map((c) => (
-              <option key={c.get('code')} value={c.get('coords')}>
-                {`${c.get('name')} - ${c.get('building')} ${c.get('room')} (${c.get('days')} | ${c.get('time')})`}
+              <option key={c.get('code')} value={c.get('building').get('mapId')}>
+                {`${c.get('name')} - ${c.get('building').get('name')} ${c.get('room')} (${c.get('days')} | ${c.get('time')})`}
               </option>
             ))}
       </select>

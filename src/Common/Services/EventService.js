@@ -1,7 +1,8 @@
 import Parse from 'parse';
 
 
-const CLASS_SCHEDULE = 'test';
+// const CLASS_SCHEDULE = 'test';
+const CLASS_SCHEDULE = 'Event';
 
 export const addClass = async (code, name, instructor, time, days, building, coords, room) => {
   const ClassSchedule = new Parse.Object(CLASS_SCHEDULE);
@@ -28,6 +29,9 @@ Events.collection = [];
 export const getAllEvents = () => {
   const Event = Parse.Object.extend(CLASS_SCHEDULE);
   const query = new Parse.Query(Event);
+
+  query.include("building");
+
   return query
     .find()
     .then((results) => {

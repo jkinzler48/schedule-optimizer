@@ -29,7 +29,7 @@ const EventList = ({ classes, day, selectFunction }) => {
                     .sort((a, b) => getStartTime(a.get('time')) - getStartTime(b.get('time'))) // Sort by start time
                     .map((c) => (
                     <li key={c.get('code')}>
-                        {c.get('time')} | {c.get('name')} ({c.get('building')})
+                        {c.get('time')} | {c.get('name')} ({c.get('building').get("name")})
                     </li>
                     ))
                 )}

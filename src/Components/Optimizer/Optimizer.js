@@ -10,7 +10,7 @@ const Optimizer = () => {
     let classSelected = e.target.value;
     // if the selected class is next, then get the next class's mapId
     if (classSelected === "next" && nextClass) {
-      classSelected = nextClass.mapId;
+      classSelected = nextClass.get('building').get('mapId');
     }
     // updates schedule shown on screen
     setClassSelected(classSelected);
@@ -63,7 +63,7 @@ useEffect(() => {
   // Update `classSelected` when `nextClass` changes
   useEffect(() => {
     if (nextClass) {
-      setClassSelected(nextClass.get('coords'));
+      setClassSelected(nextClass.get('building').get('mapId'));
     }
   }, [nextClass]);
 
