@@ -6,6 +6,7 @@ import Planner from './Components/Planner/Planner.js'; // Import the Main compon
 import Optimizer from "./Components/Optimizer/Optimizer.js"
 import * as Env from "./environments";
 import Parse from "parse";
+import Components from "./Components/Components.js"
 
 // Initialize Parse
 Parse.initialize(Env.APPLICATION_ID, Env.JAVASCRIPT_KEY);
@@ -13,10 +14,11 @@ Parse.serverURL = Env.SERVER_URL;
 
 function App() {
   return (
-    <div className="App">
-      <Planner />
-      <Optimizer /> 
-    </div>
+    <Components />
+    // <div className="App">
+    //   <Planner />
+    //   <Optimizer /> 
+    // </div>
   );
 }
 
