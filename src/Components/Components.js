@@ -6,11 +6,12 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 export default function Components() {
     return (
         <Router>
+			<Footer />
             <Routes>
                 <Route path="/" element={<Planner />} />
                 <Route path="/optimizer" element={<Optimizer />} />
             </Routes>
-            <Footer />
+            
         </Router>
     );
 }
