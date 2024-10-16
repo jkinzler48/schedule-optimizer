@@ -33,7 +33,7 @@ straightforward as possible.
  
 ### Changed
 
-- Chagned source of class information from a local json file to Parse Objects
+- Changed source of class information from a local json file to Parse Objects
  
 ### Fixed
 
