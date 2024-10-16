@@ -1,15 +1,22 @@
 import React from 'react';
 
-const OptimizerMap = ({prevClass, nextClass}) => {
+const OptimizerMap = ({prevClass, nextClass, startEnd}) => {
   return (
     <div>
       <h4>
+        {!startEnd && (
+          <>
+          <p>You have not selected a Starting/Ending location for your day. Please visit the Planner page to add a Starting/Ending location to your schedule.</p>
+          </>
+        )}
+
+
         {(!nextClass)
             ? "You do not have any events scheduled."
             :nextClass.get('name') === 'Day Start/End'
               ? `Your Next Event is: ${nextClass.get('name')} (${nextClass.get('building').get('name')})`
               : `Your Next Event is: ${nextClass.get('name')} in ${nextClass.get('building').get('name')} ${nextClass.get('room')} at ${nextClass.get('time')} (${nextClass.get('days').join(', ')})`
-          }
+        }
         <br />
         <br />
           {(!prevClass)

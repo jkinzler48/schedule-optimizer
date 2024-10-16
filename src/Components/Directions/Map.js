@@ -8,9 +8,9 @@ const Map = ({ buildings, source, destination, sourceChange, destChange }) => {
         {buildings.length > 0 &&
           buildings
             .sort((a, b) => a.get('name').localeCompare(b.get('name')))
-            .map((c) => (
-              <option key={c.id} value={c.get('mapId')}>
-                {`${c.get('name')}`}
+            .map((b) => (
+              <option key={b.id} value={b.get('mapId')}>
+                {`${b.get('name')}`}
               </option>
             ))}
       </select>
@@ -20,9 +20,9 @@ const Map = ({ buildings, source, destination, sourceChange, destChange }) => {
         {buildings.length > 0 &&
           buildings
             .sort((a, b) => a.get('name').localeCompare(b.get('name')))
-            .map((c) => (
-              <option key={c.id} value={c.get('mapId')}>
-                {`${c.get('name')}`}
+            .map((b) => (
+              <option key={b.id} value={b.get('mapId')}>
+                {`${b.get('name')}`}
               </option>
             ))}
       </select>

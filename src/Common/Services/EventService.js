@@ -20,6 +20,24 @@ export const addClass = async (code, name, instructor, time, days, building, coo
   }
 };
 
+export const createEvent = (name, code, time, building, days, room, instructor) => {
+  //console.log("Creating: ", name);
+  const Event = Parse.Object.extend(CLASS_SCHEDULE);
+  const event = new Event();
+  // using setter to UPDATE the object
+  event.set("name", name);
+  event.set('code', code);
+  event.set("time", time);
+  event.set('building', building);
+  event.set("days", days);
+  event.set('room', room);
+  event.set("instructor", instructor);
+
+  return event.save().then((result) => {
+    // returns new Lesson object
+    return result;
+  });
+};
 
 
 export let Events = {};
@@ -97,8 +115,10 @@ const parseTime = (time) => {
 
 export const getNextClass = async (classes) => {
   const currentDate = new Date();
+
   const currentDay = currentDate.toLocaleString("en-US", { weekday: "long" });
   const currentTime = currentDate.toTimeString().slice(0, 5);
+
 
   let dayEvents = classes
     .filter((c) => c.get('days').some((d) => d === currentDay))

@@ -30,6 +30,7 @@ const Optimizer = () => {
           <OptimizerMap
             prevClass={prevClass}
             nextClass={nextClass}
+            startEnd={startEnd}
           />
         </div>
         <div className="module">
@@ -51,6 +52,7 @@ const Optimizer = () => {
 
   // initializes hooks for classes and next class to occur
   const [classes, setSchedule] = useState([]);
+  const [startEnd, setStartEnd] = useState(null);
   const [nextClass, setNextClass] = useState(null);
   const [prevClass, setPrevClass] = useState(null);
 
@@ -65,27 +67,31 @@ useEffect(() => {
     }
   }, []);
 
+  useEffect(() => {
+    getStartEnd(classes).then((c) => {setStartEnd(c);});
+  }, [classes]);
+
   // Determine the next class after the schedule is fetched
   // Determine the next class after the schedule is fetched
   useEffect(() => {
     if (classes.length) {
-      getNextClass(classes).then((startEnd) => {
-        if (startEnd[0] === "startEnd") {
-          getStartEnd(classes).then((c) => {setPrevClass(c);});
+      getNextClass(classes).then((results) => {
+        if (results[0] === "startEnd") {
+          setPrevClass(startEnd);
         } else {
-          setPrevClass(startEnd[0]);
+          setPrevClass(results[0]);
         }
 
-        if (startEnd[1] === "startEnd") {
-          getStartEnd(classes).then((c) => {setNextClass(c);})
+        if (results[1] === "startEnd") {
+          setNextClass(startEnd);
         } else {
-          setNextClass(startEnd[1]);
+          setNextClass(results[1]);
         }
 
       });
 
     }
-  }, [classes]);
+  }, [classes, startEnd]);
 
   // Update `classSelected` when `nextClass` changes
   useEffect(() => {
