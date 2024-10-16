@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { getAllEvents, getNextClass, Events } from "../../Common/Services/EventService.js";
-import { getAllBuildings, Buildings } from "../../Common/Services/BuildingService.js";
+import { getAllEvents, getNextClass, getStartEnd, Events } from "../../Common/Services/EventService.js";
 
 import OptimizerMap from "./OptimizerMap.js";
-import Directions from "./Directions.js";
+import EventMap from './EventMap.js';
+
 
 const Optimizer = () => {
   // Functions
@@ -20,23 +20,6 @@ const Optimizer = () => {
   };
 
 
-  //dropdown functions for source and destination dropdowns
-  const onSourceChange = (e) => {
-    let source = e.target.value;
-     
-    // updates schedule shown on screen
-    setSource(source);
-  };
-
-  const onDestinationChange = (e) => {
-    let destination = e.target.value;
-     
-      // updates schedule shown on screen
-      setDestination(destination);
-  };
-
-
-
 
   // Main component JSX
   function displayOptimizer() {
@@ -45,20 +28,17 @@ const Optimizer = () => {
         <h1>Optimizer</h1>
         <div className="module">
           <OptimizerMap
-            classes={classes}
+            prevClass={prevClass}
             nextClass={nextClass}
-            selectedMapId={classSelected}
-            selectFunction={onClassChange}
           />
         </div>
         <div className="module">
-          <Directions 
-            buildings={buildings}
-            source={source}
-            destination={destination}
-            sourceChange={onSourceChange}
-            destChange={onDestinationChange}
-          />
+          <h2>Display Any Event Location</h2>
+          <EventMap
+              classes={classes}
+              selectedMapId={classSelected}
+              selectFunction={onClassChange}
+            />
         </div>
       </>
     );
@@ -72,6 +52,7 @@ const Optimizer = () => {
   // initializes hooks for classes and next class to occur
   const [classes, setSchedule] = useState([]);
   const [nextClass, setNextClass] = useState(null);
+  const [prevClass, setPrevClass] = useState(null);
 
 // Fetch the schedule only once when the component mounts
 useEffect(() => {
@@ -85,9 +66,24 @@ useEffect(() => {
   }, []);
 
   // Determine the next class after the schedule is fetched
+  // Determine the next class after the schedule is fetched
   useEffect(() => {
     if (classes.length) {
-      getNextClass(classes).then((c) => setNextClass(c));
+      getNextClass(classes).then((startEnd) => {
+        if (startEnd[0] === "startEnd") {
+          getStartEnd(classes).then((c) => {setPrevClass(c);});
+        } else {
+          setPrevClass(startEnd[0]);
+        }
+
+        if (startEnd[1] === "startEnd") {
+          getStartEnd(classes).then((c) => {setNextClass(c);})
+        } else {
+          setNextClass(startEnd[1]);
+        }
+
+      });
+
     }
   }, [classes]);
 
@@ -98,32 +94,6 @@ useEffect(() => {
     }
   }, [nextClass]);
 
-
-  //initalize hooks for directions component
-  const [source, setSource] = useState("");
-  const [destination, setDestination] = useState("");
-  const [buildings, setBuildings] = useState([]);
-
-  // Fetch the buildings only once when the component mounts
-  useEffect(() => {
-    if (Buildings.collection.length) {
-      setBuildings(Buildings.collection);
-    } else {
-      getAllBuildings().then((buildings) => {
-        setBuildings(buildings);
-      });
-    }
-  }, []);
-
-  //when buildings is updated, set the source and destination equal to the first building to keep the 
-  //directions map consistent with the dropdown values
-  useEffect(() => {
-    if (buildings.length > 0) {
-      let firstBuilding = buildings.sort((a, b) => a.get('name').localeCompare(b.get('name')))[0];
-      setSource(firstBuilding.get('mapId'));
-      setDestination(firstBuilding.get('mapId'));
-    }
-  }, [buildings]);
 
   // return the JSX for the main component
   return displayOptimizer();

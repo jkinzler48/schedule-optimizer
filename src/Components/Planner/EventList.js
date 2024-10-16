@@ -21,11 +21,11 @@ const EventList = ({ classes, day, selectFunction }) => {
             <h4>{day}'s Schedule</h4>
             <ol>
                 {/* Displays all classes that occur on selected day */}
-                {classes.filter((c) => c.get('days').some((d) => d === day.substring(0, 2))).length === 0 ? (
+                {classes.filter((c) => c.get('days').some((d) => d === day)).length === 0 ? (
                 <p>Nothing scheduled for {day}.</p>
                 ) : (
                 classes
-                    .filter((c) => c.get('days').some((d) => d === day.substring(0, 2)))
+                    .filter((c) => c.get('days').some((d) => d === day))
                     .sort((a, b) => getStartTime(a.get('time')) - getStartTime(b.get('time'))) // Sort by start time
                     .map((c) => (
                     <li key={c.get('code')}>
