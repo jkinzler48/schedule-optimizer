@@ -4,6 +4,7 @@ import { getAllBuildings, Buildings } from "../../Common/Services/BuildingServic
 import EventList from "./EventList.js";
 import UpdateEvents from "./UpdateEvents.js";
 import AddStartEnd from './AddStartEnd.js';
+import removeClass from "../../Common/Services/removeClassService.js"
 
 
 const Planner = () => {
@@ -36,6 +37,19 @@ const Planner = () => {
     setDaySelected(daySelected);
   };
 
+  const refreshClasses = async () => {
+    const updatedClasses = await getAllEvents();
+    setSchedule(updatedClasses); // Update the state with the new list
+  };
+
+  const handleRemoveClass = async (classCode) => {
+    const result = await removeClass(classCode); // Call the remove service
+    console.log(result); // Optional: log the result for debugging
+
+    // Fetch the updated list of events after removal
+    await refreshClasses()
+  };
+
 
   // Main component JSX
   function displayPlanner() {
@@ -60,6 +74,8 @@ const Planner = () => {
           />
           <UpdateEvents
             classes={classes}
+			onRemoveClass={handleRemoveClass}
+			refreshClasses={refreshClasses}
           />
         </div>
       </>
@@ -104,6 +120,7 @@ useEffect(() => {
   const [startEnd, setStartEnd] = useState();
   const [addDayStart, setAddDayStart] = useState(false);
 
+
   useEffect(() => {
     // Check for add flag and make sure name state variable is defined
     if (startEnd && addDayStart) {
@@ -138,11 +155,6 @@ useEffect(() => {
     // Continuously updating name to be added on submit
     setStartEnd(e.target.value);
   };
-
-
-
-
-
 
   // return the JSX for the main component
   return displayPlanner();
