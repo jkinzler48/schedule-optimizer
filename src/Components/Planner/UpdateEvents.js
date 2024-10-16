@@ -3,37 +3,9 @@ import React from 'react';
 const getStartTime = (time) =>
   parseInt(time.split('-')[0].replace(':', ''), 10);
 
-const ClassList = ({ classes, day, selectFunction }) => {
+const UpdateEvents = ({ classes }) => {
   return (
-    <div>
-      This is your class schedule for the selected day.
-      <select id="daySelect" className="daySelect" onChange={selectFunction}>
-        <option value="Today">Today</option>
-        <option value="Sunday">Sunday</option>
-        <option value="Monday">Monday</option>
-        <option value="Tuesday">Tuesday</option>
-        <option value="Wednesday">Wednesday</option>
-        <option value="Thursday">Thursday</option>
-        <option value="Friday">Friday</option>
-        <option value="Saturday">Saturday</option>
-      </select>
-      <h4>{day}'s Schedule</h4>
-      <ol>
-        {/* Displays all classes that occur on selected day */}
-        {classes.filter((c) => c.days.includes(day.substring(0, 2))).length === 0 ? (
-          <p>Nothing scheduled for {day}.</p>
-        ) : (
-          classes
-            .filter((c) => c.days.includes(day.substring(0, 2)))
-            .sort((a, b) => getStartTime(a.time) - getStartTime(b.time)) // Sort by start time
-            .map((c) => (
-              <li key={c.code}>
-                {c.time} | {c.name} ({c.building})
-              </li>
-            ))
-        )}
-      </ol>
-
+    <>
       <div>
         <h4>Add class to Schedule</h4>
         <p>Enter Information for class to add:</p>
@@ -87,16 +59,16 @@ const ClassList = ({ classes, day, selectFunction }) => {
           {/* Creates radio button option for every class in the classes list */}
           {classes.length > 0 &&
             classes
-              .sort((a, b) => getStartTime(a.time) - getStartTime(b.time))
+              .sort((a, b) => getStartTime(a.get('time')) - getStartTime(b.get('time')))
               .map((c) => (
-                <div key={c.code}>
+                <div key={c.get('code')}>
                   <input
                     type="radio"
                     name="removes"
-                    value={c.code}
+                    value={c.get('code')}
                     style={{ margin: '10px' }}
                   />
-                  {c.name} - {c.instructor} ({c.days.join(', ')} | {c.time})
+                  {c.get('name')} - {c.get('instructor')} ({c.get('days').join(', ')} | {c.get('time')})
                   <br />
                 </div>
               ))}
@@ -144,8 +116,8 @@ const ClassList = ({ classes, day, selectFunction }) => {
           <input type="submit" value="Submit" />
         </form>
       </div>
-    </div>
+    </>
   );
 };
 
-export default ClassList;
+export default UpdateEvents;

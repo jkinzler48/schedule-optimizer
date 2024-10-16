@@ -37,6 +37,34 @@
   }
 }
 
+.headerBar {
+	display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: #8282dc; */
+  border-radius: 10px;
+  padding: 20px;
+  /* color: white; */
+}
+
+.navLink {
+	display: flex;
+	padding: 10px;
+	margin: 20px;
+	text-decoration: none;
+	color:#f99700;
+	background-color: #8282dc;
+	border-radius: 6px;
+}
+
+.navLink:hover {
+	color: #ffa701;
+}
+
+
+
+
+
 body {
 	font-family: "Arial", sans-serif;
 	background-color: #8282dc; /* Light background to contrast */
@@ -106,6 +134,7 @@ body {
   }
   
   .dayList button {
+    display: flex;
   }
   
   input {
