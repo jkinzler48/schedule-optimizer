@@ -5,7 +5,7 @@ import createClass from "../../Common/Services/createClassService"
 const getStartTime = (time) =>
   parseInt(time.split('-')[0].replace(':', ''), 10);
 
-const UpdateEvents = ({ classes, refreshClasses }) => {
+const UpdateEvents = ({ classes, refreshClasses, setSchedule }) => {
   const [status, setStatus] = useState('');
   const [selectedClassCode, setSelectedClassCode] = useState('none');
   const [newClass, setNewClass] = useState({
@@ -30,8 +30,6 @@ const UpdateEvents = ({ classes, refreshClasses }) => {
     setStatus(result);
 
 	await refreshClasses();
-    
-    // Optionally, reset the selected class code after submission
     setSelectedClassCode('none');
   };
 
@@ -49,11 +47,12 @@ const UpdateEvents = ({ classes, refreshClasses }) => {
 	console.log("Submitting Class: ", newClass)
 	try {
 		const {code,name, instructor, building, room, time, days} = newClass;
-		const classDays = days.length > 0 ? days : ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']; // Default to all days if none selected
+		const classDays = days.length > 0 ? days : ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']; // Default to all days if none selected
 
-		await createClass(code, name, instructor, building, room, time, classDays);
+		const newClassObj = await createClass(code, name, instructor, building, room, time, classDays);
 
 		await refreshClasses();
+		setSchedule((prevClasses) => [...prevClasses, newClassObj]);
 
 		setNewClass({
 			code: '',
@@ -66,6 +65,7 @@ const UpdateEvents = ({ classes, refreshClasses }) => {
 		});
 
 		setStatus("Class added")
+
 	} catch (error) {
 		console.error("ERROR: ", error);
 		setStatus("Failed to add class");

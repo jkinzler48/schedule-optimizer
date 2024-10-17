@@ -1,7 +1,5 @@
 import Parse from 'parse';
 
-
-// const CLASS_SCHEDULE = 'test';
 const CLASS_SCHEDULE = 'Event';
 
 export const addClass = async (code, name, instructor, time, days, building, coords, room) => {
@@ -53,7 +51,7 @@ export const getAllEvents = () => {
   return query
     .find()
     .then((results) => {
-      // console.log("results: ", results);
+      console.log("results: ", results);
       // returns array of Lesson objects
       return results;
     })

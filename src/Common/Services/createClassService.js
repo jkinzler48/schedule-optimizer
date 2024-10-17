@@ -27,7 +27,8 @@ export const createClass = async (code, name, instructor, building, room, time, 
   newClass.set('days', days);
 
 	console.log(newClass);
-    await newClass.save();
+    const savedClass = newClass.save();
+	return savedClass
   } catch (error) {
     throw new Error(`Failed to create class: ${error.message}`);
   }

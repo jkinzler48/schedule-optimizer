@@ -39,7 +39,10 @@ const Planner = () => {
 
   const refreshClasses = async () => {
     const updatedClasses = await getAllEvents();
-    setSchedule(updatedClasses); // Update the state with the new list
+	const filteredClasses = updatedClasses.filter((c) =>
+		c.get('days').includes(daySelected) // Check against the selected day's moniker
+	  );
+    setSchedule(filteredClasses); // Update the state with the new list
   };
 
   const handleRemoveClass = async (classCode) => {
@@ -76,6 +79,7 @@ const Planner = () => {
             classes={classes}
 			onRemoveClass={handleRemoveClass}
 			refreshClasses={refreshClasses}
+			setSchedule={setSchedule}
           />
         </div>
       </>
@@ -90,16 +94,56 @@ const Planner = () => {
   // initializes hooks for classes and next class to occur
   const [classes, setSchedule] = useState([]);
 
-// Fetch the schedule only once when the component mounts
-useEffect(() => {
+
+
+
+
+  useEffect(() => {
+    const fetchClasses = async () => {
+        const classesData = await getAllEvents();
+        setSchedule(classesData); 
+    };
+
     if (Events.collection.length) {
-      setSchedule(Events.collection);
+        setSchedule(Events.collection);
     } else {
-      getAllEvents().then((classes) => {
-        setSchedule(classes);
-      });
+        fetchClasses();
     }
-  }, []);
+}, []);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // Fetch the schedule only once when the component mounts
+// useEffect(() => {
+//     if (Events.collection.length) {
+//       setSchedule(Events.collection);
+//     } else {
+//       getAllEvents().then((classes) => {
+//         setSchedule(classes);
+//       });
+//     }
+//   }, []);
+
+//   useEffect(() => {
+//     const fetchClasses = async () => {
+//         const classes = await getAllEvents();
+//         setSchedule(classes); // This sets the state to the fetched classes
+//     };
+
+//     	fetchClasses();
+// 	}, []);
 
 
   //initalize hooks for directions component
@@ -115,6 +159,25 @@ useEffect(() => {
       });
     }
   }, []);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   const [startEnd, setStartEnd] = useState();

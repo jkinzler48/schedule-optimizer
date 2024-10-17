@@ -34,10 +34,11 @@ const EventList = ({ classes, day, selectFunction }) => {
                     ))
                 )}
             </ol>
-
+				
         </div>
     </>
   );
 };
+
 
 export default EventList;
