@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import removeClass from "../../Common/Services/removeClassService";
-import createClass from "../../Common/Services/createClassService"
+import { removeClass, createClass } from '../../Common/Services/EventService';
 
 const getStartTime = (time) =>
   parseInt(time.split('-')[0].replace(':', ''), 10);
@@ -17,6 +16,15 @@ const UpdateEvents = ({ classes, refreshClasses, setSchedule }) => {
     time: '',
     days: [],
   });
+  const [newStudyTime, setNewStudyTime] = useState({
+	code: '',
+    name: '',
+    instructor: '',
+    building: '',
+    room: '',
+    time: '',
+    days: [],
+  })
 
   const handleRemoveSubmit = async (e) => {
     e.preventDefault();
@@ -34,7 +42,6 @@ const UpdateEvents = ({ classes, refreshClasses, setSchedule }) => {
 
     setStatus(result);
 
-	// await refreshClasses();
     setSelectedClassCode('none');
   };
 
@@ -43,13 +50,14 @@ const UpdateEvents = ({ classes, refreshClasses, setSchedule }) => {
 	e.preventDefault();
 	console.log("Submitting Class: ", newClass)
 	try {
-		const {code,name, instructor, building, room, time, days} = newClass;
+		const {code, name, instructor, building, room, time, days} = newClass;
 		const classDays = days.length > 0 ? days : ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']; // Default to all days if none selected
 
 		const newClassObj = await createClass(code, name, instructor, building, room, time, classDays);
 
 		// await refreshClasses();
-		setSchedule((prevClasses) => [...prevClasses, newClassObj]);
+		// setSchedule((prevClasses) => [...prevClasses, newClassObj]);
+		setSchedule([...classes, newClassObj]);
 
 		setNewClass({
 			code: '',
@@ -69,7 +77,40 @@ const UpdateEvents = ({ classes, refreshClasses, setSchedule }) => {
 	}
   };
 
-  const handleInputChange = (e) => {
+
+  const handleAddStudyTime = async (e) => {
+	e.preventDefault();
+	console.log("Submitting Class: ", newStudyTime)
+	try {
+		const {building, time, days} = newStudyTime;
+		const classDays = days.length > 0 ? days : ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']; // Default to all days if none selected
+
+		const newClassObj = await createClass(" ", "Study Time", "", building, "", time, classDays);
+
+		// await refreshClasses();
+		setSchedule([...classes, newClassObj]);
+
+		setNewStudyTime({
+			code: '',
+        	name: '',
+        	instructor: '',
+        	building: '',
+        	room: '',
+        	time: '',
+        	days: [],
+		});
+
+		setStatus("Study Time added")
+
+	} catch (error) {
+		console.error("ERROR: ", error);
+		setStatus("Failed to add study time");
+	}
+  };
+
+
+
+  const handleInputChangeClass = (e) => {
 	const { name, value, type, checked } = e.target;
 	if (type === 'checkbox') {
 	  // Update days array based on checkbox state
@@ -82,6 +123,22 @@ const UpdateEvents = ({ classes, refreshClasses, setSchedule }) => {
 	} else {
 	  // Update other input fields
 	  setNewClass((prev) => ({ ...prev, [name]: value }));
+	}
+  };
+
+  const handleInputChangeClassStudy = (e) => {
+	const { name, value, type, checked } = e.target;
+	if (type === 'checkbox') {
+	  // Update days array based on checkbox state
+	  setNewStudyTime((prev) => {
+		const days = checked
+		  ? [...prev.days, value] // Add day if checked
+		  : prev.days.filter((day) => day !== value); // Remove day if unchecked
+		return { ...prev, days };
+	  });
+	} else {
+	  // Update other input fields
+	  setNewStudyTime((prev) => ({ ...prev, [name]: value }));
 	}
   };
 
@@ -120,19 +177,19 @@ const UpdateEvents = ({ classes, refreshClasses, setSchedule }) => {
           <p>
             Select the days the class is held on:
             <br />
-            <input type="checkbox" name="classDays" value="Mo" checked={newClass.days.includes('Mo')} onChange={handleInputChange}/> Monday
+            <input type="checkbox" name="classDays" value="Mo" checked={newClass.days.includes('Mo')} onChange={handleInputChangeClass}/> Monday
             <br />
-            <input type="checkbox" name="classDays" value="Tu" checked={newClass.days.includes('Tu')} onChange={handleInputChange}/> Tuesday
+            <input type="checkbox" name="classDays" value="Tu" checked={newClass.days.includes('Tu')} onChange={handleInputChangeClass}/> Tuesday
             <br />
-            <input type="checkbox" name="classDays" value="We" checked={newClass.days.includes('We')} onChange={handleInputChange}/> Wednesday
+            <input type="checkbox" name="classDays" value="We" checked={newClass.days.includes('We')} onChange={handleInputChangeClass}/> Wednesday
             <br />
-            <input type="checkbox" name="classDays" value="Th" checked={newClass.days.includes('Th')} onChange={handleInputChange}/> Thursday
+            <input type="checkbox" name="classDays" value="Th" checked={newClass.days.includes('Th')} onChange={handleInputChangeClass}/> Thursday
             <br />
-            <input type="checkbox" name="classDays" value="Fr" checked={newClass.days.includes('Fr')} onChange={handleInputChange}/> Friday
+            <input type="checkbox" name="classDays" value="Fr" checked={newClass.days.includes('Fr')} onChange={handleInputChangeClass}/> Friday
             <br />
-            <input type="checkbox" name="classDays" value="Sa" checked={newClass.days.includes('Sa')} onChange={handleInputChange}/> Saturday
+            <input type="checkbox" name="classDays" value="Sa" checked={newClass.days.includes('Sa')} onChange={handleInputChangeClass}/> Saturday
             <br />
-            <input type="checkbox" name="classDays" value="Su" checked={newClass.days.includes('Su')} onChange={handleInputChange}/> Sunday
+            <input type="checkbox" name="classDays" value="Su" checked={newClass.days.includes('Su')} onChange={handleInputChangeClass}/> Sunday
           </p>
           <input type="submit" value="Submit" />
         </form>
@@ -158,7 +215,7 @@ const UpdateEvents = ({ classes, refreshClasses, setSchedule }) => {
             classes
               .sort((a, b) => getStartTime(a.get('time')) - getStartTime(b.get('time')))
               .map((c) => (
-                <div key={c.get('code')}>
+                <div key={c.id}>
                   <input
                     type="radio"
                     name="removes"
@@ -178,42 +235,35 @@ const UpdateEvents = ({ classes, refreshClasses, setSchedule }) => {
 
       <div>
         <h4>Add study time to Schedule</h4>
-        <form className="studyForm" id="studyForm" action="#stayhere">
+        <form className="studyForm" id="studyForm" action="#stayhere" onSubmit={handleAddStudyTime}>
           <p>How much study time do you want to add?</p>
           <p>
-            <select id="studyLengthSelect" className="studyLengthSelect">
-              <option value="15">15 minutes</option>
-              <option value="30">30 minutes</option>
-              <option value="45">45 minutes</option>
-              <option value="60">60 minutes</option>
-              <option value="75">1 hour 15 minutes</option>
-              <option value="90">1 hour 30 minutes</option>
-              <option value="105">1 hour 45 minutes</option>
-              <option value="120">2 hours</option>
-            </select>
+		  	<label htmlFor="timeInput">Enter Time in 24hr format: </label>
+          	<input type="text" id="timeInput" className="addClass" placeholder="HH:MM-HH:MM" onChange={(e) => setNewStudyTime({ ...newStudyTime, time: e.target.value })} required />
           </p>
           <p>Where would you like to study?</p>
           <p>
-            <input type="text" id="studyBuilding" placeholder="Enter Building Name" required />
+            <input type="text" id="studyBuilding" placeholder="Enter Building Name" onChange={(e) => setNewStudyTime({ ...newStudyTime, building: e.target.value })}required />
           </p>
           <p id="daysInput">
             Select the days you want to add the study time to:
             <br />
-            <input type="checkbox" name="studyDays" value="Mo" /> Monday
+            <input type="checkbox" name="studyDays" value="Mo" checked={newStudyTime.days.includes('Monday')} onChange={handleInputChangeClassStudy}/> Monday
             <br />
-            <input type="checkbox" name="studyDays" value="Tu" /> Tuesday
+            <input type="checkbox" name="studyDays" value="Tu" checked={newStudyTime.days.includes('Tuesday')} onChange={handleInputChangeClassStudy}/> Tuesday
             <br />
-            <input type="checkbox" name="studyDays" value="We" /> Wednesday
+            <input type="checkbox" name="studyDays" value="We" checked={newStudyTime.days.includes('Wednesday')} onChange={handleInputChangeClassStudy}/> Wednesday
             <br />
-            <input type="checkbox" name="studyDays" value="Th" /> Thursday
+            <input type="checkbox" name="studyDays" value="Th" checked={newStudyTime.days.includes('Thursday')} onChange={handleInputChangeClassStudy}/> Thursday
             <br />
-            <input type="checkbox" name="studyDays" value="Fr" /> Friday
+            <input type="checkbox" name="studyDays" value="Fr" checked={newStudyTime.days.includes('Friday')} onChange={handleInputChangeClassStudy}/> Friday
             <br />
-            <input type="checkbox" name="studyDays" value="Sa" /> Saturday
+            <input type="checkbox" name="studyDays" value="Sa" checked={newStudyTime.days.includes('Saturday')} onChange={handleInputChangeClassStudy}/> Saturday
             <br />
-            <input type="checkbox" name="studyDays" value="Su" /> Sunday
+            <input type="checkbox" name="studyDays" value="Su" checked={newStudyTime.days.includes('Sunday')} onChange={handleInputChangeClassStudy}/> Sunday
           </p>
           <input type="submit" value="Submit" />
+		  {status && <p>{status}</p>} {/* Display status message */}
         </form>
       </div>
     </>

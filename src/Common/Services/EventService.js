@@ -2,21 +2,6 @@ import Parse from 'parse';
 
 const CLASS_SCHEDULE = 'Event';
 
-// export const addClass = async (code, name, instructor, time, days, building, coords, room) => {
-//   const ClassSchedule = new Parse.Object(CLASS_SCHEDULE);
-
-//   // Set attributes
-//   ClassSchedule.set({ code, name, instructor, time, days, building, coords, room });
-
-//   try {
-//     const savedClass = await ClassSchedule.save();
-//     console.log('Class added successfully:', savedClass);
-//     return savedClass;
-//   } catch (error) {
-//     console.error('Error while adding class:', error.message || error);
-//     throw error;
-//   }
-// };
 
 export const createEvent = (name, code, time, building, days, room, instructor) => {
   //console.log("Creating: ", name);
@@ -36,7 +21,6 @@ export const createEvent = (name, code, time, building, days, room, instructor) 
     return result;
   });
 };
-
 
 export let Events = {};
 Events.collection = [];
@@ -59,30 +43,6 @@ export const getAllEvents = () => {
       console.log("error: ", error);
     });
 };
-
-
-
-// export const getSchedule = async () => {
-//   const query = new Parse.Query(CLASS_SCHEDULE);
-
-//   try {
-//     const results = await query.find();
-//     return results.map(result => ({
-//       id: result.id,
-//       code: result.get('code'),
-//       name: result.get('name'),
-//       instructor: result.get('instructor'),
-//       time: result.get('time'),
-//       days: result.get('days'),
-//       building: result.get('building'),
-//       coords: result.get('coords'),
-//       room: result.get('room'),
-//     }));
-//   } catch (error) {
-//     console.error('Error while fetching schedule:', error.message || error);
-//     throw error;
-//   }
-// };
 
 export const getStartEnd = (classes) => {
 
@@ -169,8 +129,65 @@ export const getNextClass = async (classes) => {
 
   }
 
-
   return [comingFrom, nextClass];
 };
 
 
+export const createClass = async (code, name, instructor, building, room, time, days) => {
+	const Class = Parse.Object.extend('Event'); // Change 'Class' to your class name in Back4App
+	const newClass = new Class();
+  
+	const Building = Parse.Object.extend('Building'); // Change 'Building' to your building class name
+	const query = new Parse.Query(Building);
+	
+	// Assuming buildingName is the name of the building you want to set as a pointer
+	query.equalTo('name', building); // Change 'name' to the field you are querying by
+	
+	try {
+	  const buildingObject = await query.first(); // Fetch the building object
+  
+	  if (!buildingObject) {
+		throw new Error(`Building "${building}" not found.`);
+	  }
+  
+  
+	newClass.set('code', code);
+	newClass.set('name', name);
+	newClass.set('instructor', instructor);
+	newClass.set('building', buildingObject);
+	newClass.set('room', room);
+	newClass.set('time', time);
+	newClass.set('days', days);
+  
+	  console.log(newClass);
+	  const savedClass = newClass.save();
+	  return savedClass
+	} catch (error) {
+	  throw new Error(`Failed to create class: ${error.message}`);
+	}
+  };
+  
+
+
+  export const removeClass = async (classCode) => {
+	try {
+	  const query = new Parse.Query('Event'); // Adjust 'Class' to your Parse class name.
+	  query.equalTo('objectId', classCode); // Search for the class by its code.
+
+	  const classObject = await query.first(); // Get the first matching class.
+  
+	  if (!classObject) {
+		throw new Error('Class not found.');
+	  }
+  
+	  console.log(classObject)
+	  await classObject.destroy(); // Remove the class from the database.
+	  return `Class with code ${classCode} removed successfully.`;
+
+	  
+	} catch (error) {
+	  console.error('Error while removing class:', error);
+	  return `Failed to remove class: ${error.message}`;
+	}
+  };
+  

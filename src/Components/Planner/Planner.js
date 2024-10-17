@@ -94,10 +94,6 @@ const Planner = () => {
   // initializes hooks for classes and next class to occur
   const [classes, setSchedule] = useState([]);
 
-
-
-
-
   useEffect(() => {
     const fetchClasses = async () => {
         const classesData = await getAllEvents();
@@ -110,41 +106,6 @@ const Planner = () => {
         fetchClasses();
     }
 }, []);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// // Fetch the schedule only once when the component mounts
-// useEffect(() => {
-//     if (Events.collection.length) {
-//       setSchedule(Events.collection);
-//     } else {
-//       getAllEvents().then((classes) => {
-//         setSchedule(classes);
-//       });
-//     }
-//   }, []);
-
-//   useEffect(() => {
-//     const fetchClasses = async () => {
-//         const classes = await getAllEvents();
-//         setSchedule(classes); // This sets the state to the fetched classes
-//     };
-
-//     	fetchClasses();
-// 	}, []);
-
 
   //initalize hooks for directions component
   const [buildings, setBuildings] = useState([]);
@@ -160,29 +121,8 @@ const Planner = () => {
     }
   }, []);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   const [startEnd, setStartEnd] = useState();
   const [addDayStart, setAddDayStart] = useState(false);
-
 
   useEffect(() => {
     // Check for add flag and make sure name state variable is defined
@@ -195,10 +135,6 @@ const Planner = () => {
           // Add the newly created lesson to the lessons array
           // to render the new list of lessons (thru spread/concatination)
           setSchedule([...classes, newEvent]);
-
-          //Note: CANNOT MANIPULATE STATE ARRAY DIRECTLY
-          //lessons = lessons.push(lesson)
-          //setLessons(lessons)
       });
     }
   }, [classes, startEnd, addDayStart]);
