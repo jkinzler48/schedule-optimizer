@@ -1,3 +1,21 @@
+# Class Planner / Optimizer
+
+## Group Members
+Sean Dougherty and Jake Kinzler
+
+## Overview
+Our objective is to make an app for students that could be used to optimize their schedule and understand where and when their classes are. This app consists of three sections. 
+
+### Planner Section
+Our first section displays the student's schedule for today, and they can choose any day of the week to display as well. They will also be able to update their schedule within this section.
+
+### Optimizer Section
+Our second section is the Optimizer feature for the user. This section contains information about the user's schedule and also allows the user to view the locations of all events on their schedule.
+
+### Directions Section
+Our third section allows the user to select 2 buildings on cmapus, and it provides them with an embedded map of directions to navigate between the two buildings.
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
