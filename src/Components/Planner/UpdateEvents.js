@@ -46,6 +46,7 @@ const UpdateEvents = ({ classes, refreshClasses }) => {
 
   const handleAddSubmit = async (e) => {
 	e.preventDefault();
+	console.log("Submitting Class: ", newClass)
 	try {
 		const {code,name, instructor, building, room, time, days} = newClass;
 		const classDays = days.length > 0 ? days : ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']; // Default to all days if none selected
@@ -66,7 +67,8 @@ const UpdateEvents = ({ classes, refreshClasses }) => {
 
 		setStatus("Class added")
 	} catch (error) {
-		setStatus("Failed to add class")
+		console.error("ERROR: ", error);
+		setStatus("Failed to add class");
 	}
   };
 

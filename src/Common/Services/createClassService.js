@@ -21,7 +21,7 @@ export const createClass = async (code, name, instructor, building, room, time, 
   newClass.set('code', code);
   newClass.set('name', name);
   newClass.set('instructor', instructor);
-  newClass.set('building', building);
+  newClass.set('building', buildingObject);
   newClass.set('room', room);
   newClass.set('time', time);
   newClass.set('days', days);
