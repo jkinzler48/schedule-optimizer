@@ -16,6 +16,8 @@ const removeClass = async (classCode) => {
 	  console.log(classObject)
 	  await classObject.destroy(); // Remove the class from the database.
 	  return `Class with code ${classCode} removed successfully.`;
+
+	  
 	} catch (error) {
 	  console.error('Error while removing class:', error);
 	  return `Failed to remove class: ${error.message}`;

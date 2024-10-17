@@ -19,16 +19,16 @@ const ScheduleComponent = () => {
     fetchSchedule();
   }, []);
 
-  const handleAddClass = async (newClass) => {
-    try {
-      await addClass(newClass.code, newClass.name, newClass.instructor, newClass.time, newClass.days, newClass.building, newClass.coords, newClass.room);
-      // Optionally, refresh the schedule after adding a class
-      const updatedClasses = await getSchedule();
-      setClasses(updatedClasses);
-    } catch (error) {
-      console.error("Error adding class:", error);
-    }
-  };
+//   const handleAddClass = async (newClass) => {
+//     try {
+//       await addClass(newClass.code, newClass.name, newClass.instructor, newClass.time, newClass.days, newClass.building, newClass.coords, newClass.room);
+//       // Optionally, refresh the schedule after adding a class
+//       const updatedClasses = await getSchedule();
+//       setClasses(updatedClasses);
+//     } catch (error) {
+//       console.error("Error adding class:", error);
+//     }
+//   };
 
   return (
     <div>

@@ -25,21 +25,18 @@ const UpdateEvents = ({ classes, refreshClasses, setSchedule }) => {
       setStatus('No class selected for removal.');
       return;
     }
+	console.log(selectedClassCode)
 
     const result = await removeClass(selectedClassCode);
+	setSchedule(classes.filter((c) => {
+		return c.id !== selectedClassCode;
+	}))
+
     setStatus(result);
 
-	await refreshClasses();
+	// await refreshClasses();
     setSelectedClassCode('none');
   };
-
-
-
-
-
-
-
-
 
 
   const handleAddSubmit = async (e) => {
@@ -51,7 +48,7 @@ const UpdateEvents = ({ classes, refreshClasses, setSchedule }) => {
 
 		const newClassObj = await createClass(code, name, instructor, building, room, time, classDays);
 
-		await refreshClasses();
+		// await refreshClasses();
 		setSchedule((prevClasses) => [...prevClasses, newClassObj]);
 
 		setNewClass({

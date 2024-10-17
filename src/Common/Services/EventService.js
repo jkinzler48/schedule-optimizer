@@ -2,21 +2,21 @@ import Parse from 'parse';
 
 const CLASS_SCHEDULE = 'Event';
 
-export const addClass = async (code, name, instructor, time, days, building, coords, room) => {
-  const ClassSchedule = new Parse.Object(CLASS_SCHEDULE);
+// export const addClass = async (code, name, instructor, time, days, building, coords, room) => {
+//   const ClassSchedule = new Parse.Object(CLASS_SCHEDULE);
 
-  // Set attributes
-  ClassSchedule.set({ code, name, instructor, time, days, building, coords, room });
+//   // Set attributes
+//   ClassSchedule.set({ code, name, instructor, time, days, building, coords, room });
 
-  try {
-    const savedClass = await ClassSchedule.save();
-    console.log('Class added successfully:', savedClass);
-    return savedClass;
-  } catch (error) {
-    console.error('Error while adding class:', error.message || error);
-    throw error;
-  }
-};
+//   try {
+//     const savedClass = await ClassSchedule.save();
+//     console.log('Class added successfully:', savedClass);
+//     return savedClass;
+//   } catch (error) {
+//     console.error('Error while adding class:', error.message || error);
+//     throw error;
+//   }
+// };
 
 export const createEvent = (name, code, time, building, days, room, instructor) => {
   //console.log("Creating: ", name);
