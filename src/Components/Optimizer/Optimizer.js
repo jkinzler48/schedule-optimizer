@@ -4,6 +4,9 @@ import OptimizerMap from "./OptimizerMap.js";
 import EventMap from './EventMap.js';
 
 
+//in the future, we will build out this section so that it provides recomendations to
+//the user about their schedule. This may include recommendations such as what specific time
+//they shoudl leave for a class or what specific supplies they should bring to a class
 const Optimizer = () => {
   // Functions
 
