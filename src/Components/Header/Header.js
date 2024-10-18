@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
-const Footer = () => (
+//Navigation Section that appears on every page
+const Header = () => (
     <div className="module">
         <nav className = "headerBar">
             <Link className="navLink" to="/">Planner</Link>
@@ -10,4 +11,4 @@ const Footer = () => (
     </div>
 );
 
-export default Footer;
+export default Header;

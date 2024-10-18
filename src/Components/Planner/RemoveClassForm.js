@@ -4,6 +4,7 @@ import React from 'react';
 const getStartTime = (time) =>
     parseInt(time.split('-')[0].replace(':', ''), 10);
 
+
 const RemoveClassForm = ({ events, selectedClass, onChange, onClick, status, formRef }) => {
     return (
         
@@ -41,7 +42,9 @@ const RemoveClassForm = ({ events, selectedClass, onChange, onClick, status, for
               ))}
               <br />
           <button type="submit" value="Submit" onClick={onClick}>Submit</button>
-          {status && <p>{status}</p>} {/* Display status message */}
+          
+          {/* Display status message */}
+          {status && <p>{status}</p>}
         </form>
       </div>
       );

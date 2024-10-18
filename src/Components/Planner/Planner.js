@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import {  getAllEvents, Events } from "../../Common/Services/EventService.js";
 import { getAllBuildings, Buildings } from "../../Common/Services/BuildingService.js";
 import EventList from "./EventList.js";
-
 import AddStartEnd from './AddStartEnd.js';
 import AddClass from './AddClass.js';
 import AddStudyTime from './AddStudyTime.js';
 import RemoveClass from './RemoveClass.js';
 
 
-
+//In future, we will add user feautres, so that each user can have their own schedule,
+//and this will allow them to have personalized recommendations
 const Planner = () => {
   // Functions
 
@@ -32,11 +32,12 @@ const Planner = () => {
   // updates the schedule when the selected day changes in the dropdown
   const onDateChange = (e) => {
     let daySelected = e.target.value;
+
     // if the selected day is Today, then get the current day
     if (daySelected === "Today") {
       daySelected = getCurrentDay();
     }
-    // updates schedule shown on screen
+    //sets day to update schedule shown on screen
     setDaySelected(daySelected);
   };
 
@@ -75,21 +76,25 @@ const Planner = () => {
             buildings={buildings}
             studyUpdateFunction={setSchedule}
           />
+          {/* We may also add section for adding additional "special" events, such as
+          adding a meal time or break time */}
         </div>
       </>
     );
   }
 
+
   // Main code
 
-  // initializes hooks for dropdowns so they can be updated
+  // initializes hooks for day dropdown so schedule can be updated
   const [daySelected, setDaySelected] = useState(getCurrentDay());
 
-  // initializes hooks for classes and next class to occur
+  // initializes hooks for classes and building Parse object lists
   const [classes, setSchedule] = useState([]);
+  const [buildings, setBuildings] = useState([]);
 
-// Fetch the schedule only once when the component mounts
-useEffect(() => {
+  // Fetch the schedule only once when the component mounts
+  useEffect(() => {
     if (Events.collection.length) {
       setSchedule(Events.collection);
     } else {
@@ -99,9 +104,6 @@ useEffect(() => {
     }
   }, []);
 
-
-  //initalize hooks for directions component
-  const [buildings, setBuildings] = useState([]);
 
   // Fetch the buildings only once when the component mounts
   useEffect(() => {
@@ -115,11 +117,10 @@ useEffect(() => {
   }, []);
 
 
-
-
-
   // return the JSX for the main component
   return displayPlanner();
+
 };
+
 
 export default Planner;

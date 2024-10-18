@@ -5,26 +5,27 @@ const AddStudyTimeForm = ({ buildings, newStudyTime, onChange, onCheckboxChange,
     return (
         <>
           <div>
-        <h4>Add study time to Schedule</h4>
-        <form ref={formRef} className="studyForm" id="studyForm" action="#stayhere">
-          <p>What time would you like to study?</p>
-          <label htmlFor="timeInput">Enter Time in 24hr format: </label>
-              <input type="text" id="timeInput" name="time" className="addClass" placeholder="HH:MM-HH:MM" onChange={onChange} required />
-          <p>Where would you like to study?</p>
-          <p>
-            <select id="buildingSelect" name="building" className="classSelect" onChange={onChange}>
-                  {buildings.length > 0 &&
-                    buildings
-                      .sort((a, b) => a.get('name').localeCompare(b.get('name')))
-                      .filter((b) => (b.get('type') === 'parking lot' || b.get('type') === 'dorm'))
-                      .map((b) => (
-                        <option key={b.id} value={b.id}>
-                          {`${b.get('name')}`}
-                        </option>
-                      ))}
-            </select>
-          </p>
-          <p>
+            <h4>Add study time to Schedule</h4>
+            <form ref={formRef} className="studyForm" id="studyForm" action="#stayhere">
+              <p>What time would you like to study?</p>
+              <label htmlFor="timeInput">Enter Time in 24hr format: </label>
+                  <input type="text" id="timeInput" name="time" className="addClass" placeholder="HH:MM-HH:MM" onChange={onChange} required />
+              <p>Where would you like to study?</p>
+              <p>
+                {/* Create dropdown option for all buildings in list */}
+                <select id="buildingSelect" name="building" className="classSelect" onChange={onChange}>
+                      {buildings.length > 0 &&
+                        buildings
+                          .sort((a, b) => a.get('name').localeCompare(b.get('name')))
+                          .map((b) => (
+                            <option key={b.id} value={b.id}>
+                              {`${b.get('name')}`}
+                            </option>
+                          ))}
+                </select>
+              </p>
+
+              <p>
                 Select the days you want to add the study time to:
                 <br />
                 <input type="checkbox" name="classDays" value="Monday" checked={newStudyTime.days.includes('Monday')} onChange={onCheckboxChange}/> Monday
@@ -43,7 +44,8 @@ const AddStudyTimeForm = ({ buildings, newStudyTime, onChange, onCheckboxChange,
               </p>
               <input type="submit" value="Submit" onClick={onClick}/>
         </form>
-        {status && <p>{status}</p>} {/* Display status message */}
+        {/* Display status message */}
+        {status && <p>{status}</p>}
       </div>
         </>
       );

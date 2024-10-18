@@ -5,6 +5,24 @@ import AddStartEndForm from './AddStartEndForm.js';
 
 const AddStartEnd = ({ events, buildings, classUpdateFunction }) => {
 
+  //Functions
+
+  //Handler to handle event passed from child submit button
+  const onAddStartEndClick = (e) => {
+      e.preventDefault();
+      // Trigger add flag to create start/end event and
+      // re-render list with new lesson
+      setAddDayStart(true);
+  };
+  
+  // Handler to track changes to the child input text
+  const onChangeStartEnd = (e) => {
+      e.preventDefault();
+      // Continuously updating name to be added on submit
+      setStartEnd(e.target.value);
+  };
+
+
   // Main component JSX
   function displayForm() {
     return (
@@ -18,29 +36,17 @@ const AddStartEnd = ({ events, buildings, classUpdateFunction }) => {
       </>
     );
   }
-
-     // Handler to handle event passed from child submit button
-  const onAddStartEndClick = (e) => {
-      e.preventDefault();
-      // Trigger add flag to create lesson and
-      // re-render list with new lesson
-      setAddDayStart(true);
-  };
-  
-    // Handler to track changes to the child input text
-    const onChangeStartEnd = (e) => {
-      e.preventDefault();
-      // Continuously updating name to be added on submit
-      setStartEnd(e.target.value);
-    };
   
 
   // Main code
 
-
+  //initializes hooks for input field and sumbit button
   const [startEnd, setStartEnd] = useState(null);
   const [addDayStart, setAddDayStart] = useState(false);
 
+
+  //initialize the start/End location equal to the first building (in alphabetical order)
+  //keeps code consisitent with the dropdown
   useEffect(() => {
     if (buildings.length > 0) {
       // Set startEnd to the first building's id
@@ -48,28 +54,27 @@ const AddStartEnd = ({ events, buildings, classUpdateFunction }) => {
     }
   }, [buildings]);
 
+
+
   useEffect(() => {
     // Check for add flag and make sure name state variable is defined
     if (startEnd && addDayStart) {
-      
-      // createEvent("Day Start/End", "START/END", "start/end of day", buildingPointer,['Every Day'], '', '')
+
+      //creates a new Event object used to store the day's start/end.
       createClass("START/END", "Day Start/End", '', startEnd, '', "start/end of day", ['Every Day'])
         .then((newEvent) => {
           setAddDayStart(false);
-          // Add the newly created lesson to the lessons array
+          // Add the newly created event to the events array
           // to render the new list of lessons (thru spread/concatination)
           classUpdateFunction([...events, newEvent]);
-
-          //Note: CANNOT MANIPULATE STATE ARRAY DIRECTLY
-          //lessons = lessons.push(lesson)
-          //setLessons(lessons)
       });
     }
   }, [events, startEnd, addDayStart, classUpdateFunction]);
 
-
   // return the JSX for the main component
   return displayForm();
+  
 };
+
 
 export default AddStartEnd;

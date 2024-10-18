@@ -11,7 +11,7 @@ export const getAllBuildings = () => {
   return query
     .find()
     .then((results) => {
-      // console.log("results: ", results);
+
       // returns array of Lesson objects
       return results;
     })

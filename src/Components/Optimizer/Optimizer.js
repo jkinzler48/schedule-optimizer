@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { getAllEvents, getNextClass, getStartEnd, Events } from "../../Common/Services/EventService.js";
-
 import OptimizerMap from "./OptimizerMap.js";
 import EventMap from './EventMap.js';
 
@@ -11,14 +10,15 @@ const Optimizer = () => {
   // updates the schedule when the selected class changes in the dropdown
   const onClassChange = (e) => {
     let classSelected = e.target.value;
+
     // if the selected class is next, then get the next class's mapId
     if (classSelected === "next" && nextClass) {
       classSelected = nextClass.get('building').get('mapId');
     }
-    // updates schedule shown on screen
+
+    //updates schedule that will be shown on screen
     setClassSelected(classSelected);
   };
-
 
 
   // Main component JSX
@@ -45,16 +45,18 @@ const Optimizer = () => {
     );
   }
 
+
   // Main code
 
-  // initializes hooks for dropdowns so they can be updated
+  // initializes hooks for dropdown so it can be updated
   const [classSelected, setClassSelected] = useState("");
 
-  // initializes hooks for classes and next class to occur
+  // initializes hooks for classes and next/previous class to occur
   const [classes, setSchedule] = useState([]);
   const [startEnd, setStartEnd] = useState(null);
   const [nextClass, setNextClass] = useState(null);
   const [prevClass, setPrevClass] = useState(null);
+
 
 // Fetch the schedule only once when the component mounts
 useEffect(() => {
@@ -67,21 +69,29 @@ useEffect(() => {
     }
   }, []);
 
+
+  //when classes changes, set the starting/ending location
   useEffect(() => {
     getStartEnd(classes).then((c) => {setStartEnd(c);});
   }, [classes]);
 
+
   // Determine the next class after the schedule is fetched
-  // Determine the next class after the schedule is fetched
+  // and the location/class the user will be coming from to get to their next class
   useEffect(() => {
     if (classes.length) {
       getNextClass(classes).then((results) => {
+
+        //if the user is coming from their starting/ending location, set their
+        //previous class equal to this location for directions/optimzer purposes
         if (results[0] === "startEnd") {
           setPrevClass(startEnd);
         } else {
           setPrevClass(results[0]);
         }
 
+        //if the user's next event is going to their starting/ending location, set their
+        //next class equal to this location for directions/optimzer purposes
         if (results[1] === "startEnd") {
           setNextClass(startEnd);
         } else {
@@ -93,7 +103,8 @@ useEffect(() => {
     }
   }, [classes, startEnd]);
 
-  // Update `classSelected` when `nextClass` changes
+
+  // Update `classSelected`, which stores a mapId, when `nextClass` changes
   useEffect(() => {
     if (nextClass) {
       setClassSelected(nextClass.get('building').get('mapId'));
@@ -104,5 +115,6 @@ useEffect(() => {
   // return the JSX for the main component
   return displayOptimizer();
 };
+
 
 export default Optimizer;

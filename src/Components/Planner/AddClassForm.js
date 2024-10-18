@@ -7,6 +7,7 @@ const AddClassForm = ({ buildings, newClass, onChange, onCheckboxChange, onClick
           <div>
             <h4>Add class to Schedule</h4>
             <p>Enter Information for class to add:</p>
+
             <form ref={formRef} className="addForm" id="addForm" action="#stayhere">
               <label htmlFor="codeInput">Class Code: </label>
               <input type="text" id="codeInput" name="code" className="addClass" placeholder="XYZ 12345" onChange={onChange} required />
@@ -24,17 +25,19 @@ const AddClassForm = ({ buildings, newClass, onChange, onCheckboxChange, onClick
               <input type="text" id="timeInput" name="time" className="addClass" placeholder="HH:MM-HH:MM" onChange={onChange} required />
               <br />
               <p>Select the Building where the class is located: </p>
+
+              {/* create dropdown option for each builing*/}
               <select id="buildingSelect" name="building" className="classSelect" onChange={onChange}>
                   {buildings.length > 0 &&
                     buildings
                       .sort((a, b) => a.get('name').localeCompare(b.get('name')))
-                      .filter((b) => (b.get('type') === 'parking lot' || b.get('type') === 'dorm'))
                       .map((b) => (
                         <option key={b.id} value={b.id}>
                           {`${b.get('name')}`}
                         </option>
                       ))}
                 </select>
+
               <p>
                 Select the days the class is held on:
                 <br />
@@ -54,7 +57,9 @@ const AddClassForm = ({ buildings, newClass, onChange, onCheckboxChange, onClick
               </p>
               <input type="submit" value="Submit" onClick={onClick}/>
             </form>
-            {status && <p>{status}</p>} {/* Display status message */}
+
+            {/* Display status message */}
+            {status && <p>{status}</p>}
           </div>
         </>
       );

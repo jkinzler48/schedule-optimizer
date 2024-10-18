@@ -3,15 +3,13 @@ import { removeClass } from "../../Common/Services/EventService.js";
 import RemoveClassForm from './RemoveClassForm.js';
 
 
-
+//component that allows user to dynamically remove an event to their schedule.
 export const RemoveClass = ({ events, classUpdateFunction }) => {
 
-const [status, setStatus] = useState('');
-const [selectedClassCode, setSelectedClassCode] = useState('none');
- 
-const formRef = useRef(null);
+  //Functions
 
-const handleRemoveSubmit = (e) => {
+  //Function to handle when submit button is pressed
+  const handleRemoveSubmit = (e) => {
     e.preventDefault();
     
     if (selectedClassCode === 'none') {
@@ -19,14 +17,15 @@ const handleRemoveSubmit = (e) => {
       return;
     }
 
+    //remove class if one is selected
     const result = removeClass(selectedClassCode);
     setStatus(result);
-
-    if (result.startsWith("Class with code")) {
+   
+    //update events list so that the removed class dissapears from teh user's view
+    if (result.startsWith("Class removed successfully")) {
         classUpdateFunction(events.filter((e) => e.id !== selectedClassCode))
     }
 
-    
     // Optionally, reset the selected class code after submission
     setSelectedClassCode('none');
   };
@@ -36,6 +35,16 @@ const handleRemoveSubmit = (e) => {
   }
 
 
+  //Main Code
+
+  //initializises hooks for selected class and status
+  const [status, setStatus] = useState('');
+  const [selectedClassCode, setSelectedClassCode] = useState('none');
+  
+  const formRef = useRef(null);
+
+
+  //JSX
   return (
     <>
         <RemoveClassForm
