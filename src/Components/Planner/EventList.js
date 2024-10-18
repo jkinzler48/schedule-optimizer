@@ -28,16 +28,16 @@ const EventList = ({ classes, day, selectFunction }) => {
                     .filter((c) => c.get('days').some((d) => d === day))
                     .sort((a, b) => getStartTime(a.get('time')) - getStartTime(b.get('time'))) // Sort by start time
                     .map((c) => (
-                    <li key={c.get('code')}>
+                    <li key={c.id}>
                         {c.get('time')} | {c.get('name')} ({c.get('building').get("name")})
                     </li>
                     ))
                 )}
             </ol>
-
         </div>
     </>
   );
 };
+
 
 export default EventList;

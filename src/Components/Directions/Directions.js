@@ -4,24 +4,23 @@ import Map from "./Map.js";
 
 
 const Directions = () => {
-  // Function
 
-  //dropdown functions for source and destination dropdowns
+  ///Functions
+
+  //dropdown functions for source and destination dropdown changes
   const onSourceChange = (e) => {
     let source = e.target.value;
      
-    // updates schedule shown on screen
+    //set source equal to the id of the building selected by the dropdown
     setSource(source);
   };
 
   const onDestinationChange = (e) => {
     let destination = e.target.value;
      
-      // updates schedule shown on screen
-      setDestination(destination);
+    //set destination equal to the id of the building selected by the dropdown
+    setDestination(destination);
   };
-
-
 
 
   // Main component JSX
@@ -42,8 +41,8 @@ const Directions = () => {
     );
   }
 
-  // Main code
 
+  // Main code
 
   //initalize hooks for directions component
   const [source, setSource] = useState("");
@@ -74,5 +73,6 @@ const Directions = () => {
   // return the JSX for the main component
   return displayOptimizer();
 };
+
 
 export default Directions;

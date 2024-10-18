@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { createEvent, getAllEvents, Events } from "../../Common/Services/EventService.js";
+import {  getAllEvents, Events } from "../../Common/Services/EventService.js";
 import { getAllBuildings, Buildings } from "../../Common/Services/BuildingService.js";
 import EventList from "./EventList.js";
-import UpdateEvents from "./UpdateEvents.js";
 import AddStartEnd from './AddStartEnd.js';
+import AddClass from './AddClass.js';
+import AddStudyTime from './AddStudyTime.js';
+import RemoveClass from './RemoveClass.js';
 
 
+//In future, we will add user feautres, so that each user can have their own schedule,
+//and this will allow them to have personalized recommendations
 const Planner = () => {
   // Functions
 
@@ -28,11 +32,12 @@ const Planner = () => {
   // updates the schedule when the selected day changes in the dropdown
   const onDateChange = (e) => {
     let daySelected = e.target.value;
+
     // if the selected day is Today, then get the current day
     if (daySelected === "Today") {
       daySelected = getCurrentDay();
     }
-    // updates schedule shown on screen
+    //sets day to update schedule shown on screen
     setDaySelected(daySelected);
   };
 
@@ -55,27 +60,41 @@ const Planner = () => {
           <AddStartEnd 
             events={classes}
             buildings={buildings}
-            onChange={onChangeStartEnd}
-            onClick={onAddStartEndClick}
+            classUpdateFunction={setSchedule}
           />
-          <UpdateEvents
-            classes={classes}
+          <AddClass
+            events={classes}
+            buildings={buildings}
+            classUpdateFunction={setSchedule}
           />
+          <RemoveClass
+            events={classes}
+            classUpdateFunction={setSchedule}
+          />
+           <AddStudyTime
+            events={classes}
+            buildings={buildings}
+            studyUpdateFunction={setSchedule}
+          />
+          {/* We may also add section for adding additional "special" events, such as
+          adding a meal time or break time */}
         </div>
       </>
     );
   }
 
+
   // Main code
 
-  // initializes hooks for dropdowns so they can be updated
+  // initializes hooks for day dropdown so schedule can be updated
   const [daySelected, setDaySelected] = useState(getCurrentDay());
 
-  // initializes hooks for classes and next class to occur
+  // initializes hooks for classes and building Parse object lists
   const [classes, setSchedule] = useState([]);
+  const [buildings, setBuildings] = useState([]);
 
-// Fetch the schedule only once when the component mounts
-useEffect(() => {
+  // Fetch the schedule only once when the component mounts
+  useEffect(() => {
     if (Events.collection.length) {
       setSchedule(Events.collection);
     } else {
@@ -85,9 +104,6 @@ useEffect(() => {
     }
   }, []);
 
-
-  //initalize hooks for directions component
-  const [buildings, setBuildings] = useState([]);
 
   // Fetch the buildings only once when the component mounts
   useEffect(() => {
@@ -101,51 +117,10 @@ useEffect(() => {
   }, []);
 
 
-  const [startEnd, setStartEnd] = useState();
-  const [addDayStart, setAddDayStart] = useState(false);
-
-  useEffect(() => {
-    // Check for add flag and make sure name state variable is defined
-    if (startEnd && addDayStart) {
-      
-      const buildingPointer = { __type: 'Pointer', className: 'Building', objectId: startEnd };
-      createEvent("Day Start/End", "START/END", "start/end of day", buildingPointer,['Every Day'], '', '')
-        .then((newEvent) => {
-        setAddDayStart(false);
-          // Add the newly created lesson to the lessons array
-          // to render the new list of lessons (thru spread/concatination)
-          setSchedule([...classes, newEvent]);
-
-          //Note: CANNOT MANIPULATE STATE ARRAY DIRECTLY
-          //lessons = lessons.push(lesson)
-          //setLessons(lessons)
-      });
-    }
-  }, [classes, startEnd, addDayStart]);
-
-
-     // Handler to handle event passed from child submit button
-  const onAddStartEndClick = (e) => {
-    e.preventDefault();
-    // Trigger add flag to create lesson and
-    // re-render list with new lesson
-    setAddDayStart(true);
-  };
-
-  // Handler to track changes to the child input text
-  const onChangeStartEnd = (e) => {
-    e.preventDefault();
-    // Continuously updating name to be added on submit
-    setStartEnd(e.target.value);
-  };
-
-
-
-
-
-
   // return the JSX for the main component
   return displayPlanner();
+
 };
+
 
 export default Planner;

@@ -4,42 +4,65 @@ import Parse from 'parse';
 // const CLASS_SCHEDULE = 'test';
 const CLASS_SCHEDULE = 'Event';
 
-export const addClass = async (code, name, instructor, time, days, building, coords, room) => {
-  const ClassSchedule = new Parse.Object(CLASS_SCHEDULE);
 
-  // Set attributes
-  ClassSchedule.set({ code, name, instructor, time, days, building, coords, room });
+//CREATE: function to create a new Event in the parse class
+export const createClass = (code, name, instructor, building, room, time, days) => {
+  const Class = Parse.Object.extend('Event'); // Change 'Class' to your class name in Back4App
+  const newClass = new Class();
 
   try {
-    const savedClass = await ClassSchedule.save();
-    console.log('Class added successfully:', savedClass);
-    return savedClass;
+
+    //the building input is the id for a Building Parse Object, so classify it is a pointer for the new Event
+    const buildingPointer = { __type: 'Pointer', className: 'Building', objectId: building };
+
+    //set all attributes for hte new event
+    newClass.set('code', code);
+    newClass.set('name', name);
+    newClass.set('instructor', instructor);
+    newClass.set('building', buildingPointer);
+    newClass.set('room', room);
+    newClass.set('time', time);
+    newClass.set('days', days);
+
+    return newClass.save().then((result) => {
+      // After saving the new class, fetch it including the building pointer
+      //so the building's attributes can be accessed by the new event added to the Events list
+      const classQuery = new Parse.Query(Class);
+      classQuery.include('building'); 
+      return classQuery.get(result.id).then((fetchedClass) => {
+        //return the newClass with information about its building included
+        return fetchedClass;
+      });
+    });
+
   } catch (error) {
-    console.error('Error while adding class:', error.message || error);
-    throw error;
+    throw new Error(`Failed to create class: ${error.message}`);
   }
 };
 
-export const createEvent = (name, code, time, building, days, room, instructor) => {
-  //console.log("Creating: ", name);
-  const Event = Parse.Object.extend(CLASS_SCHEDULE);
-  const event = new Event();
-  // using setter to UPDATE the object
-  event.set("name", name);
-  event.set('code', code);
-  event.set("time", time);
-  event.set('building', building);
-  event.set("days", days);
-  event.set('room', room);
-  event.set("instructor", instructor);
 
-  return event.save().then((result) => {
-    // returns new Lesson object
-    return result;
-  });
+
+//DELETE: function to remove an Event in the parse class
+export const removeClass = (classCode) => {
+  //class code input is the id for the Event Parse Object
+	try {
+
+    //find the Event Object wiht hte given id, and then delete it from the Database
+	  const query = new Parse.Query('Event'); 
+	  query.get(classCode).then((event) => {
+      event.destroy();
+    });
+	  return `Class removed successfully.`;
+
+	} catch (error) {
+    //if the class with the given id can't be removed, then return error message
+	  console.error('Error while removing class:', error);
+	  return `Failed to remove class: ${error.message}`;
+	}
 };
+  
 
-
+//list of Events
 export let Events = {};
 Events.collection = [];
 
@@ -63,31 +86,10 @@ export const getAllEvents = () => {
 };
 
 
-
-// export const getSchedule = async () => {
-//   const query = new Parse.Query(CLASS_SCHEDULE);
-
-//   try {
-//     const results = await query.find();
-//     return results.map(result => ({
-//       id: result.id,
-//       code: result.get('code'),
-//       name: result.get('name'),
-//       instructor: result.get('instructor'),
-//       time: result.get('time'),
-//       days: result.get('days'),
-//       building: result.get('building'),
-//       coords: result.get('coords'),
-//       room: result.get('room'),
-//     }));
-//   } catch (error) {
-//     console.error('Error while fetching schedule:', error.message || error);
-//     throw error;
-//   }
-// };
-
+//function that gets the event that starts/ends a day
 export const getStartEnd = (classes) => {
 
+  //query to database for an Event that has a name equal to "Day Start/End"
   const Event = Parse.Object.extend(CLASS_SCHEDULE);
   const query = new Parse.Query(Event);
 
@@ -96,11 +98,14 @@ export const getStartEnd = (classes) => {
 
   return query.find()
     .then((results) => {
+
+      //if the starting/ending event exists, return it, otherwise return null
       if (results.length > 0) {
         return results[0];
       } else {
         return null;
       }
+
     })
     .catch((error) => {
       console.log("Error: ", error);
@@ -108,28 +113,35 @@ export const getStartEnd = (classes) => {
 
 }
 
+
+
 const parseTime = (time) => {
   const [start] = time.split("-");
   return parseInt(start.replace(":", ""), 10);
 };
 
-export const getNextClass = async (classes) => {
-  const currentDate = new Date();
 
+//function to get the next class in a schedule, and the event that occurs directly before it.
+export const getNextClass = async (classes) => {
+
+  let nextClass, comingFrom;
+
+  //get current Day/Time
+  const currentDate = new Date();
   const currentDay = currentDate.toLocaleString("en-US", { weekday: "long" });
   const currentTime = currentDate.toTimeString().slice(0, 5);
 
-
+  //get all events that occur today
   let dayEvents = classes
     .filter((c) => c.get('days').some((d) => d === currentDay))
     .sort((a, b) => parseTime(a.get('time')) - parseTime(b.get('time')));
-  
-  let nextClass, comingFrom;
 
+  //if there are no events today, or all events today have already ended, then the next event will occur on a differnet day
   if (dayEvents.length === 0 || (dayEvents.length > 0 && dayEvents[dayEvents.length - 1].get('time').substring(6, 11) < currentTime)) {
+    
     let dayInc = 1;
-
     do {
+      //increment the day until you find a day that has at least one class
       currentDate.setDate(currentDate.getDate() + 1);
       const nextDay = currentDate.toLocaleString("en-US", { weekday: "long" });
       dayEvents = [...classes
@@ -138,6 +150,7 @@ export const getNextClass = async (classes) => {
       dayInc++;
     } while (dayEvents.length === 0 && dayInc <= 7);
 
+    //if there is ever a next class, then the next class will be the first class to occur on the day
     if (dayEvents.length > 0) {
       nextClass = dayEvents[0];
     }
@@ -148,7 +161,11 @@ export const getNextClass = async (classes) => {
       comingFrom = "startEnd";
     }
 
+
+  //if there is at least one class that has not ended today, then the next class or previous class will occur today
   } else {
+
+    //find the index of the next/current event to occur 
     let i = dayEvents.length - 1;
     while (i > 0 && dayEvents[i - 1].get('time').substring(0,5) > currentTime) {
       i--;
@@ -171,7 +188,7 @@ export const getNextClass = async (classes) => {
 
   }
 
-
+  //return both the event that comes directly before the next class, and the next class
   return [comingFrom, nextClass];
 };
 
