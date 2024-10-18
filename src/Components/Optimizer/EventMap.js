@@ -13,7 +13,7 @@ const EventMap = ({ classes, selectedMapId, selectFunction }) => {
           classes
             .sort((a, b) => getStartTime(a.get('time')) - getStartTime(b.get('time')))
             .map((c) => (
-              <option key={c.get('code')} value={c.get('building').get('mapId')}>
+              <option key={c.id} value={c.get('building').get('mapId')}>
                 {`${c.get('name')} - ${c.get('building').get('name')} ${c.get('room')} (${c.get('days')} | ${c.get('time')})`}
               </option>
             ))}
