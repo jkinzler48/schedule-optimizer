@@ -11,7 +11,6 @@ import RemoveClass from './RemoveClass.js';
 //In future, we will add user feautres, so that each user can have their own schedule,
 //and this will allow them to have personalized recommendations
 const Planner = () => {
-  // Functions
 
   // function that returns the current day of the week it is
   function getCurrentDay() {
@@ -62,15 +61,21 @@ const Planner = () => {
             buildings={buildings}
             classUpdateFunction={setSchedule}
           />
+		</div>
+		<div className="module">
           <AddClass
             events={classes}
             buildings={buildings}
             classUpdateFunction={setSchedule}
           />
+		</div>
+		<div className="module">
           <RemoveClass
             events={classes}
             classUpdateFunction={setSchedule}
           />
+		</div>
+		<div className="module">
            <AddStudyTime
             events={classes}
             buildings={buildings}
@@ -93,7 +98,7 @@ const Planner = () => {
   const [classes, setSchedule] = useState([]);
   const [buildings, setBuildings] = useState([]);
 
-  // Fetch the schedule only once when the component mounts
+  // Fetch the schedule only once when the component mounts, otherwise refresh
   useEffect(() => {
     if (Events.collection.length) {
       setSchedule(Events.collection);
@@ -105,7 +110,7 @@ const Planner = () => {
   }, []);
 
 
-  // Fetch the buildings only once when the component mounts
+  // Fetch the buildings only once when the component mounts, otherwise refresh
   useEffect(() => {
     if (Buildings.collection.length) {
       setBuildings(Buildings.collection);

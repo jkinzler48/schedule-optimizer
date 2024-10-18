@@ -15,6 +15,9 @@ Our second section is the Optimizer feature for the user. This section contains 
 ### Directions Section
 Our third section allows the user to select 2 buildings on cmapus, and it provides them with an embedded map of directions to navigate between the two buildings.
 
+### Future Ideas
+We could add functionalities for tracking what materials are needed for class on the selected day for the student to bring with them, and potentially automatically schedule meal times based on user perferences and time to eat
+
 
 
 # Information on Getting Started with Create React App:

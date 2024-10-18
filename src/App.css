@@ -55,18 +55,17 @@
 	color:#f99700;
 	background-color: #8282dc;
 	border-radius: 6px;
+	font-size: 1.5em;
 }
 
 .navLink:hover {
-	color: #ffa701;
+	color: #ffa7f1;
 }
-
-
 
 
 
 body {
-	font-family: "Arial", sans-serif;
+	font-family: "Roboto Flex", sans-serif;
 	background-color: #8282dc; /* Light background to contrast */
 	color: #0c2340; /* Notre Dame Blue */
 	margin: 0;
@@ -77,6 +76,7 @@ body {
   h2 {
 	text-align: center;
 	color: #c99700; /* Standard Dome Gold */
+	font-weight: bold;
   }
   
   h1 {

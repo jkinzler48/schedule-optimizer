@@ -16,3 +16,6 @@ function App() {
 }
 
 export default App;
+
+/* Future ideas - Add a back4app class for class materials and have a list of what you should bring in your backpack */
+/* Another idea - auto schedule meals based on user set critieria (X time away from dorm, X time to eat, etc) */

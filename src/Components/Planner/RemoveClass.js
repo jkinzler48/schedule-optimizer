@@ -6,9 +6,7 @@ import RemoveClassForm from './RemoveClassForm.js';
 //component that allows user to dynamically remove an event to their schedule.
 export const RemoveClass = ({ events, classUpdateFunction }) => {
 
-  //Functions
-
-  //Function to handle when submit button is pressed
+  //function to handle when submit button is pressed
   const handleRemoveSubmit = (e) => {
     e.preventDefault();
     
@@ -30,7 +28,7 @@ export const RemoveClass = ({ events, classUpdateFunction }) => {
     setSelectedClassCode('none');
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e) => {	
     setSelectedClassCode(e.target.value);
   }
 

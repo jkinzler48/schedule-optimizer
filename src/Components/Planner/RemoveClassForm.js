@@ -10,7 +10,7 @@ const RemoveClassForm = ({ events, selectedClass, onChange, onClick, status, for
         
     <div>
         <h4>Remove event from Schedule</h4>
-        <form className="removeForm" id="removeForm" action="#stayhere" style={{ margin: '10px' }}>
+        <form className="removeForm" id="removeForm" action="#stayhere">
           <p>Select class to remove:</p>
           <input 
             type="radio" 

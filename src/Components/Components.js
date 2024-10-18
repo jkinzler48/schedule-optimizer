@@ -11,7 +11,7 @@ export default function Components() {
             <Routes>
                 <Route path="/" element={<Planner />} />
                 <Route path="/optimizer" element={<Optimizer />} />
-                <Route path="/directions" element={<Directions />} />
+                <Route path="/directions" element={<Directions />} />	{/* Routing */}	
                 {/* In the future, we may add aditional pages, such as a settings/preferences page */}
             </Routes>
         </Router>

@@ -6,7 +6,7 @@ const Header = () => (
         <nav className = "headerBar">
             <Link className="navLink" to="/">Planner</Link>
             <Link className="navLink" to="/optimizer">Optimizer</Link>
-            <Link className="navLink" to="/directions">Directions</Link>
+            <Link className="navLink" to="/directions">Directions</Link>	{/* Nav bar displayed on each page */}
         </nav>
     </div>
 );
