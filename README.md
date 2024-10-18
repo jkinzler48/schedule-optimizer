@@ -16,6 +16,8 @@ Our second section is the Optimizer feature for the user. This section contains 
 Our third section allows the user to select 2 buildings on cmapus, and it provides them with an embedded map of directions to navigate between the two buildings.
 
 
+
+# Information on Getting Started with Create React App:
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -14,6 +14,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Parse Object on buildings
 - Directions page that allows users to select two buildings on campus and provides an embeded map between them
 - Added functinoality to forms for updating classes, so they work and the class list becomes dynamic
+- Form for removing event
+- Form for adding study time
+- Form for adding class
 - Form for adding day start/end location
  
 ### Changed
