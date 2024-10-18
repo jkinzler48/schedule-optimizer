@@ -17,6 +17,11 @@ export const RemoveClass = ({ events, classUpdateFunction }) => {
       return;
     }
 
+    //check if the selected code to remove is valid
+    if (!(events.find((e) => e.id === selectedClassCode))) {
+      return;
+    }
+
     //remove class if one is selected
     const result = removeClass(selectedClassCode);
     setStatus(result);
