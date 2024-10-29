@@ -7,6 +7,8 @@ const Header = () => (
             <Link className="navLink" to="/">Planner</Link>
             <Link className="navLink" to="/optimizer">Optimizer</Link>
             <Link className="navLink" to="/directions">Directions</Link>	{/* Nav bar displayed on each page */}
+			<Link className="navLink" to="/auth">Account</Link>	{/* Nav bar displayed on each page */}
+
         </nav>
     </div>
 );
