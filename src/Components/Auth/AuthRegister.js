@@ -41,13 +41,11 @@ const AuthRegister = () => {
   };
 
   return (
-    <div>
       <AuthForm
         user={newUser}
         onChange={onChangeHandler}
         onSubmit={onSubmitHandler}
       />
-    </div>
   );
 };
 

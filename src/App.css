@@ -72,26 +72,26 @@ body {
 	padding: 0;
   }
   
-  h1,
-  h2 {
+h1,
+h2 {
 	text-align: center;
 	color: #c99700; /* Standard Dome Gold */
 	font-weight: bold;
   }
   
-  h1 {
+h1 {
 	font-size: 2.5em;
 	margin-top: 20px;
 	color: #c99700; /* Standard Dome Gold */
   }
   
-  h2 {
+h2 {
 	font-size: 1.8em;
 	margin-top: 0px;
 	color: #0c2340; /* Notre Dame Blue */
   }
   
-  div {
+div {
 	margin: 20px 20px 40px 20px;
 	padding: 20px;
 	background-color: #ffffff;
@@ -101,29 +101,26 @@ body {
 	flex-flow: column;
   }
   
-  .module {
+.module {
 	background-color: #efefff;
   }
   
-  ol {
+ol {
 	padding-left: 40px;
 	list-style-type: decimal;
 	color: #0c2340; /* Notre Dame Blue */
   }
   
-  li {
+li {
 	margin-bottom: 10px;
   }
-  
   li:hover {
 	color: #c99700;
   }
-  
   #highlighter {
 	background-color: #0f0f0f;
 	display: none;
   }
-  
   .dayList {
 	padding: 0px;
 	margin: 0px;
@@ -132,42 +129,65 @@ body {
 	justify-content: space-evenly;
 	list-style: none;
   }
-  
   .dayList button {
     display: flex;
   }
-  
   input {
 	padding: 5px;
 	margin: 5px;
   }
   
-  input[type="text"] {
+input[type="text"] {
+	margin: 10px;
+  }
+  input[type="email"] {
+	margin: 10px;
+  }
+  input[type="password"] {
 	margin: 10px;
   }
   
-  input[type="checkbox"] {
+input[type="checkbox"] {
 	margin: 8px;
   }
   
-  input[type="submit"] {
+input[type="submit"] {
 	padding: 12px;
 	background-color: #8282fc;
 	border-radius: 6px;
   }
   
-  input[type="submit"]:hover {
+input[type="submit"]:hover {
 	background-color: #8282dc;
   }
-  input[type="radio"] {
+input[type="radio"] {
 	transform: scale(1.7);
   }
   
-  input[type="checkbox"] {
+input[type="checkbox"] {
 	transform: scale(1.7);
   }
+
+  button {
+	padding: 12px;
+	background-color: #8282fc;
+	border-radius: 6px;
+  }
+
+  button:hover {
+	background-color: #8282dc;
+  }
   
-  select {
+select {
 	height: 35px;
   }
+
+.authButtons {
+	display: flex;
+	justify-content: center; 
+	align-items: center; 
+	gap: 20px; 
+	flex-wrap: wrap; 
+	flex-direction: row;
+}
   

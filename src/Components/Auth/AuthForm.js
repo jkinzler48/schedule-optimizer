@@ -2,7 +2,7 @@ import React from "react";
 
 const AuthForm = ({ user, onChange, onSubmit }) => {
   return (
-    <div>
+    <div className = "module">
       <form onSubmit={onSubmit}>
         <div>
           <label>First Name</label>
@@ -12,7 +12,7 @@ const AuthForm = ({ user, onChange, onSubmit }) => {
             value={user.firstName}
             onChange={onChange}
             name="firstName"
-            placeholder="first name"
+            placeholder="Your First Name"
             required
           />
         </div>
@@ -24,7 +24,7 @@ const AuthForm = ({ user, onChange, onSubmit }) => {
             value={user.lastName}
             onChange={onChange}
             name="lastName"
-            placeholder="last name"
+            placeholder="Your Last Name"
             required
           />
         </div>{" "}
@@ -36,7 +36,7 @@ const AuthForm = ({ user, onChange, onSubmit }) => {
             value={user.email}
             onChange={onChange}
             name="email"
-            placeholder="email"
+            placeholder="Your Email"
             required
           />
         </div>{" "}
@@ -48,7 +48,7 @@ const AuthForm = ({ user, onChange, onSubmit }) => {
             value={user.password}
             onChange={onChange}
             name="password"
-            placeholder="password"
+            placeholder="Your (Unique) Password"
             min="0"
             required
           />
