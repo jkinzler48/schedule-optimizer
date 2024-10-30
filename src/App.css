@@ -1,193 +1,159 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+body {
+    font-family: "Roboto Flex", sans-serif;
+    background-color: #8282dc; /* Light background to contrast */
+    color: #0c2340; /* Notre Dame Blue */
+    margin: 0;
+    padding: 0;
 }
 
 .headerBar {
-	display: flex;
-  justify-content: center;
-  align-items: center;
-  /* background-color: #8282dc; */
-  border-radius: 10px;
-  padding: 20px;
-  /* color: white; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    background-color: #565a89;
+    padding: 20px 0;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .navLink {
-	display: flex;
-	padding: 10px;
-	margin: 20px;
-	text-decoration: none;
-	color:#f99700;
-	background-color: #8282dc;
-	border-radius: 6px;
-	font-size: 1.5em;
+    padding: 12px 24px;
+    margin: 10px;
+    text-decoration: none;
+    color: white;
+    background-color: #6b7acb;
+    border-radius: 8px;
+    font-size: 1.5em;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 .navLink:hover {
-	color: #ffa7f1;
+    background-color: #8282fc;
+    transform: scale(1.05);
+    color: white;
 }
 
+/* Headings */
+h1, h2 {
+    text-align: center;
+    font-weight: bold;
+}
 
-
-body {
-	font-family: "Roboto Flex", sans-serif;
-	background-color: #8282dc; /* Light background to contrast */
-	color: #0c2340; /* Notre Dame Blue */
-	margin: 0;
-	padding: 0;
-  }
-  
-h1,
-h2 {
-	text-align: center;
-	color: #c99700; /* Standard Dome Gold */
-	font-weight: bold;
-  }
-  
 h1 {
-	font-size: 2.5em;
-	margin-top: 20px;
-	color: #c99700; /* Standard Dome Gold */
-  }
-  
-h2 {
-	font-size: 1.8em;
-	margin-top: 0px;
-	color: #0c2340; /* Notre Dame Blue */
-  }
-  
-div {
-	margin: 20px 20px 40px 20px;
-	padding: 20px;
-	background-color: #ffffff;
-	border-radius: 5px;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-	display: flex;
-	flex-flow: column;
-  }
-  
-.module {
-	background-color: #efefff;
-  }
-  
-ol {
-	padding-left: 40px;
-	list-style-type: decimal;
-	color: #0c2340; /* Notre Dame Blue */
-  }
-  
-li {
-	margin-bottom: 10px;
-  }
-  li:hover {
-	color: #c99700;
-  }
-  #highlighter {
-	background-color: #0f0f0f;
-	display: none;
-  }
-  .dayList {
-	padding: 0px;
-	margin: 0px;
-	display: flex;
-	flex-flow: row wrap;
-	justify-content: space-evenly;
-	list-style: none;
-  }
-  .dayList button {
-    display: flex;
-  }
-  input {
-	padding: 5px;
-	margin: 5px;
-  }
-  
-input[type="text"] {
-	margin: 10px;
-  }
-  input[type="email"] {
-	margin: 10px;
-  }
-  input[type="password"] {
-	margin: 10px;
-  }
-  
-input[type="checkbox"] {
-	margin: 8px;
-  }
-  
-input[type="submit"] {
-	padding: 12px;
-	background-color: #8282fc;
-	border-radius: 6px;
-  }
-  
-input[type="submit"]:hover {
-	background-color: #8282dc;
-  }
-input[type="radio"] {
-	transform: scale(1.7);
-  }
-  
-input[type="checkbox"] {
-	transform: scale(1.7);
-  }
-
-  button {
-	padding: 12px;
-	background-color: #8282fc;
-	border-radius: 6px;
-  }
-
-  button:hover {
-	background-color: #8282dc;
-  }
-  
-select {
-	height: 35px;
-  }
-
-.authButtons {
-	display: flex;
-	justify-content: center; 
-	align-items: center; 
-	gap: 20px; 
-	flex-wrap: wrap; 
-	flex-direction: row;
+    font-size: 2.5em;
+    margin-top: 20px;
+    color: #c99700; /* Standard Dome Gold */
 }
-  
+
+h2 {
+    font-size: 1.8em;
+    margin-top: 0;
+    color: #0c2340; /* Notre Dame Blue */
+}
+
+/* Divs and Modules */
+div {
+    margin: 20px 20px 40px 20px;
+    padding: 25px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-flow: column;
+}
+
+.module {
+    background-color: #efefff; /* Source of light background div color */
+}
+
+/* Lists */
+ol {
+    padding-left: 40px;
+    list-style-type: decimal;
+    color: #0c2340; /* Notre Dame Blue */
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+li:hover {
+    color: #c99700;
+}
+
+/* Hidden Element */
+#highlighter {
+    background-color: #0f0f0f;
+    display: none;
+}
+
+/* Day List */
+.dayList {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    list-style: none;
+}
+
+.dayList button {
+    display: flex;
+}
+
+/* Inputs */
+input {
+    padding: 5px;
+    margin: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="checkbox"] {
+    margin: 10px;
+}
+
+input[type="submit"] {
+    padding: 12px;
+    background-color: #8282fc;
+    border-radius: 6px;
+}
+
+input[type="submit"]:hover {
+    background-color: #8282dc;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    transform: scale(1.5);
+    margin: 10px;
+}
+
+/* Buttons */
+button {
+    padding: 12px;
+    background-color: #8282fc;
+    border-radius: 6px;
+}
+
+button:hover {
+    background-color: #8282dc;
+}
+
+select {
+    height: 40px;
+	border-radius: 6px;
+	font-size: 1.1em;
+}
+
+/* Authentication Buttons */
+.authButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
