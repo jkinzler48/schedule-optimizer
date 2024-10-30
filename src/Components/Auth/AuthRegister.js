@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { createUser } from "./AuthService";
-import AuthForm from "./AuthForm";
+import { createUser } from "../../Common/Services/AuthService.js"
+import RegisterForm from "./RegisterForm";
 
 const AuthRegister = () => {
   const [newUser, setNewUser] = useState({
@@ -12,7 +12,7 @@ const AuthRegister = () => {
 
   // flag is the state to watch for add/remove updates
   const [add, setAdd] = useState(false);
-
+ 
   useEffect(() => {
     if (newUser && add) {
       createUser(newUser).then((userCreated) => {
@@ -28,9 +28,9 @@ const AuthRegister = () => {
 
   const onChangeHandler = (e) => {
     e.preventDefault();
-    console.log(e.target);
+    // console.log(e.target);
     const { name, value: newValue } = e.target;
-    console.log(newValue);
+    // console.log(newValue);
     setNewUser({ ...newUser, [name]: newValue });
   };
 
@@ -41,7 +41,7 @@ const AuthRegister = () => {
   };
 
   return (
-      <AuthForm
+      <RegisterForm
         user={newUser}
         onChange={onChangeHandler}
         onSubmit={onSubmitHandler}

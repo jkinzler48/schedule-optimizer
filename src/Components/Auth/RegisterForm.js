@@ -1,6 +1,6 @@
 import React from "react";
 
-const AuthForm = ({ user, onChange, onSubmit }) => {
+const RegisterForm = ({ user, onChange, onSubmit }) => {
   return (
     <div className = "module">
       <form onSubmit={onSubmit}>
@@ -63,4 +63,4 @@ const AuthForm = ({ user, onChange, onSubmit }) => {
   );
 };
 
-export default AuthForm;
+export default RegisterForm;

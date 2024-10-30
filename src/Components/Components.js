@@ -10,6 +10,7 @@ import {
   } from "react-router-dom";
   import AuthModule from "./Auth/Auth.js";
 import AuthRegister from "./Auth/AuthRegister.js";
+import AuthLogin from "./Auth/AuthLogin.js"
 
 export default function Components() {
     return (
@@ -21,6 +22,7 @@ export default function Components() {
                 <Route path="/directions" element={<Directions />} />	{/* Routing */}	
 				<Route path="/auth" element={<AuthModule />} />
         		<Route path="/register" element={<AuthRegister />} />
+                <Route path="/login" element={<AuthLogin />} />
         		<Route path="*" element={<Navigate to="/auth" replace />} />
                 {/* In the future, we may add aditional pages, such as a settings/preferences page */}
             </Routes>
