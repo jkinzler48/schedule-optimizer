@@ -1,6 +1,6 @@
 import React from "react";
 
-const LoginForm = ({ user, onChange, onSubmit }) => {
+const LoginForm = ({ user, onChange, onSubmit, status }) => {
   return (
     <div className = "module">
       <form onSubmit={onSubmit}>
@@ -15,8 +15,8 @@ const LoginForm = ({ user, onChange, onSubmit }) => {
             placeholder="Your Username"
             required
           />
-        </div>
-        <div>
+          <br />
+          <br />
           <label>Password</label>
           <br />
           <input
@@ -27,13 +27,14 @@ const LoginForm = ({ user, onChange, onSubmit }) => {
             placeholder="Your Password"
             required
           />
-        </div>{" "}
-        <div>
+          <br />
+          <br />
           <button type="submit" onSubmit={onSubmit}>
             Submit
           </button>
         </div>
       </form>
+      {status && <div>{status}</div>}
     </div>
   );
 };

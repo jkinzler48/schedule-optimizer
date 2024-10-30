@@ -10,10 +10,26 @@ const AuthLogin = () => {
 
   // flag is the state to watch for add/remove updates
   const [login, setLogin] = useState(false);
+  const [status, setStatus] = useState("");
 
   useEffect(() => {
     if (userInfo && login) {
-      loginUser(userInfo)
+      loginUser(userInfo).then((result) => {// Reset the form element
+        if (result === "success") {
+            //alert(` you successfully logged in!`);
+            setUserInfo({
+                username: "",
+                password: "",
+                });
+            setStatus("Logged in sucessfully")
+        } else {
+            setUserInfo({
+                username: userInfo.username,
+                password: "",
+                });
+            setStatus(result)
+        }
+      })
       setLogin(false);
     }
   }, [userInfo, login]);
@@ -27,15 +43,16 @@ const AuthLogin = () => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    console.log("submitted: ", e.target);
     setLogin(true);
   };
+
 
   return (
       <LoginForm
         user={userInfo}
         onChange={onChangeHandler}
         onSubmit={onSubmitHandler}
+        status={status}
       />
   );
 };

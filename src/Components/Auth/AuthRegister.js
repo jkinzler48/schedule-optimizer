@@ -21,6 +21,12 @@ const AuthRegister = () => {
             `${userCreated.get("firstName")}, you successfully registered!`
           );
         }
+        setNewUser({
+          firstName: "",
+          lastName: "",
+          email: "",
+          password: "",
+        })
         setAdd(false);
       });
     }

@@ -24,11 +24,12 @@ export const createUser = (newUser) => {
 export const loginUser = (userInfo) => {
   //const user = new Parse.User();
   return Parse.User.logIn(userInfo.username, userInfo.password)
-  .then((result) => {
-    alert(` you successfully logged in!`);
-  })
-  .catch((error) => {
-    alert("Error: " + error.code + " " + error.message);
-  });
+    .then((result) => {
+      return "success";
+    })
+    .catch((error) => {
+      //console.log("Error: " + error.code + " " + error.message);
+      return error.message;
+    });
 };
   
