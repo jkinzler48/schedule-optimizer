@@ -1,13 +1,8 @@
 import React from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Header from "../Header/Header";
-import { isAuthenticated } from "../../Common/Services/AuthService";
 
 export const Auth = () => {
-    // Check if the user is authenticated
-    if (isAuthenticated()) {
-        return <Navigate to="/" replace />; // Redirect to home if authenticated
-    }
 
     return (
         <>
