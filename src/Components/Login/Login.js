@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { loginUser } from "../../Common/Services/AuthService.js"
 import Header from "../Header/Header.js";
 import LoginForm from "./LoginForm";
+import { useNavigate } from "react-router-dom";
 
 const AuthLogin = () => {
   const [userInfo, setUserInfo] = useState({
@@ -13,6 +14,8 @@ const AuthLogin = () => {
   const [login, setLogin] = useState(false);
   const [status, setStatus] = useState("");
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (userInfo && login) {
       loginUser(userInfo).then((result) => {// Reset the form element
@@ -23,6 +26,7 @@ const AuthLogin = () => {
                 password: "",
                 });
             setStatus("Logged in sucessfully")
+            navigate("/")
         } else {
             setUserInfo({
                 username: userInfo.username,
@@ -33,7 +37,7 @@ const AuthLogin = () => {
       })
       setLogin(false);
     }
-  }, [userInfo, login]);
+  }, [userInfo, login, navigate]);
   
 
   const onChangeHandler = (e) => {

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { createUser } from "../../Common/Services/AuthService.js"
 import RegisterForm from "./RegisterForm";
 import Header from "../Header/Header.js";
+import {  useNavigate } from "react-router-dom";
 
 const AuthRegister = () => {
   const [newUser, setNewUser] = useState({
@@ -15,6 +16,8 @@ const AuthRegister = () => {
   // flag is the state to watch for add/remove updates
   const [add, setAdd] = useState(false);
   const [status, setStatus] = useState("");
+
+  const navigate = useNavigate();
  
   useEffect(() => {
     if (newUser && add) {
@@ -27,10 +30,8 @@ const AuthRegister = () => {
 
         createUser(newUser).then((userCreated) => {
           if (userCreated) {
-            alert(
-              `${userCreated.get("firstName")}, you successfully registered!`
-            );
             setStatus("User Successfully Created");
+            navigate("/")
           }
           setNewUser({
             firstName: "",
@@ -54,7 +55,7 @@ const AuthRegister = () => {
       }
       setAdd(false);
     }
-  }, [newUser, add]);
+  }, [newUser, add, navigate]);
 
   const onChangeHandler = (e) => {
     e.preventDefault();

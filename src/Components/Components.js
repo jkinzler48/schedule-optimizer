@@ -1,6 +1,7 @@
 import Optimizer from "./Optimizer/Optimizer";
 import Planner from "./Planner/Planner";
 import Directions from "./Directions/Directions"
+import ProtectedRoute from "../Common/Services/ProtectedRoute";
 import Auth from "./Auth/Auth";
 
 import {
@@ -16,9 +17,9 @@ export default function Components() {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Planner />} />
+                <Route path="/" element={<ProtectedRoute element={Planner} />} />
                 <Route path="/auth" element={<Auth />} />
-                <Route path="/optimizer" element={<Optimizer />} />
+                <Route path="/optimizer" element={<ProtectedRoute element={Optimizer} />} />
                 <Route path="/directions" element={<Directions />} />	{/* Routing */}	
         		<Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
