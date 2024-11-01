@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react"; // Import useState and useEf
 import { Link } from "react-router-dom";
 import { isAuthenticated, logoutUser } from "../../Common/Services/AuthService"; // Ensure you import logoutUser as well
 import HeaderAuthLink from "./HeaderAuthLink"; // Import your HeaderAuthLink component
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 // Navigation Section that appears on every page
 const Header = () => {
-    
+    const navigate = useNavigate();
     const [logout, setLogout] = useState(false);
 
     // useEffect to logout the user
@@ -17,15 +17,14 @@ const Header = () => {
                 // Reset the form element
                 if (result === "success") {
                     console.log("Successfully Logged Out.");
-                    <Navigate to={"/"} replace />
-
+                    navigate("/auth");
                 } else {
                     console.log(result);
                 }
             });
             setLogout(false);
         }
-    }, [logout]);
+    }, [logout, navigate]);
 
 
 
