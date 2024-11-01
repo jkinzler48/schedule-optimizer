@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getAllBuildings, Buildings } from "../../Common/Services/BuildingService.js";
 import Map from "./Map.js";
-
+import Header from '../Header/Header.js';
 
 const Directions = () => {
 
@@ -27,6 +27,7 @@ const Directions = () => {
   function displayOptimizer() {
     return (
       <>
+       <Header/>
         <h1>Campus Directions</h1>
         <div className="module">
           <Map 

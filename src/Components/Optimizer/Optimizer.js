@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getAllEvents, getNextClass, getStartEnd, Events } from "../../Common/Services/EventService.js";
 import OptimizerMap from "./OptimizerMap.js";
 import EventMap from './EventMap.js';
+import Header from '../Header/Header.js';
 
 
 //in the future, we will build out this section so that it provides recomendations to
@@ -28,6 +29,7 @@ const Optimizer = () => {
   function displayOptimizer() {
     return (
       <>
+        <Header />
         <h1>Optimizer</h1>
         <div className="module">
           <OptimizerMap
