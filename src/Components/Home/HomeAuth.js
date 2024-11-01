@@ -3,11 +3,6 @@ import { Link } from "react-router-dom";
 const HomeAuth = ({ authorized, onLogoutPress, status }) => {
   return (
     <>
-      {status && (
-        <div className="module">
-          <h3>{status}</h3>
-        </div>
-      )}
       {authorized ?  (
         // If user is authorized/authenticated, then show option to logout
         <div className="module">
@@ -30,6 +25,11 @@ const HomeAuth = ({ authorized, onLogoutPress, status }) => {
               <button>Login</button>
             </Link>
           </div>
+        </div>
+      )}
+       {status && (
+        <div className="module">
+          <h3>{status}</h3>
         </div>
       )}
     </>
