@@ -17,7 +17,7 @@ export const createUser = (newUser) => {
       return newUserSaved;
     })
     .catch((error) => {
-      alert(`Error: ${error.message}`);
+      throw error;
     });
 };
 
@@ -33,3 +33,24 @@ export const loginUser = (userInfo) => {
     });
 };
   
+//returns true is user is authenticated, and returns false if user is not authenticated
+export const isAuthenticated = () => {
+  if (Parse.User.current() && Parse.User.current().authenticated()) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+
+//logs out the current user
+export const logoutUser = () => {
+  return Parse.User.logOut()
+    .then((result) => {
+      return "success";
+    })
+    .catch((error) => {
+      //console.log("Error: " + error.code + " " + error.message);
+      return error.message;
+    });
+};
