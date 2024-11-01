@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { loginUser } from "../../Common/Services/AuthService.js"
+import Header from "../Header/Header.js";
 import LoginForm from "./LoginForm";
 
 const AuthLogin = () => {
@@ -48,12 +49,15 @@ const AuthLogin = () => {
 
 
   return (
-      <LoginForm
-        user={userInfo}
-        onChange={onChangeHandler}
-        onSubmit={onSubmitHandler}
-        status={status}
-      />
+      <>
+        <Header />
+        <LoginForm
+          user={userInfo}
+          onChange={onChangeHandler}
+          onSubmit={onSubmitHandler}
+          status={status}
+        />
+      </>
   );
 };
 

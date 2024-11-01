@@ -18,6 +18,8 @@ body {
 }
 
 .navLink {
+    border: none;
+    cursor: pointer;
     padding: 12px 24px;
     margin: 10px;
     text-decoration: none;

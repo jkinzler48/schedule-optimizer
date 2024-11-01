@@ -6,6 +6,7 @@ import AddStartEnd from './AddStartEnd.js';
 import AddClass from './AddClass.js';
 import AddStudyTime from './AddStudyTime.js';
 import RemoveClass from './RemoveClass.js';
+import Header from '../Header/Header.js';
 
 
 //In future, we will add user feautres, so that each user can have their own schedule,
@@ -45,6 +46,8 @@ const Planner = () => {
   function displayPlanner() {
     return (
       <>
+        <Header/>
+
         <h1>Planner</h1>
         <div className="module">
           <h2>Current Schedule</h2>

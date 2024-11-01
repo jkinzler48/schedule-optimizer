@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { createUser } from "../../Common/Services/AuthService.js"
 import RegisterForm from "./RegisterForm";
+import Header from "../Header/Header.js";
 
 const AuthRegister = () => {
   const [newUser, setNewUser] = useState({
@@ -70,12 +71,15 @@ const AuthRegister = () => {
   };
 
   return (
-      <RegisterForm
-        user={newUser}
-        onChange={onChangeHandler}
-        onSubmit={onSubmitHandler}
-        status={status}
-      />
+      <>
+        <Header />
+        <RegisterForm
+          user={newUser}
+          onChange={onChangeHandler}
+          onSubmit={onSubmitHandler}
+          status={status}
+        />
+      </>
   );
 };
 
