@@ -25,10 +25,19 @@ const AuthRegister = () => {
       //checks if password and confirm password fields match before attempting to create user
       if (newUser.password !== newUser.confirmPassword) {
         setStatus("Error: Passwords do not match.")
-
+        setNewUser({
+          firstName: newUser.firstName,
+          lastName: newUser.lastName,
+          email: newUser.email,
+          password: "",
+          confirmPassword: "",
+        })
       } else {
 
+        //attempts to create a new user
         createUser(newUser).then((userCreated) => {
+
+          //if successful, redirect to Planner page
           if (userCreated) {
             setStatus("User Successfully Created");
             navigate("/")
@@ -50,13 +59,13 @@ const AuthRegister = () => {
             password: "",
             confirmPassword: "",
           })
-          setAdd(false);
         });
       }
       setAdd(false);
     }
   }, [newUser, add, navigate]);
 
+  //handle changes to text input fields
   const onChangeHandler = (e) => {
     e.preventDefault();
     // console.log(e.target);
@@ -65,6 +74,7 @@ const AuthRegister = () => {
     setNewUser({ ...newUser, [name]: newValue });
   };
 
+  //handles when submit button is pressed
   const onSubmitHandler = (e) => {
     e.preventDefault();
     console.log("submitted: ", e.target);

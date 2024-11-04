@@ -5,6 +5,7 @@ const LoginForm = ({ user, onChange, onSubmit, status }) => {
   return (
     <>
       <div className = "module">
+        {/* displays status message if one exists */}
         {status && <div style={{color:'red'}}>{status}</div>}
         <form onSubmit={onSubmit}>
           <div>
@@ -38,6 +39,8 @@ const LoginForm = ({ user, onChange, onSubmit, status }) => {
           </div>
         </form>
       </div>
+
+      {/* Link to Register page */}
       <div className="module">
           <p>Don't Have an Account?</p>
           <Link to="/register">

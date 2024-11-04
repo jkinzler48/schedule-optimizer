@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {  getAllEvents, Events } from "../../Common/Services/EventService.js";
+import {  getEventsByUser, Events } from "../../Common/Services/EventService.js";
 import { getAllBuildings, Buildings } from "../../Common/Services/BuildingService.js";
 import EventList from "./EventList.js";
 import AddStartEnd from './AddStartEnd.js';
@@ -106,7 +106,7 @@ const Planner = () => {
     if (Events.collection.length) {
       setSchedule(Events.collection);
     } else {
-      getAllEvents().then((classes) => {
+      getEventsByUser().then((classes) => {
         setSchedule(classes);
       });
     }
