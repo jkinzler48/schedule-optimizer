@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Header from "../Header/Header";
 
+
+//Outer Authorization module that has links to login and register pages
 export const Auth = () => {
 
     return (
