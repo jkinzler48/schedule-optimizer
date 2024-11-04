@@ -18,9 +18,10 @@ const AuthLogin = () => {
 
   useEffect(() => {
     if (userInfo && login) {
-      loginUser(userInfo).then((result) => {// Reset the form element
+      loginUser(userInfo).then((result) => {
         if (result === "success") {
             //alert(` you successfully logged in!`);
+            // Reset the form element
             setUserInfo({
                 username: "",
                 password: "",
@@ -28,6 +29,7 @@ const AuthLogin = () => {
             setStatus("Logged in sucessfully")
             navigate("/")
         } else {
+            //reset password but keep the username if the login was unsuccessful
             setUserInfo({
                 username: userInfo.username,
                 password: "",
@@ -39,13 +41,14 @@ const AuthLogin = () => {
     }
   }, [userInfo, login, navigate]);
   
-
+  //handles change to text input
   const onChangeHandler = (e) => {
     e.preventDefault();
     const { name, value: newValue } = e.target;
     setUserInfo({ ...userInfo, [name]: newValue });
   };
 
+  //handles submit button being pressed
   const onSubmitHandler = (e) => {
     e.preventDefault();
     setLogin(true);
