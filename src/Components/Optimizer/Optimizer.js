@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getAllEvents, getNextClass, getStartEnd, Events } from "../../Common/Services/EventService.js";
+import { getEventsByUser, getNextClass, getStartEnd, Events } from "../../Common/Services/EventService.js";
 import OptimizerMap from "./OptimizerMap.js";
 import EventMap from './EventMap.js';
 import Header from '../Header/Header.js';
@@ -68,7 +68,7 @@ useEffect(() => {
     if (Events.collection.length) {
       setSchedule(Events.collection);
     } else {
-      getAllEvents().then((classes) => {
+      getEventsByUser().then((classes) => {
         setSchedule(classes);
       });
     }

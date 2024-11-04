@@ -12,8 +12,21 @@ export const createClass = (code, name, instructor, building, room, time, days) 
 
   try {
 
+    //get the current user
+    const currentUser = Parse.User.current();
+
+    //make sure current user exists
+    if (!currentUser) {
+      console.log('error: no current user')
+      return
+    }
+
+    //create pointer to current user
+    const userPointer = { __type: 'Pointer', className: '_User', objectId: currentUser.id };
+
     //the building input is the id for a Building Parse Object, so classify it is a pointer for the new Event
     const buildingPointer = { __type: 'Pointer', className: 'Building', objectId: building };
+
 
     //set all attributes for hte new event
     newClass.set('code', code);
@@ -23,6 +36,7 @@ export const createClass = (code, name, instructor, building, room, time, days) 
     newClass.set('room', room);
     newClass.set('time', time);
     newClass.set('days', days);
+    newClass.set('user', userPointer)
 
     return newClass.save().then((result) => {
       // After saving the new class, fetch it including the building pointer
@@ -84,6 +98,33 @@ export const getAllEvents = () => {
       console.log("error: ", error);
     });
 };
+
+
+
+// READ operation - get all objects in Parse class Event for the current user
+export const getEventsByUser = () => {
+
+  //get the current user
+  const user = Parse.User.current();
+
+  const Event = Parse.Object.extend(CLASS_SCHEDULE);
+  const query = new Parse.Query(Event);
+
+  query.include("building");
+  query.equalTo("user", user);
+
+  return query
+    .find()
+    .then((results) => {
+      // console.log("results: ", results);
+      // returns array of Lesson objects
+      return results;
+    })
+    .catch((error) => {
+      console.log("error: ", error);
+    });
+};
+
 
 
 //function that gets the event that starts/ends a day
