@@ -1,5 +1,9 @@
 import Parse from "parse";
 
+
+//Parse Service with authentication methods
+
+//creates a new _User object in the Parse database
 export const createUser = (newUser) => {
   const user = new Parse.User();
 
@@ -21,6 +25,8 @@ export const createUser = (newUser) => {
     });
 };
 
+
+//Attempts to login user
 export const loginUser = (userInfo) => {
   //const user = new Parse.User();
   return Parse.User.logIn(userInfo.username, userInfo.password)

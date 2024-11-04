@@ -2,7 +2,7 @@ import Optimizer from "./Optimizer/Optimizer";
 import Planner from "./Planner/Planner";
 import Directions from "./Directions/Directions"
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
-import AuthRoute from "../Common/Services/AuthRoute";
+import AuthRoute from "./AuthRoute/AuthRoute";
 import Auth from "./Auth/Auth";
 
 import {
