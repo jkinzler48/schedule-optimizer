@@ -4,6 +4,8 @@ import {  useNavigate } from "react-router-dom";
 import AuthForm from "./AuthForm.js";
 import { isAuthenticated, createUser } from "../../Common/Services/AuthService.js";
 
+
+//Register component that uses athentication methods from AuthService
 const AuthRegister = () => {
 
 

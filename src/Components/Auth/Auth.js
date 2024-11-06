@@ -4,7 +4,7 @@ import Header from "../Header/Header";
 import { isAuthenticated } from "../../Common/Services/AuthService";
 
 
-//Outer Authorization module that has links to login and register pages
+//Main Authorization Componenet that has links to login and register pages
 export const Auth = () => {
 
     const navigate = useNavigate();

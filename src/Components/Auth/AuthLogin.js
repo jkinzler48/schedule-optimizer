@@ -5,6 +5,8 @@ import AuthForm from "./AuthForm.js";
 import { useNavigate } from "react-router-dom";
 import { isAuthenticated } from "../../Common/Services/AuthService.js";
 
+
+//Login component that uses athentication methods from AuthService
 const AuthLogin = () => {
 
     const navigate = useNavigate();
