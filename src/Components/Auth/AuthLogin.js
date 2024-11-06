@@ -1,12 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { loginUser } from "../../Common/Services/AuthService.js"
 import Header from "../Header/Header.js";
-import LoginForm from "./LoginForm";
+import AuthForm from "./AuthForm.js";
 import { useNavigate } from "react-router-dom";
+import { isAuthenticated } from "../../Common/Services/AuthService.js";
 
 const AuthLogin = () => {
+
+    const navigate = useNavigate();
+
+    // redirect already authenticated users back to home
+    //prevents user from routing to auth if already logged in
+    useEffect(() => {
+        if (isAuthenticated()) {
+            navigate("/");
+        }
+    }, [navigate]);
+
   const [userInfo, setUserInfo] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 
@@ -14,7 +26,7 @@ const AuthLogin = () => {
   const [login, setLogin] = useState(false);
   const [status, setStatus] = useState("");
 
-  const navigate = useNavigate();
+
 
   useEffect(() => {
     if (userInfo && login) {
@@ -23,15 +35,15 @@ const AuthLogin = () => {
             //alert(` you successfully logged in!`);
             // Reset the form element
             setUserInfo({
-                username: "",
+                email: "",
                 password: "",
                 });
             setStatus("Logged in sucessfully")
             navigate("/")
         } else {
-            //reset password but keep the username if the login was unsuccessful
+            //reset password but keep the email if the login was unsuccessful
             setUserInfo({
-                username: userInfo.username,
+                email: userInfo.email,
                 password: "",
                 });
             setStatus(result)
@@ -58,8 +70,9 @@ const AuthLogin = () => {
   return (
       <>
         <Header />
-        <LoginForm
+        <AuthForm
           user={userInfo}
+          isLogin={true}
           onChange={onChangeHandler}
           onSubmit={onSubmitHandler}
           status={status}

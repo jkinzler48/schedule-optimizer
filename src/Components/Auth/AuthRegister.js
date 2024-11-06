@@ -1,10 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { createUser } from "../../Common/Services/AuthService.js"
-import RegisterForm from "./RegisterForm";
 import Header from "../Header/Header.js";
 import {  useNavigate } from "react-router-dom";
+import AuthForm from "./AuthForm.js";
+import { isAuthenticated, createUser } from "../../Common/Services/AuthService.js";
 
 const AuthRegister = () => {
+
+
+    const navigate = useNavigate();
+
+    // redirect already authenticated users back to home
+    //prevents user from routing to auth if already logged in
+    useEffect(() => {
+        if (isAuthenticated()) {
+            navigate("/");
+        }
+    }, [navigate]);
+
+
   const [newUser, setNewUser] = useState({
     firstName: "",
     lastName: "",
@@ -17,7 +30,6 @@ const AuthRegister = () => {
   const [add, setAdd] = useState(false);
   const [status, setStatus] = useState("");
 
-  const navigate = useNavigate();
  
   useEffect(() => {
     if (newUser && add) {
@@ -84,8 +96,9 @@ const AuthRegister = () => {
   return (
       <>
         <Header />
-        <RegisterForm
+        <AuthForm
           user={newUser}
+          isLogin={false}
           onChange={onChangeHandler}
           onSubmit={onSubmitHandler}
           status={status}

@@ -29,7 +29,7 @@ export const createUser = (newUser) => {
 //Attempts to login user
 export const loginUser = (userInfo) => {
   //const user = new Parse.User();
-  return Parse.User.logIn(userInfo.username, userInfo.password)
+  return Parse.User.logIn(userInfo.email, userInfo.password)
     .then((result) => {
       return "success";
     })
@@ -41,11 +41,7 @@ export const loginUser = (userInfo) => {
   
 //returns true is user is authenticated, and returns false if user is not authenticated
 export const isAuthenticated = () => {
-  if (Parse.User.current() && Parse.User.current().authenticated()) {
-    return true;
-  } else {
-    return false;
-  }
+  return Parse.User.current()?.authenticated;
 };
 
 
