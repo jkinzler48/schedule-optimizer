@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
  
+## [0.3.0] - 2024-11-06
+ 
+### Added
+
+- Authorization capability that allows users to login, logout, or register
+- Authorization, Register, and Login pages
+- Protected Route service that prohibits users from accessing restricted pages unless signed in and redirects if necessary
+- Implemented it so that users cannot access authorization pages if they are signed in and redirects if necessary
+- logout button that appears in the navigation bar if the user is logged in
+- Link to authorization page in the navigation bar that appears if the user is NOT logged in
+
+ 
+### Changed
+
+- Changed Event object to include a pointer to a _User object
+- Planner/Optimizer pages only display Events for the current user
+- Moved the Header component out of Components.js and into componenets individually to enable dynamically updated navigation bar based on if the user is logged in
+
+### Fixed
+
+ 
+
 ## [0.2.0] - 2024-10-18
  
 ### Added

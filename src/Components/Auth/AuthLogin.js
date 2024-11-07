@@ -1,12 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { loginUser } from "../../Common/Services/AuthService.js"
 import Header from "../Header/Header.js";
-import LoginForm from "./LoginForm";
+import AuthForm from "./AuthForm.js";
 import { useNavigate } from "react-router-dom";
+import { isAuthenticated } from "../../Common/Services/AuthService.js";
 
+
+//Login component that uses athentication methods from AuthService
 const AuthLogin = () => {
+
+    const navigate = useNavigate();
+
+    // redirect already authenticated users back to home
+    //prevents user from routing to auth if already logged in
+    useEffect(() => {
+        if (isAuthenticated()) {
+            navigate("/");
+        }
+    }, [navigate]);
+
   const [userInfo, setUserInfo] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 
@@ -14,22 +28,24 @@ const AuthLogin = () => {
   const [login, setLogin] = useState(false);
   const [status, setStatus] = useState("");
 
-  const navigate = useNavigate();
+
 
   useEffect(() => {
     if (userInfo && login) {
-      loginUser(userInfo).then((result) => {// Reset the form element
+      loginUser(userInfo).then((result) => {
         if (result === "success") {
             //alert(` you successfully logged in!`);
+            // Reset the form element
             setUserInfo({
-                username: "",
+                email: "",
                 password: "",
                 });
             setStatus("Logged in sucessfully")
             navigate("/")
         } else {
+            //reset password but keep the email if the login was unsuccessful
             setUserInfo({
-                username: userInfo.username,
+                email: userInfo.email,
                 password: "",
                 });
             setStatus(result)
@@ -39,13 +55,14 @@ const AuthLogin = () => {
     }
   }, [userInfo, login, navigate]);
   
-
+  //handles change to text input
   const onChangeHandler = (e) => {
     e.preventDefault();
     const { name, value: newValue } = e.target;
     setUserInfo({ ...userInfo, [name]: newValue });
   };
 
+  //handles submit button being pressed
   const onSubmitHandler = (e) => {
     e.preventDefault();
     setLogin(true);
@@ -55,8 +72,9 @@ const AuthLogin = () => {
   return (
       <>
         <Header />
-        <LoginForm
+        <AuthForm
           user={userInfo}
+          isLogin={true}
           onChange={onChangeHandler}
           onSubmit={onSubmitHandler}
           status={status}

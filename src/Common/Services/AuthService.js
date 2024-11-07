@@ -1,5 +1,9 @@
 import Parse from "parse";
 
+
+//Parse Service with authentication methods
+
+//creates a new _User object in the Parse database
 export const createUser = (newUser) => {
   const user = new Parse.User();
 
@@ -9,7 +13,7 @@ export const createUser = (newUser) => {
   user.set("password", newUser.password);
   user.set("email", newUser.email);
 
-  console.log("User: ", user);
+  //console.log("User: ", user);
 
   return user
     .signUp()
@@ -21,9 +25,11 @@ export const createUser = (newUser) => {
     });
 };
 
+
+//Attempts to login user
 export const loginUser = (userInfo) => {
   //const user = new Parse.User();
-  return Parse.User.logIn(userInfo.username, userInfo.password)
+  return Parse.User.logIn(userInfo.email, userInfo.password)
     .then((result) => {
       return "success";
     })
@@ -35,11 +41,7 @@ export const loginUser = (userInfo) => {
   
 //returns true is user is authenticated, and returns false if user is not authenticated
 export const isAuthenticated = () => {
-  if (Parse.User.current() && Parse.User.current().authenticated()) {
-    return true;
-  } else {
-    return false;
-  }
+  return Parse.User.current()?.authenticated;
 };
 
 
