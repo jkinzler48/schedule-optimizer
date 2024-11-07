@@ -91,7 +91,7 @@ const AuthRegister = () => {
   //handles when submit button is pressed
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    console.log("submitted: ", e.target);
+    //console.log("submitted: ", e.target);
     setAdd(true);
   };
 
