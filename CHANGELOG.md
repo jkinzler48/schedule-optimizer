@@ -11,9 +11,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Authorization capability that allows users to login, logout, or register
 - Authorization, Register, and Login pages
 - Protected Route service that prohibits users from accessing restricted pages unless signed in and redirects if necessary
-- Authorized Route service that prohibits users from accessing authorization pages if they are signed in and redirects if necessary
+- Implemented it so that users cannot access authorization pages if they are signed in and redirects if necessary
 - logout button that appears in the navigation bar if the user is logged in
-- Link to authorization page in teh navigation bar that appears if the user is NOT logged in
+- Link to authorization page in the navigation bar that appears if the user is NOT logged in
 
  
 ### Changed
