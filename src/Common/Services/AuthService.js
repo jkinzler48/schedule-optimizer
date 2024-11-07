@@ -13,7 +13,7 @@ export const createUser = (newUser) => {
   user.set("password", newUser.password);
   user.set("email", newUser.email);
 
-  console.log("User: ", user);
+  //console.log("User: ", user);
 
   return user
     .signUp()
