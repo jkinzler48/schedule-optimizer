@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {  getEventsByUser, Events } from "../../Common/Services/EventService.js";
 import { getAllBuildings, Buildings } from "../../Common/Services/BuildingService.js";
+import { Link } from 'react-router-dom';
 import EventList from "./EventList.js";
 import AddStartEnd from './AddStartEnd.js';
 import AddClass from './AddClass.js';
@@ -57,6 +58,15 @@ const Planner = () => {
             selectFunction={onDateChange}
           />
         </div> 
+        <div className='module'>
+          <h2>Import Schedule from Novo</h2>
+                <Link to="/upload">
+                    <button>Import Schedule</button>
+                </Link>
+        </div>
+
+
+
         <div className="module">
         <h2>Update Schedule</h2>
           <AddStartEnd 
