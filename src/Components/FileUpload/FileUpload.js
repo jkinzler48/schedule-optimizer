@@ -19,11 +19,11 @@ const FileUpload = () => {
         event.preventDefault();
         if (file) {
 
-        const File = new Parse.File(file.name, file);
+        const File = new Parse.File("userScheudle.ics", file);
             
             File.save()
                 .then((savedFile) => {
-                    console.log(savedFile.name + "Imported Successfully.");
+                    console.log(file.name + " uploaded successfully");
                    
                     // const Gallery = Parse.Object.extend("Gallery");
                     // const gallery = new Gallery();
@@ -36,7 +36,7 @@ const FileUpload = () => {
                 //     // updateData();
                 // })
                 .catch((error) => {
-                    console.error("Error uploading file:", error);
+                    console.error("Error saving file:", error);
                 });
             setFile("");
             if (formRef.current) {
