@@ -20,7 +20,7 @@ export default function Components() {
         <Router>
             <Routes>
                 <Route path="/" element={<ProtectedRoute path="/" element={Planner} />} />
-                <Route path="/import" element={<ProtectedRoute path="/upload" element={FileUpload} />} />
+                <Route path="/upload" element={<ProtectedRoute path="/upload" element={FileUpload} />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/optimizer" element={<ProtectedRoute path="/optimizer" element={Optimizer} />} />
                 <Route path="/directions" element={<Directions />} />	{/* Routing */}	
