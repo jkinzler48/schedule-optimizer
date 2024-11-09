@@ -58,6 +58,7 @@ const Planner = () => {
             selectFunction={onDateChange}
           />
         </div> 
+        <h1>Update Schedule</h1>
         <div className='module'>
             <h2>Import Class Schedule (from NOVO)</h2>
             <p>It is recommended that you remove all classes that have already been added to your schedule prior
