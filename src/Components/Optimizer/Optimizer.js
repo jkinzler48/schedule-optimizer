@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { getEventsByUser, getNextClass, getStartEnd, Events } from "../../Common/Services/EventService.js";
 import OptimizerMap from "./OptimizerMap.js";
-import EventMap from './EventMap.js';
 import Header from '../Header/Header.js';
+import EventDirections from './EventDirections.js';
 
 
 //in the future, we will build out this section so that it provides recomendations to
@@ -11,19 +11,20 @@ import Header from '../Header/Header.js';
 const Optimizer = () => {
   // Functions
 
-  // updates the schedule when the selected class changes in the dropdown
-  const onClassChange = (e) => {
-    let classSelected = e.target.value;
-
-    // if the selected class is next, then get the next class's mapId
-    if (classSelected === "next" && nextClass) {
-      classSelected = nextClass.get('building').get('mapId');
-    }
-
-    //updates schedule that will be shown on screen
-    setClassSelected(classSelected);
+  //dropdown functions for source and destination dropdown changes
+  const onSourceChange = (e) => {
+    let source = e.target.value;
+     
+    //set source equal to the id of the building for the class selected by the dropdown
+    setSource(source);
   };
 
+  const onDestinationChange = (e) => {
+    let destination = e.target.value;
+     
+    //set destination equal to the id of the building for the classselected by the dropdown
+    setDestination(destination);
+  };
 
   // Main component JSX
   function displayOptimizer() {
@@ -39,12 +40,14 @@ const Optimizer = () => {
           />
         </div>
         <div className="module">
-          <h2>Display Any Event Location</h2>
-          <EventMap
-              classes={classes}
-              selectedMapId={classSelected}
-              selectFunction={onClassChange}
-            />
+          <h2>Display Directions Between Event Locations</h2>
+          <EventDirections 
+            events={classes}
+            source={source}
+            destination={destination}
+            sourceChange={onSourceChange}
+            destChange={onDestinationChange}
+          />
         </div>
       </>
     );
@@ -53,14 +56,14 @@ const Optimizer = () => {
 
   // Main code
 
-  // initializes hooks for dropdown so it can be updated
-  const [classSelected, setClassSelected] = useState("");
-
   // initializes hooks for classes and next/previous class to occur
   const [classes, setSchedule] = useState([]);
   const [startEnd, setStartEnd] = useState(null);
   const [nextClass, setNextClass] = useState(null);
   const [prevClass, setPrevClass] = useState(null);
+
+  const [source, setSource] = useState("");
+  const [destination, setDestination] = useState("");
 
 
 // Fetch the schedule only once when the component mounts
@@ -78,6 +81,17 @@ useEffect(() => {
   //when classes changes, set the starting/ending location
   useEffect(() => {
     getStartEnd(classes).then((c) => {setStartEnd(c);});
+  }, [classes]);
+
+
+  //when classes is updated, set the source and destination for the events directions equal to the first class to keep the 
+  //event directions consistent with the dropdown values
+  useEffect(() => {
+    if (classes.length > 0) {
+      let firstClass = classes.sort((a, b) => a.get('time').localeCompare(b.get('time')))[0]
+      setSource(firstClass.get('building').get('mapId'));
+      setDestination(firstClass.get('building').get('mapId'));
+    }
   }, [classes]);
 
 
@@ -108,13 +122,6 @@ useEffect(() => {
     }
   }, [classes, startEnd]);
 
-
-  // Update `classSelected`, which stores a mapId, when `nextClass` changes
-  useEffect(() => {
-    if (nextClass) {
-      setClassSelected(nextClass.get('building').get('mapId'));
-    }
-  }, [nextClass]);
 
 
   // return the JSX for the main component
