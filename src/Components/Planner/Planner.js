@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {  getEventsByUser, Events } from "../../Common/Services/EventService.js";
 import { getAllBuildings, Buildings } from "../../Common/Services/BuildingService.js";
+import { Link } from 'react-router-dom';
 import EventList from "./EventList.js";
 import AddStartEnd from './AddStartEnd.js';
 import AddClass from './AddClass.js';
@@ -47,7 +48,6 @@ const Planner = () => {
     return (
       <>
         <Header/>
-
         <h1>Planner</h1>
         <div className="module">
           <h2>Current Schedule</h2>
@@ -57,36 +57,50 @@ const Planner = () => {
             selectFunction={onDateChange}
           />
         </div> 
+        <h1>Update Schedule</h1>
+        <div className='module'>
+            <h2>Import Class Schedule (from NOVO)</h2>
+            <p>It is recommended that you remove all classes that have already been added to your schedule prior
+              to importing a new schedule. You can use the "Remove Event from Schedule" section below
+              to accomplish this.
+            </p>
+            <Link to="/upload">
+                <button>Import Schedule</button>
+            </Link>
+        </div>
         <div className="module">
-        <h2>Update Schedule</h2>
-          <AddStartEnd 
-            events={classes}
-            buildings={buildings}
-            classUpdateFunction={setSchedule}
-          />
-		</div>
-		<div className="module">
+            <h2>Remove Event from Schedule</h2>
+            <RemoveClass
+              events={classes}
+              classUpdateFunction={setSchedule}
+            />
+        </div>
+        <div className="module">
+          <h2>Manually Add Class to Schedule</h2>
           <AddClass
             events={classes}
             buildings={buildings}
             classUpdateFunction={setSchedule}
           />
-		</div>
-		<div className="module">
-          <RemoveClass
-            events={classes}
-            classUpdateFunction={setSchedule}
-          />
-		</div>
-		<div className="module">
-           <AddStudyTime
-            events={classes}
-            buildings={buildings}
-            studyUpdateFunction={setSchedule}
-          />
+		    </div>
+        <div className="module">
+            <h2>Add Study time</h2>
+            <AddStudyTime
+              events={classes}
+              buildings={buildings}
+              studyUpdateFunction={setSchedule}
+        />
+        </div>
+        <div className="module">
+          <h2>Add Day Starting/Ending Location</h2>
+            <AddStartEnd 
+              events={classes}
+              buildings={buildings}
+              classUpdateFunction={setSchedule}
+            />
+		    </div>
           {/* We may also add section for adding additional "special" events, such as
           adding a meal time or break time */}
-        </div>
       </>
     );
   }

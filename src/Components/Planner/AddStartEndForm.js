@@ -7,7 +7,9 @@ const AddStartEndForm = ({ events, buildings, onChange, onClick }) => {
           {/* check if a start/ending location has already been specified by the user. If it has, then don't let them create a new one */}
           {events && events.find((e) => e.get('code') === 'START/END') ? (
             <p>
-              You have selected a Starting/Ending location. In order to change your Starting/Ending Location, you must remove the existing one from your schedule.
+              You have selected a Starting/Ending location. In order to change your Starting/Ending Location, you must remove the existing one from your schedule
+              using the "Remove Event from Schedule" section below.
+
             </p>
           ) : (
             <>
