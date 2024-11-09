@@ -4,7 +4,7 @@ import React from 'react';
 const AddClassForm = ({ buildings, newClass, onChange, onCheckboxChange, onClick, status, formRef }) => {
     return (
         <>
-          <div>
+          <div className="section">
             <h4>Add class to Schedule</h4>
             <p>Enter Information for class to add:</p>
 
@@ -21,11 +21,11 @@ const AddClassForm = ({ buildings, newClass, onChange, onCheckboxChange, onClick
               <label htmlFor="roomInput">Room: </label>
               <input type="text" id="roomInput" name="room" className="addClass" placeholder="123" onChange={onChange} required />
               <br />
-              <label htmlFor="timeInput">Start Time: </label>
-              <input type="time" name="startTime" className="addClass"onChange={onChange} required />
+              <label htmlFor="startTime">Start Time: </label>
+              <input type="time" id="startTime" name="startTime" className="addClass"onChange={onChange} required />
               <br />
-              <label htmlFor="timeInput">End Time: </label>
-              <input type="time" name="endTime" className="addClass" onChange={onChange} required />
+              <label htmlFor="endTime">End Time: </label>
+              <input type="time" id="endTime" name="endTime" className="addClass" onChange={onChange} required />
               <br />
               <p>Select the Building where the class is located: </p>
 

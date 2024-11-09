@@ -55,7 +55,8 @@ h2 {
 }
 
 /* Divs and Modules */
-div {
+/* used to be css for all div */
+div#root, .section {
     margin: 20px 20px 40px 20px;
     padding: 25px;
     background-color: #ffffff;
@@ -67,6 +68,12 @@ div {
 
 .module {
     background-color: #efefff; /* Source of light background div color */
+    margin: 20px 20px 40px 20px;
+    padding: 25px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-flow: column;
 }
 
 /* Lists */
@@ -76,7 +83,7 @@ ol {
     color: #0c2340; /* Notre Dame Blue */
 }
 
-li {
+.eventList li {
     margin-bottom: 10px;
 }
 
@@ -107,15 +114,9 @@ li:hover {
 /* Inputs */
 input {
     padding: 5px;
-    margin: 5px;
-}
-
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="checkbox"] {
     margin: 10px;
 }
+
 
 input[type="submit"] {
     padding: 12px;
@@ -159,3 +160,4 @@ select {
     flex-wrap: wrap;
     flex-direction: row;
 }
+

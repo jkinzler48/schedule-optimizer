@@ -6,7 +6,7 @@ import { displayTime } from '../../Common/Services/EventService';
 // and shows directions between them
 const OptimizerMap = ({prevClass, nextClass, startEnd}) => {
   return (
-    <div>
+    <div className='section'>
       <h4>
 
         {/* if user has not selected a location where they start/end their day, inform them and 

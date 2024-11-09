@@ -3,7 +3,7 @@ import React from 'react';
 
 const AddStartEndForm = ({ events, buildings, onChange, onClick }) => {
     return (
-        <div>
+        <div className="section">
           {/* check if a start/ending location has already been specified by the user. If it has, then don't let them create a new one */}
           {events && events.find((e) => e.get('code') === 'START/END') ? (
             <p>

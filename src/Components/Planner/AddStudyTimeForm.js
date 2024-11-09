@@ -4,15 +4,15 @@ import React from 'react';
 const AddStudyTimeForm = ({ buildings, newStudyTime, onChange, onCheckboxChange, onClick, status, formRef }) => {
     return (
         <>
-          <div>
+          <div className="section">
             <h4>Add study time to Schedule</h4>
             <form ref={formRef} className="studyForm" id="studyForm" action="#stayhere">
               <p>What time would you like to study?</p>
-              <label htmlFor="timeInput">Start Time: </label>
-              <input type="time" name="startTime" className="addClass"onChange={onChange} required />
+              <label htmlFor="startTime">Start Time: </label>
+              <input type="time" id="startTime" name="startTime" className="addClass"onChange={onChange} required />
               <br />
-              <label htmlFor="timeInput">End Time: </label>
-              <input type="time" name="endTime" className="addClass" onChange={onChange} required />
+              <label htmlFor="endTime">End Time: </label>
+              <input type="time" id="endTime" name="endTime" className="addClass" onChange={onChange} required />
               <p>Where would you like to study?</p>
               <p>
                 {/* Create dropdown option for all buildings in list */}

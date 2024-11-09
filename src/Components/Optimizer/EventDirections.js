@@ -7,7 +7,7 @@ import { displayTime } from '../../Common/Services/EventService';
 export const EventDirections = ({ events, source, destination, sourceChange, destChange }) => {
   return (
 
-    <div>
+    <div className='section'>
       <p>Select Source Event</p>
       {/* Create a dropdown option for every event, where the event are sorted in order of the time they start */}
       <select className="classSelect" onChange={sourceChange}>

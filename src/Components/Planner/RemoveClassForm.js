@@ -6,7 +6,7 @@ import { displayTime } from '../../Common/Services/EventService';
 const RemoveClassForm = ({ events, selectedClass, onChange, onClick, status, formRef }) => {
     return (
         
-      <div>
+      <div className="section">
         <h4>Remove event from Schedule</h4>
         <form className="removeForm" id="removeForm" action="#stayhere">
           <p>Select class to remove:</p>
@@ -14,7 +14,7 @@ const RemoveClassForm = ({ events, selectedClass, onChange, onClick, status, for
             name="removes" 
             value={selectedClass} 
             onChange={onChange} 
-            style={{ margin: '10px' }}
+            style={{ margin: '10px', width: '100%' }}
           >
             {/* Dropdown for no event selected */}
             <option value="none">Select Event to Remove</option>

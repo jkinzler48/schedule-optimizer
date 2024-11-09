@@ -5,7 +5,7 @@ import { displayTime } from '../../Common/Services/EventService';
 const EventList = ({ classes, day, selectFunction }) => {
   return (
     <>
-        <div>
+        <div className="section">
             This is your schedule for the selected day.
             <select id="daySelect" className="daySelect" onChange={selectFunction}>
                 <option value="Today">Today</option>
@@ -19,7 +19,7 @@ const EventList = ({ classes, day, selectFunction }) => {
                 <option value="All Days">All Days</option>
             </select>
             <h4>{day}'s Schedule</h4>
-            <ol>
+            <ol className="eventList">
                 {/* if All days option is selected, then display all classes for user in order of start time */}
                 {day === "All Days" ? (
                   <>
