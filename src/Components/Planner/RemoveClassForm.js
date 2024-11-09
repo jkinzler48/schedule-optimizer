@@ -37,6 +37,8 @@ const RemoveClassForm = ({ events, selectedClass, onChange, onClick, status, for
           </select>
       
           <br />
+          <br />
+          <br />
           <button type="submit" value="Submit" onClick={onClick}>Submit</button>
           
           {/* Display status message */}
