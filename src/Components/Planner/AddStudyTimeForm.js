@@ -8,8 +8,11 @@ const AddStudyTimeForm = ({ buildings, newStudyTime, onChange, onCheckboxChange,
             <h4>Add study time to Schedule</h4>
             <form ref={formRef} className="studyForm" id="studyForm" action="#stayhere">
               <p>What time would you like to study?</p>
-              <label htmlFor="timeInput">Enter Time in 24hr format: </label>
-                  <input type="text" id="timeInput" name="time" className="addClass" placeholder="HH:MM-HH:MM" onChange={onChange} required />
+              <label htmlFor="timeInput">Start Time: </label>
+              <input type="time" name="startTime" className="addClass"onChange={onChange} required />
+              <br />
+              <label htmlFor="timeInput">End Time: </label>
+              <input type="time" name="endTime" className="addClass" onChange={onChange} required />
               <p>Where would you like to study?</p>
               <p>
                 {/* Create dropdown option for all buildings in list */}

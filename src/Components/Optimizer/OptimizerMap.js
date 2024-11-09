@@ -1,4 +1,6 @@
 import React from 'react';
+import { displayTime } from '../../Common/Services/EventService';
+
 
 // component that tells a user what their next event is, where they will be coming from
 // and shows directions between them
@@ -20,7 +22,7 @@ const OptimizerMap = ({prevClass, nextClass, startEnd}) => {
             ? "You do not have any events scheduled."
             :nextClass.get('name') === 'Day Start/End'
               ? `Your Next Event is: ${nextClass.get('name')} (${nextClass.get('building').get('name')})`
-              : `Your Next Event is: ${nextClass.get('name')} in ${nextClass.get('building').get('name')} ${nextClass.get('room')} at ${nextClass.get('time')} (${nextClass.get('days').join(', ')})`
+              : `Your Next Event is: ${nextClass.get('name')} in ${nextClass.get('building').get('name')} ${nextClass.get('room')} at ${displayTime(nextClass)} (${nextClass.get('days').join(', ')})`
         }
         <br />
         <br />
@@ -30,7 +32,7 @@ const OptimizerMap = ({prevClass, nextClass, startEnd}) => {
           ? ""
             : prevClass.get('name') === 'Day Start/End'
               ? `You are coming from: ${prevClass.get('name')} (${prevClass.get('building').get('name')})`
-              : `You are coming from: ${prevClass.get('name')} in ${prevClass.get('building').get('name')} ${prevClass.get('room')} at ${prevClass.get('time')} (${prevClass.get('days').join(', ')})`
+              : `You are coming from: ${prevClass.get('name')} in ${prevClass.get('building').get('name')} ${prevClass.get('room')} at ${displayTime(prevClass)} (${prevClass.get('days').join(', ')})`
           }
       </h4>
 

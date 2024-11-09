@@ -6,7 +6,7 @@ const CLASS_SCHEDULE = 'Event';
 
 
 //CREATE: function to create a new Event in the parse class
-export const createClass = (code, name, instructor, building, room, time, days) => {
+export const createClass = (code, name, instructor, building, room, startTime, endTime, days) => {
   const Class = Parse.Object.extend('Event'); // Change 'Class' to your class name in Back4App
   const newClass = new Class();
 
@@ -27,6 +27,13 @@ export const createClass = (code, name, instructor, building, room, time, days) 
     //the building input is the id for a Building Parse Object, so classify it is a pointer for the new Event
     const buildingPointer = { __type: 'Pointer', className: 'Building', objectId: building };
 
+    //converts startTime from a string to a date
+    const [startHours, startMinutes] = startTime.split(':').map(Number);
+    const startDate = new Date(0,0,0, startHours, startMinutes);
+ 
+     //converts endTime from a string to a date
+    const [endHours, endMinutes] = endTime.split(':').map(Number);
+    const endDate = new Date(0,0,0, endHours, endMinutes);
 
     //set all attributes for hte new event
     newClass.set('code', code);
@@ -34,7 +41,8 @@ export const createClass = (code, name, instructor, building, room, time, days) 
     newClass.set('instructor', instructor);
     newClass.set('building', buildingPointer);
     newClass.set('room', room);
-    newClass.set('time', time);
+    newClass.set('startTime', startDate);
+    newClass.set('endTime', endDate);
     newClass.set('days', days);
     newClass.set('user', userPointer)
 
@@ -156,12 +164,6 @@ export const getStartEnd = (classes) => {
 
 
 
-const parseTime = (time) => {
-  const [start] = time.split("-");
-  return parseInt(start.replace(":", ""), 10);
-};
-
-
 //function to get the next class in a schedule, and the event that occurs directly before it.
 export const getNextClass = async (classes) => {
 
@@ -169,16 +171,19 @@ export const getNextClass = async (classes) => {
 
   //get current Day/Time
   const currentDate = new Date();
+
   const currentDay = currentDate.toLocaleString("en-US", { weekday: "long" });
-  const currentTime = currentDate.toTimeString().slice(0, 5);
+
+  //set current time equal to the actual current time, but at Date(0,0,0) for comparison
+  const currentTime = new Date(0, 0, 0, currentDate.getHours(), currentDate.getMinutes());
 
   //get all events that occur today
   let dayEvents = classes
     .filter((c) => c.get('days').some((d) => d === currentDay))
-    .sort((a, b) => parseTime(a.get('time')) - parseTime(b.get('time')));
+    .sort((a, b) => a.get('startTime') - b.get('startTime'));
 
   //if there are no events today, or all events today have already ended, then the next event will occur on a differnet day
-  if (dayEvents.length === 0 || (dayEvents.length > 0 && dayEvents[dayEvents.length - 1].get('time').substring(6, 11) < currentTime)) {
+  if (dayEvents.length === 0 || (dayEvents.length > 0 && dayEvents[dayEvents.length - 1].get('endTime') < currentTime)) {
     
     let dayInc = 1;
     do {
@@ -187,7 +192,7 @@ export const getNextClass = async (classes) => {
       const nextDay = currentDate.toLocaleString("en-US", { weekday: "long" });
       dayEvents = [...classes
         .filter((c) => c.get('days').some((d) => d === nextDay))
-        .sort((a, b) => parseTime(a.get('time')) - parseTime(b.get('time')))];
+        .sort((a, b) => a.get('startTime') - b.get('startTime'))];
       dayInc++;
     } while (dayEvents.length === 0 && dayInc <= 7);
 
@@ -208,7 +213,7 @@ export const getNextClass = async (classes) => {
 
     //find the index of the next/current event to occur 
     let i = dayEvents.length - 1;
-    while (i > 0 && dayEvents[i - 1].get('time').substring(0,5) > currentTime) {
+    while (i > 0 && dayEvents[i - 1].get('startTime') > currentTime) {
       i--;
     }
 
@@ -218,7 +223,7 @@ export const getNextClass = async (classes) => {
         nextClass = dayEvents[i];
     
     //if the next class is the last class of the day, nextClass will be the start/end Location for the day
-    } else if (i < 0 || ((i === dayEvents.length - 1) && dayEvents[i].get('time').substring(0,5) < currentTime)) {
+    } else if (i < 0 || ((i === dayEvents.length - 1) && dayEvents[i].get('startTime')) < currentTime) {
       comingFrom = dayEvents[dayEvents.length - 1];
       nextClass = "startEnd";
 
@@ -234,3 +239,13 @@ export const getNextClass = async (classes) => {
 };
 
 
+//displays the time for an event based in 12 hour HH:MM - HH:MM
+export const displayTime = (event) => {
+
+  const parameters = { hour: '2-digit', minute: '2-digit', hour12: true };
+  
+  const startTime = event.get('startTime').toLocaleString('en-US', parameters);
+  const endTime = event.get('endTime').toLocaleString('en-US', parameters);
+  
+  return `${startTime} - ${endTime}`;
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { displayTime } from '../../Common/Services/EventService';
 
 
 //HTML for Map component that allows user to select source and destination location
@@ -13,10 +13,10 @@ export const EventDirections = ({ events, source, destination, sourceChange, des
       <select className="classSelect" onChange={sourceChange}>
       {events.length > 0 &&
           events
-            .sort((a, b) => a.get('time').localeCompare(b.get('time')))
+            .sort((a, b) => a.get('startTime') - b.get('startTime'))
             .map((c) => (
               <option key={c.id} value={c.get('building').get('mapId')}>
-                {`${c.get('name')} - ${c.get('building').get('name')} ${c.get('room')} (${c.get('days')} | ${c.get('time')})`}
+                {`${c.get('name')} - ${c.get('building').get('name')} ${c.get('room')} (${c.get('days')} | ${displayTime(c)})`}
               </option>
             ))}
       </select>
@@ -27,10 +27,10 @@ export const EventDirections = ({ events, source, destination, sourceChange, des
       <select className="classSelect" onChange={destChange}>
       {events.length > 0 &&
           events
-          .sort((a, b) => a.get('time').localeCompare(b.get('time')))
+            .sort((a, b) => a.get('startTime') - b.get('startTime'))
             .map((c) => (
               <option key={c.id} value={c.get('building').get('mapId')}>
-                {`${c.get('name')} - ${c.get('building').get('name')} ${c.get('room')} (${c.get('days')} | ${c.get('time')})`}
+                {`${c.get('name')} - ${c.get('building').get('name')} ${c.get('room')} (${c.get('days')} | ${displayTime(c)})`}
               </option>
             ))}
       </select>

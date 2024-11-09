@@ -1,7 +1,6 @@
 import React from 'react';
+import { displayTime } from '../../Common/Services/EventService';
 
-const getStartTime = (time) =>
-  parseInt(time.split('-')[0].replace(':', ''), 10);
 
 const EventList = ({ classes, day, selectFunction }) => {
   return (
@@ -29,10 +28,12 @@ const EventList = ({ classes, day, selectFunction }) => {
                       <p>No Events are on your schedule for any day.</p>
                     ) : (
                     classes
-                        .sort((a, b) => a.get('time').localeCompare(b.get('time')))
+                        .sort((a, b) => a.get('startTime') - b.get('startTime'))
                         .map((c) => (
                         <li key={c.id}>
-                            {c.get('time')} | {c.get('days').join('/')} | {c.get('name')} ({c.get('building').get("name")} )
+                            {c.get('name')} ({c.get('building').get("name")})  
+                            <br />
+                            {displayTime(c)} | {c.get('days').join('/')}
                         </li>
                         ))
                     )}
@@ -46,10 +47,12 @@ const EventList = ({ classes, day, selectFunction }) => {
                     ) : (
                     classes
                         .filter((c) => c.get('days').some((d) => d === day))
-                        .sort((a, b) => getStartTime(a.get('time')) - getStartTime(b.get('time'))) // Sort by start time
+                        .sort((a,b) => a.get('startTime') - b.get('startTime'))
                         .map((c) => (
                         <li key={c.id}>
-                            {c.get('time')} | {c.get('name')} ({c.get('building').get("name")})
+                            {c.get('name')} ({c.get('building').get("name")})  
+                            <br />
+                            {displayTime(c)} | {c.get('days').join('/')}
                         </li>
                         ))
                     )}

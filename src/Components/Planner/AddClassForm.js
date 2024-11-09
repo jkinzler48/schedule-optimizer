@@ -21,8 +21,11 @@ const AddClassForm = ({ buildings, newClass, onChange, onCheckboxChange, onClick
               <label htmlFor="roomInput">Room: </label>
               <input type="text" id="roomInput" name="room" className="addClass" placeholder="123" onChange={onChange} required />
               <br />
-              <label htmlFor="timeInput">Enter Time in 24hr format: </label>
-              <input type="text" id="timeInput" name="time" className="addClass" placeholder="HH:MM-HH:MM" onChange={onChange} required />
+              <label htmlFor="timeInput">Start Time: </label>
+              <input type="time" name="startTime" className="addClass"onChange={onChange} required />
+              <br />
+              <label htmlFor="timeInput">End Time: </label>
+              <input type="time" name="endTime" className="addClass" onChange={onChange} required />
               <br />
               <p>Select the Building where the class is located: </p>
 

@@ -14,7 +14,7 @@ const UploadForm = ({file, uploadedFlag, handleFileUpload, onSubmit, formRef, st
                     <form ref={formRef}>
                         <h4>
                             Select .ics file exported from <a href="https://bxeregprod.oit.nd.edu/StudentRegistration/ssb/registration" target="_blank" rel="noreferrer">NOVO</a> that 
-                            contains class information. See below for instructions on how to acquire this .ics file.
+                            contains class information to add classes from NOVO. See below for instructions on how to acquire this .ics file.
                         </h4>
                         <input
                             id="file-upload"
