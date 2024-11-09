@@ -25,7 +25,7 @@ export const AddClass = ({ events, buildings, classUpdateFunction }) => {
     e.preventDefault();
 
     //if all input fields are not filled out, don't attempt to create a new class
-    if (!newClass.name || !newClass.code || !newClass.time || !newClass.room || !newClass.instructor) {
+    if (!newClass.name || !newClass.code || !newClass.startTime || !newClass.endTime || !newClass.room || !newClass.instructor) {
         setStatus("Please Enter information for all fields")
     } else {
          // Trigger add flag to create event and
@@ -66,7 +66,8 @@ export const AddClass = ({ events, buildings, classUpdateFunction }) => {
     instructor: '',
     building: '',
     room: '',
-    time: '',
+    startTime: '',
+    endTime: '',
     days: [],
   });
 
@@ -82,7 +83,8 @@ useEffect(() => {
             instructor: '',
             building: buildings.sort((a, b) => a.get('name').localeCompare(b.get('name')))[0].id,
             room: '',
-            time: '',
+            startTime: '',
+            endTime: '',
             days: [],
           });
     }
@@ -93,13 +95,13 @@ useEffect(() => {
     // Check for add flag
     if (addClassFlag) {
 
-        const { code, name, instructor, building, room, time, days } = newClass;
+        const { code, name, instructor, building, room, startTime, endTime, days } = newClass;
 
         //if no days have been selected for the class, default to make the new class occur on every day
         const classDays = days.length > 0 ? days : ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
         // Create class and handle response
-        createClass(code, name, instructor, building, room, time, classDays)
+        createClass(code, name, instructor, building, room, startTime, endTime, classDays)
             .then((result) => {
                 
                 // Update class list and status message
@@ -113,7 +115,8 @@ useEffect(() => {
                     instructor: '',
                     building: buildings.sort((a, b) => a.get('name').localeCompare(b.get('name')))[0].id,
                     room: '',
-                    time: '',
+                    startTime: '',
+                    endTime: '',
                     days: newClass.days,
                 });
                 

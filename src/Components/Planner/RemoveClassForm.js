@@ -1,8 +1,6 @@
 import React from 'react';
+import { displayTime } from '../../Common/Services/EventService';
 
-
-const getStartTime = (time) =>
-    parseInt(time.split('-')[0].replace(':', ''), 10);
 
 
 const RemoveClassForm = ({ events, selectedClass, onChange, onClick, status, formRef }) => {
@@ -24,10 +22,10 @@ const RemoveClassForm = ({ events, selectedClass, onChange, onClick, status, for
             {/* Dropdown options for each class */}
             {events.length > 0 &&
               events
-                .sort((a, b) => getStartTime(a.get('time')) - getStartTime(b.get('time')))
+                .sort((a, b) => a.get('startTime') - b.get('startTime'))
                 .map((c) => (
                   <option key={c.id} value={c.id}>
-                    {c.get('name')} - {c.get('instructor')} ({c.get('days').join(', ')} | {c.get('time')})
+                    {c.get('name')} - {c.get('instructor')} ({c.get('days').join(', ')} | {displayTime(c)})
                   </option>
                 ))}
             {/* Dropdown for all CLASSES selected */}

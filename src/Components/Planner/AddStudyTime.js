@@ -25,7 +25,7 @@ export const AddStudyTime = ({ events, buildings, studyUpdateFunction }) => {
     e.preventDefault();
 
     //if all input fields are not filled out, don't attempt to create a new class
-    if (!newStudyTime.time) {
+    if (!newStudyTime.startTime || !newStudyTime.endTime) {
         setStatus("Please Enter information for all fields")
     } else {
         // Trigger add flag to create event and
@@ -60,7 +60,8 @@ export const AddStudyTime = ({ events, buildings, studyUpdateFunction }) => {
   const [addStudyFlag, setFlag] = useState(false);
   const [newStudyTime, setNewStudyTime] = useState({
     building: '',
-    time: '',
+    startTime: '',
+    endTime: '',
     days: [],
   });
 
@@ -73,7 +74,8 @@ export const AddStudyTime = ({ events, buildings, studyUpdateFunction }) => {
 
       setNewStudyTime({
             building: buildings.sort((a, b) => a.get('name').localeCompare(b.get('name')))[0].id,
-            time: '',
+            startTime: '',
+            endTime: '',
             days: [],
           });
     }
@@ -84,11 +86,11 @@ export const AddStudyTime = ({ events, buildings, studyUpdateFunction }) => {
     // Check for add flag
     if (addStudyFlag) {
 
-        const { building, time, days } = newStudyTime;
+        const { building, startTime, endTime, days } = newStudyTime;
         const classDays = days.length > 0 ? days : ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
         // Create event and handle response
-        createClass('STUDY', 'Study Time', '', building, '', time, classDays)
+        createClass('STUDY', 'Study Time', '', building, '', startTime, endTime, classDays)
             .then((result) => {
 
                 // Update event list
@@ -98,7 +100,8 @@ export const AddStudyTime = ({ events, buildings, studyUpdateFunction }) => {
                 // Reset new study times's state and attributes
                 setNewStudyTime({
                     building: buildings.sort((a, b) => a.get('name').localeCompare(b.get('name')))[0].id,
-                    time: '',
+                    startTime: '',
+                    endTime: '',
                     days: newStudyTime.days,
                 });
                 

@@ -88,7 +88,7 @@ useEffect(() => {
   //event directions consistent with the dropdown values
   useEffect(() => {
     if (classes.length > 0) {
-      let firstClass = classes.sort((a, b) => a.get('time').localeCompare(b.get('time')))[0]
+      let firstClass = classes.sort((a, b) => a.get('startTime') - b.get('startTime'))[0]
       setSource(firstClass.get('building').get('mapId'));
       setDestination(firstClass.get('building').get('mapId'));
     }
