@@ -66,12 +66,12 @@ export const removeClass = (classCode) => {
 	  query.get(classCode).then((event) => {
       event.destroy();
     });
-	  return `Class removed successfully.`;
+	  return `Event removed successfully.`;
 
 	} catch (error) {
     //if the class with the given id can't be removed, then return error message
-	  console.error('Error while removing class:', error);
-	  return `Failed to remove class: ${error.message}`;
+	  console.error('Error while removing event:', error);
+	  return `Failed to remove event: ${error.message}`;
 	}
 };
   

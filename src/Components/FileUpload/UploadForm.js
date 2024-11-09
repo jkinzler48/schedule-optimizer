@@ -1,11 +1,14 @@
 import { Link } from "react-router-dom";
 
+
 const UploadForm = ({file, uploadedFlag, handleFileUpload, onSubmit, formRef, status}) => {
 
   return (
     <>
         <div className="module">
+            {/* display status if there is one to display */}
             {status && <h4>{status}</h4>}
+            {/* if the file has not been uploaded, display upload form */}
             {!uploadedFlag ? (
                 <>
                     <form ref={formRef}>
@@ -28,6 +31,7 @@ const UploadForm = ({file, uploadedFlag, handleFileUpload, onSubmit, formRef, st
                     </form>
                 </>
                 ) : (
+                // if file has already been uploaded, then display button with link back to planner page
                 <>
                     <Link to="/">
                         <button>Return to Planner</button>

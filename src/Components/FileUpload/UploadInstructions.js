@@ -8,8 +8,10 @@ import step7Image from "../../images/Step7Image.png"
 
 const UploadInstructions = ({ uploadedFlag }) => {
 
+    
   return (
     <>
+        {/* display instructions if a file has not yet been successfully uploaded */}
         {!uploadedFlag && 
             <div className="module">
                 <h2>Instructions to Download the required file from NOVO</h2>
@@ -46,7 +48,7 @@ const UploadInstructions = ({ uploadedFlag }) => {
                     </li>
                     <br />
                     <li>
-                        <h4>Go to your email that you set the file to be emailed to, and download the .ics file in the email from "noreply_StudentReg@nd.edu".</h4>
+                        <h4>Go to your email that you had the file sent to, and download the .ics file in the email from "noreply_StudentReg@nd.edu".</h4>
                         <img width="100%" src={step7Image} alt="Bottom of the email with the .ics file sent from 'noreply_StudentReg@nd.edu' and the 'Download' link highlighted."/>
                     </li>
                 </ol>
@@ -55,5 +57,6 @@ const UploadInstructions = ({ uploadedFlag }) => {
     </>
   );
 }
+
 
 export default UploadInstructions;

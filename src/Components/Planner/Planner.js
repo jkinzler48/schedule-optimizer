@@ -60,6 +60,10 @@ const Planner = () => {
         </div> 
         <div className='module'>
             <h2>Import Class Schedule (from NOVO)</h2>
+            <p>It is recommended that you remove all classes that have already been added to your schedule prior
+              to importing a new schedule. You can use the "Remove Event from Schedule" option below
+              to accomplish this.
+            </p>
             <Link to="/upload">
                 <button>Import Schedule</button>
             </Link>
