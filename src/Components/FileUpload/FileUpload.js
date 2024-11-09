@@ -1,17 +1,18 @@
 import Parse from "parse";
+import Header from '../Header/Header.js';
+import UploadForm from "./UploadForm.js";
+import UploadInstructions from "./UploadInstructions.js";
 
 //FileUpload.jsx
 import React from "react";
 
 
+
 const FileUpload = () => {
 
     const [file, setFile] = React.useState("");
-
-    const handleFileUpload = (event) => {
-    event.preventDefault();
-      setFile(event.target.files[0]);
-    };
+    const [flag, setFlag ] = React.useState(false);
+    const [status, setStatus] = React.useState("");
 
     const formRef = React.useRef(null);
 
@@ -23,20 +24,12 @@ const FileUpload = () => {
             
             File.save()
                 .then((savedFile) => {
-                    console.log(file.name + " uploaded successfully");
-                   
-                    // const Gallery = Parse.Object.extend("Gallery");
-                    // const gallery = new Gallery();
-                    // gallery.set("photo", photo);
-        
-                    // return gallery.save();
+                    setFlag(true);
+                    setStatus("File uploaded successfully.");
+
                 })
-                // .then((gallery) => {
-                //     console.log("File saved:", gallery);
-                //     // updateData();
-                // })
                 .catch((error) => {
-                    console.error("Error saving file:", error);
+                    setStatus("Error saving file. Please try agian or enter your schedule manually.");
                 });
             setFile("");
             if (formRef.current) {
@@ -44,27 +37,30 @@ const FileUpload = () => {
             }
             };
         }
+
+    const handleFileUpload = (event) => {
+      event.preventDefault();
+      setFile(event.target.files[0]);
+    };
         
   
   
 
   return (
-    <form ref={formRef}>
-      <label htmlFor="file-upload" className="custom-file-upload">
-        Select .ics file exported from NOVO that contains class information.
-      </label>
-      <br />
-      <br />
-      <input
-        id="file-upload"
-        type="file"
-        filename={file}
-        onChange={handleFileUpload}
-      />
-      <button type="submit" onClick={onSubmit}>
-            Upload
-      </button>
-    </form>
+    <>
+    <Header />
+    <UploadForm 
+      file={file}
+      uploadedFlag = {flag}
+      handleFileUpload={handleFileUpload}
+      onSubmit={onSubmit}
+      formRef={formRef}
+      status={status}
+    />
+    <UploadInstructions 
+      uploadedFlag = {flag}
+    />
+    </>
   );
 }
 

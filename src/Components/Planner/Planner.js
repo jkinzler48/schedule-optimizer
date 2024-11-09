@@ -59,44 +59,44 @@ const Planner = () => {
           />
         </div> 
         <div className='module'>
-          <h2>Import Schedule from Novo</h2>
-                <Link to="/upload">
-                    <button>Import Schedule</button>
-                </Link>
+            <h2>Import Class Schedule (from NOVO)</h2>
+            <Link to="/upload">
+                <button>Import Schedule</button>
+            </Link>
         </div>
-
-
-
         <div className="module">
-        <h2>Update Schedule</h2>
-          <AddStartEnd 
-            events={classes}
-            buildings={buildings}
-            classUpdateFunction={setSchedule}
-          />
-		</div>
-		<div className="module">
+          <h2>Manually Add Class to Schedule</h2>
           <AddClass
             events={classes}
             buildings={buildings}
             classUpdateFunction={setSchedule}
           />
-		</div>
-		<div className="module">
-          <RemoveClass
-            events={classes}
-            classUpdateFunction={setSchedule}
-          />
-		</div>
-		<div className="module">
-           <AddStudyTime
-            events={classes}
-            buildings={buildings}
-            studyUpdateFunction={setSchedule}
-          />
+		    </div>
+        <div className="module">
+            <h2>Add Study time</h2>
+            <AddStudyTime
+              events={classes}
+              buildings={buildings}
+              studyUpdateFunction={setSchedule}
+        />
+        </div>
+        <div className="module">
+          <h2>Add Day Starting/Ending Location</h2>
+            <AddStartEnd 
+              events={classes}
+              buildings={buildings}
+              classUpdateFunction={setSchedule}
+            />
+		    </div>
+        <div className="module">
+            <h2>Remove Event from Schedule</h2>
+            <RemoveClass
+              events={classes}
+              classUpdateFunction={setSchedule}
+            />
+        </div>
           {/* We may also add section for adding additional "special" events, such as
           adding a meal time or break time */}
-        </div>
       </>
     );
   }
