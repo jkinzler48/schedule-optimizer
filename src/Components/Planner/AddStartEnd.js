@@ -68,7 +68,7 @@ const AddStartEnd = ({ events, buildings, eventsUpdateFunction }) => {
       if (startEnd) {
 
         //creates a new Event object used to store the day's start/end.
-        createEvent("START/END", "Day Start/End", '', startEnd, '', "00:00", "00:00", ['Every Day'])
+        createEvent("START/END", "Day Start/End", '', startEnd, '', "Start of Day", "End of Day", ['Every Day'])
           .then((newEvent) => {
             setAddDayStart(false);
             // Add the newly created event to the events array

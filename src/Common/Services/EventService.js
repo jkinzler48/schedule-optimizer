@@ -27,22 +27,14 @@ export const createEvent = (code, name, instructor, building, room, startTime, e
     //the building input is the id for a Building Parse Object, so classify it is a pointer for the new Event
     const buildingPointer = { __type: 'Pointer', className: 'Building', objectId: building };
 
-    //converts startTime from a string to a date
-    const [startHours, startMinutes] = startTime.split(':').map(Number);
-    const startDate = new Date(0,0,0, startHours, startMinutes);
- 
-     //converts endTime from a string to a date
-    const [endHours, endMinutes] = endTime.split(':').map(Number);
-    const endDate = new Date(0,0,0, endHours, endMinutes);
-
     //set all attributes for hte new event
     newEvent.set('code', code);
     newEvent.set('name', name);
     newEvent.set('instructor', instructor);
     newEvent.set('building', buildingPointer);
     newEvent.set('room', room);
-    newEvent.set('startTime', startDate);
-    newEvent.set('endTime', endDate);
+    newEvent.set('startTime', startTime);
+    newEvent.set('endTime', endTime);
     newEvent.set('days', days);
     newEvent.set('user', userPointer)
 
@@ -170,88 +162,118 @@ export const getStartEnd = (events) => {
 
 
 
-//function to get the next event in a schedule, and the event that occurs directly before it.
+//function to get the next class in a schedule, and the event that occurs directly before it.
 export const getNextEvent = async (events) => {
 
-  let nextEvent, comingFrom;
+  // Helper function to convert HH:MM string to minutes
+  //so that times can be directly compared
+  function timeToMinutes(timeStr) {
+    const [hours, minutes] = timeStr.split(':').map(Number);
+    return hours * 60 + minutes;
+  }
+
+  let nextClass, comingFrom;
 
   //get current Day/Time
   const currentDate = new Date();
-
   const currentDay = currentDate.toLocaleString("en-US", { weekday: "long" });
-
-  //set current time equal to the actual current time, but at Date(0,0,0) for comparison
-  const currentTime = new Date(0, 0, 0, currentDate.getHours(), currentDate.getMinutes());
+  const currentTime = currentDate.toTimeString().slice(0, 5);
 
   //get all events that occur today
   let dayEvents = events
     .filter((c) => c.get('days').some((d) => d === currentDay))
-    .sort((a, b) => a.get('startTime') - b.get('startTime'));
+    .sort((a, b) => a.get('startTime').localeCompare(b.get('startTime')))
 
   //if there are no events today, or all events today have already ended, then the next event will occur on a differnet day
-  if (dayEvents.length === 0 || (dayEvents.length > 0 && dayEvents[dayEvents.length - 1].get('endTime') < currentTime)) {
+  if (dayEvents.length === 0 || (dayEvents.length > 0 && timeToMinutes(dayEvents[dayEvents.length - 1].get('endTime')) < timeToMinutes(currentTime))) {
     
     let dayInc = 1;
     do {
-      //increment the day until you find a day that has at least one event
+      //increment the day until you find a day that has at least one class
       currentDate.setDate(currentDate.getDate() + 1);
       const nextDay = currentDate.toLocaleString("en-US", { weekday: "long" });
       dayEvents = [...events
         .filter((c) => c.get('days').some((d) => d === nextDay))
-        .sort((a, b) => a.get('startTime') - b.get('startTime'))];
+        .sort((a, b) => a.get('startTime').localeCompare(b.get('startTime')))];
       dayInc++;
     } while (dayEvents.length === 0 && dayInc <= 7);
 
-    //if there is ever a next event, then the next event will be the first event to occur on the day
+    //if there is ever a next class, then the next class will be the first class to occur on the day
     if (dayEvents.length > 0) {
-      nextEvent = dayEvents[0];
+      nextClass = dayEvents[0];
     }
 
-    //if there is a next event, the coming from will be where the day is started, since it will
-    //be the first event of the day
-    if (nextEvent) {
+    //if there is a next class, the coming from will be where the day is started, since it will
+    //be the first class of the day
+    if (nextClass) {
       comingFrom = "startEnd";
     }
 
 
-  //if there is at least one event that has not ended today, then the next event or previous event will occur today
+  //if there is at least one class that has not ended today, then the next class or previous class will occur today
   } else {
 
     //find the index of the next/current event to occur 
     let i = dayEvents.length - 1;
-    while (i > 0 && dayEvents[i - 1].get('startTime') > currentTime) {
+    while (i > 0 && timeToMinutes(dayEvents[i - 1].get('startTime')) > timeToMinutes(currentTime)) {
       i--;
     }
 
-    //if the next event is the first event of the day, comingFrom will be the start/end Location for the day
+    //if the next class is the first class of the day, comingFrom will be the start/end Location for the day
     if (i === 0) {
         comingFrom = "startEnd";
-        nextEvent = dayEvents[i];
+        nextClass = dayEvents[i];
     
-    //if the next event is the last event of the day, nextEvent will be the start/end Location for the day
-    } else if (i < 0 || ((i === dayEvents.length - 1) && dayEvents[i].get('startTime')) < currentTime) {
+    //if the next class is the last class of the day, nextClass will be the start/end Location for the day
+    } else if (i < 0 || ((i === dayEvents.length - 1) && timeToMinutes(dayEvents[i].get('startTime')) < timeToMinutes(currentTime))) {
       comingFrom = dayEvents[dayEvents.length - 1];
-      nextEvent = "startEnd";
+      nextClass = "startEnd";
 
     } else {
       comingFrom = dayEvents[i - 1];
-      nextEvent = dayEvents[i];
+      nextClass = dayEvents[i];
     }
 
   }
 
-  //return both the event that comes directly before the next event, and the next event
-  return [comingFrom, nextEvent];
+  //return both the event that comes directly before the next class, and the next class
+  return [comingFrom, nextClass];
 };
 
 
-//displays the time for an event based in 12 hour HH:MM - HH:MM
+
+//displays the time for an event based in 12 hour HH:MM AM/PM - HH:MM AM/PM
 export const displayTime = (event) => {
 
-  const parameters = { hour: '2-digit', minute: '2-digit', hour12: true };
-  
-  const startTime = event.get('startTime').toLocaleString('en-US', parameters);
-  const endTime = event.get('endTime').toLocaleString('en-US', parameters);
-  
-  return `${startTime} - ${endTime}`;
+  //internal function that returns a string in HH:MM AM/PM format for a singel time string
+  const getString = (time) => {
+
+      //if the time is either the start or end of day, then just return time
+      //to handle the strings for Day Start/End event
+      if (time === "Start of Day" || time === "End of Day") {
+        return time;
+      }
+
+      //extract hours and minutes from time string
+      //convert hours to a number so it can be compared, but keep minutes a string
+      //so the mintues always appear as 2 digits
+      let [hours, minutes] = time.split(':');
+      hours = Number(hours);
+
+      //if the hour is 12 AM or 12 PM
+      if ((hours % 12) === 0) {
+        return `12:${minutes} ${(hours === 0) ? 'AM' : 'PM'}`
+
+      //if the hour is not 12 AM, but before 12 PM
+      } else if (hours < 12) {
+        return `${hours}:${minutes} AM`
+
+      // if the hour is after 12 PM
+      } else {
+        return `${hours - 12}:${minutes} PM`
+      }
+
+  }
+
+  return `${getString(event.get('startTime'))} - ${getString(event.get('endTime'))}`;
 }

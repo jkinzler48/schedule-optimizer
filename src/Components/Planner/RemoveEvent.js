@@ -36,6 +36,12 @@ export const RemoveEvent = ({ events, eventsUpdateFunction }) => {
       //filter events to contain only classes, not study times or other events
       let allClasses = events.filter((event) => event.get('instructor'));
 
+      //check if there are no classes to remove
+      if (allClasses.length === 0) {
+        setStatus("You have no classes to remove.");
+        return;
+      }
+
       // Create a new array to hold events that were successfully removed
       let updatedEvents = [...events];
 

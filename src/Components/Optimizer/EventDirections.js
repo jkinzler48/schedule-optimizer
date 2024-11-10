@@ -13,7 +13,7 @@ export const EventDirections = ({ events, source, destination, sourceChange, des
       <select className="classSelect" onChange={sourceChange}>
       {events.length > 0 &&
           events
-            .sort((a, b) => a.get('startTime') - b.get('startTime'))
+            .sort((a, b) => a.get('startTime').localeCompare(b.get('startTime')))
             .map((c) => (
               <option key={c.id} value={c.get('building').get('mapId')}>
                 {displayTime(c)} | {c.get('days').join(', ')} | {c.get('name')} ({c.get('building').get('name')})
@@ -27,7 +27,7 @@ export const EventDirections = ({ events, source, destination, sourceChange, des
       <select className="classSelect" onChange={destChange}>
       {events.length > 0 &&
           events
-            .sort((a, b) => a.get('startTime') - b.get('startTime'))
+            .sort((a, b) => a.get('startTime').localeCompare(b.get('startTime')))
             .map((c) => (
               <option key={c.id} value={c.get('building').get('mapId')}>
                 {displayTime(c)} | {c.get('days').join(', ')} | {c.get('name')} ({c.get('building').get('name')})

@@ -7,7 +7,7 @@ const EventList = ({ events, day, selectFunction }) => {
     <>
         <div className="section">
             This is your schedule for the selected day.
-            <select id="daySelect" className="daySelect" onChange={selectFunction}>
+            <select id="daySelect" className="daySelect" onChange={selectFunction} value={day}>
                 <option value="Today">Today</option>
                 <option value="Sunday">Sunday</option>
                 <option value="Monday">Monday</option>
@@ -25,10 +25,10 @@ const EventList = ({ events, day, selectFunction }) => {
                   <>
                     {events.length === 0 ? 
                     (
-                      <p>No Events are on your schedule for any day.</p>
+                      <p>No Events are on your schedule fo any day.</p>
                     ) : (
                     events
-                        .sort((a, b) => a.get('startTime') - b.get('startTime'))
+                        .sort((a, b) => a.get('startTime').localeCompare(b.get('startTime')))
                         .map((c) => (
                         <li key={c.id}>
                             {c.get('name')} ({c.get('building').get("name")})  
@@ -47,12 +47,12 @@ const EventList = ({ events, day, selectFunction }) => {
                     ) : (
                     events
                         .filter((c) => c.get('days').some((d) => d === day))
-                        .sort((a,b) => a.get('startTime') - b.get('startTime'))
+                        .sort((a, b) => a.get('startTime').localeCompare(b.get('startTime')))
                         .map((c) => (
                         <li key={c.id}>
                             {c.get('name')} ({c.get('building').get("name")})  
                             <br />
-                            {displayTime(c)} | {c.get('days').join('/')}
+                            {displayTime(c)} | {c.get('days').join(', ')}
                         </li>
                         ))
                     )}

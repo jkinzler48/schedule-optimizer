@@ -22,7 +22,7 @@ const RemoveEventForm = ({ events, selectedClass, onChange, onClick, status, for
             {/* Dropdown options for each event */}
             {events.length > 0 &&
               events
-                .sort((a, b) => a.get('startTime') - b.get('startTime'))
+                .sort((a, b) => a.get('startTime').localeCompare(b.get('startTime')))
                 .map((c) => (
                   <option key={c.id} value={c.id}>
                      {displayTime(c)} | {c.get('days').join(', ')} | {c.get('name')} ({c.get('building').get('name')})
