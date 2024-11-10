@@ -7,16 +7,16 @@ import { displayTime } from '../../Common/Services/EventService';
 export const EventDirections = ({ events, source, destination, sourceChange, destChange }) => {
   return (
 
-    <div>
+    <div className='section'>
       <p>Select Source Event</p>
       {/* Create a dropdown option for every event, where the event are sorted in order of the time they start */}
       <select className="classSelect" onChange={sourceChange}>
       {events.length > 0 &&
           events
-            .sort((a, b) => a.get('startTime') - b.get('startTime'))
+            .sort((a, b) => a.get('startTime').localeCompare(b.get('startTime')))
             .map((c) => (
               <option key={c.id} value={c.get('building').get('mapId')}>
-                {`${c.get('name')} - ${c.get('building').get('name')} ${c.get('room')} (${c.get('days')} | ${displayTime(c)})`}
+                {displayTime(c)} | {c.get('days').join(', ')} | {c.get('name')} ({c.get('building').get('name')})
               </option>
             ))}
       </select>
@@ -27,10 +27,10 @@ export const EventDirections = ({ events, source, destination, sourceChange, des
       <select className="classSelect" onChange={destChange}>
       {events.length > 0 &&
           events
-            .sort((a, b) => a.get('startTime') - b.get('startTime'))
+            .sort((a, b) => a.get('startTime').localeCompare(b.get('startTime')))
             .map((c) => (
               <option key={c.id} value={c.get('building').get('mapId')}>
-                {`${c.get('name')} - ${c.get('building').get('name')} ${c.get('room')} (${c.get('days')} | ${displayTime(c)})`}
+                {displayTime(c)} | {c.get('days').join(', ')} | {c.get('name')} ({c.get('building').get('name')})
               </option>
             ))}
       </select>

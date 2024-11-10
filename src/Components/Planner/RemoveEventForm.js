@@ -3,10 +3,10 @@ import { displayTime } from '../../Common/Services/EventService';
 
 
 
-const RemoveClassForm = ({ events, selectedClass, onChange, onClick, status, formRef }) => {
+const RemoveEventForm = ({ events, selectedClass, onChange, onClick, status, formRef }) => {
     return (
         
-      <div>
+      <div className="section">
         <h4>Remove event from Schedule</h4>
         <form className="removeForm" id="removeForm" action="#stayhere">
           <p>Select class to remove:</p>
@@ -14,18 +14,18 @@ const RemoveClassForm = ({ events, selectedClass, onChange, onClick, status, for
             name="removes" 
             value={selectedClass} 
             onChange={onChange} 
-            style={{ margin: '10px' }}
+            style={{ margin: '10px', width: '100%' }}
           >
             {/* Dropdown for no event selected */}
             <option value="none">Select Event to Remove</option>
       
-            {/* Dropdown options for each class */}
+            {/* Dropdown options for each event */}
             {events.length > 0 &&
               events
-                .sort((a, b) => a.get('startTime') - b.get('startTime'))
+                .sort((a, b) => a.get('startTime').localeCompare(b.get('startTime')))
                 .map((c) => (
                   <option key={c.id} value={c.id}>
-                    {c.get('name')} - {c.get('instructor')} ({c.get('days').join(', ')} | {displayTime(c)})
+                     {displayTime(c)} | {c.get('days').join(', ')} | {c.get('name')} ({c.get('building').get('name')})
                   </option>
                 ))}
             {/* Dropdown for all CLASSES selected */}
@@ -50,4 +50,4 @@ const RemoveClassForm = ({ events, selectedClass, onChange, onClick, status, for
 
 
 
-export default RemoveClassForm;
+export default RemoveEventForm;

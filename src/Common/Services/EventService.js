@@ -1,14 +1,14 @@
 import Parse from 'parse';
 
 
-// const CLASS_SCHEDULE = 'test';
-const CLASS_SCHEDULE = 'Event';
+// const SCHEDULE = 'test';
+const SCHEDULE = 'Event';
 
 
 //CREATE: function to create a new Event in the parse class
-export const createClass = (code, name, instructor, building, room, startTime, endTime, days) => {
-  const Class = Parse.Object.extend('Event'); // Change 'Class' to your class name in Back4App
-  const newClass = new Class();
+export const createEvent = (code, name, instructor, building, room, startTime, endTime, days) => {
+  const Event = Parse.Object.extend('Event');
+  const newEvent = new Event();
 
   try {
 
@@ -27,57 +27,49 @@ export const createClass = (code, name, instructor, building, room, startTime, e
     //the building input is the id for a Building Parse Object, so classify it is a pointer for the new Event
     const buildingPointer = { __type: 'Pointer', className: 'Building', objectId: building };
 
-    //converts startTime from a string to a date
-    const [startHours, startMinutes] = startTime.split(':').map(Number);
-    const startDate = new Date(0,0,0, startHours, startMinutes);
- 
-     //converts endTime from a string to a date
-    const [endHours, endMinutes] = endTime.split(':').map(Number);
-    const endDate = new Date(0,0,0, endHours, endMinutes);
-
     //set all attributes for hte new event
-    newClass.set('code', code);
-    newClass.set('name', name);
-    newClass.set('instructor', instructor);
-    newClass.set('building', buildingPointer);
-    newClass.set('room', room);
-    newClass.set('startTime', startDate);
-    newClass.set('endTime', endDate);
-    newClass.set('days', days);
-    newClass.set('user', userPointer)
+    newEvent.set('code', code);
+    newEvent.set('name', name);
+    newEvent.set('instructor', instructor);
+    newEvent.set('building', buildingPointer);
+    newEvent.set('room', room);
+    newEvent.set('startTime', startTime);
+    newEvent.set('endTime', endTime);
+    newEvent.set('days', days);
+    newEvent.set('user', userPointer)
 
-    return newClass.save().then((result) => {
-      // After saving the new class, fetch it including the building pointer
+    return newEvent.save().then((result) => {
+      // After saving the new event, fetch it including the building pointer
       //so the building's attributes can be accessed by the new event added to the Events list
-      const classQuery = new Parse.Query(Class);
-      classQuery.include('building'); 
-      return classQuery.get(result.id).then((fetchedClass) => {
-        //return the newClass with information about its building included
-        return fetchedClass;
+      const eventQuery = new Parse.Query(Event);
+      eventQuery.include('building'); 
+      return eventQuery.get(result.id).then((fetchedEvent) => {
+        //return the newEvent with information about its building included
+        return fetchedEvent;
       });
     });
 
   } catch (error) {
-    throw new Error(`Failed to create class: ${error.message}`);
+    throw new Error(`Failed to create Event: ${error.message}`);
   }
 };
 
 
 
 //DELETE: function to remove an Event in the parse class
-export const removeClass = (classCode) => {
-  //class code input is the id for the Event Parse Object
+export const removeEvent = (eventCode) => {
+  //event code input is the id for the Event Parse Object
 	try {
 
     //find the Event Object wiht hte given id, and then delete it from the Database
 	  const query = new Parse.Query('Event'); 
-	  query.get(classCode).then((event) => {
+	  query.get(eventCode).then((event) => {
       event.destroy();
     });
 	  return `Event removed successfully.`;
 
 	} catch (error) {
-    //if the class with the given id can't be removed, then return error message
+    //if the event with the given id can't be removed, then return error message
 	  console.error('Error while removing event:', error);
 	  return `Failed to remove event: ${error.message}`;
 	}
@@ -90,7 +82,7 @@ Events.collection = [];
 
 // READ operation - get all events in Parse class Lesson
 export const getAllEvents = () => {
-  const Event = Parse.Object.extend(CLASS_SCHEDULE);
+  const Event = Parse.Object.extend(SCHEDULE);
   const query = new Parse.Query(Event);
 
   query.include("building");
@@ -115,7 +107,7 @@ export const getEventsByUser = () => {
   //get the current user
   const user = Parse.User.current();
 
-  const Event = Parse.Object.extend(CLASS_SCHEDULE);
+  const Event = Parse.Object.extend(SCHEDULE);
   const query = new Parse.Query(Event);
 
   query.include("building");
@@ -135,15 +127,21 @@ export const getEventsByUser = () => {
 
 
 
-//function that gets the event that starts/ends a day
-export const getStartEnd = (classes) => {
+//function that gets the event that starts/ends a day for current user
+export const getStartEnd = (events) => {
 
-  //query to database for an Event that has a name equal to "Day Start/End"
-  const Event = Parse.Object.extend(CLASS_SCHEDULE);
+  //get the current user
+  const user = Parse.User.current();
+
+  //query to database for an Event that has a name equal to "Day Start/End" and is
+  //for the current user
+  const Event = Parse.Object.extend(SCHEDULE);
   const query = new Parse.Query(Event);
 
   query.include("building");
   query.equalTo("name", "Day Start/End");
+  query.equalTo("user", user);
+
 
   return query.find()
     .then((results) => {
@@ -165,34 +163,38 @@ export const getStartEnd = (classes) => {
 
 
 //function to get the next class in a schedule, and the event that occurs directly before it.
-export const getNextClass = async (classes) => {
+export const getNextEvent = async (events) => {
+
+  // Helper function to convert HH:MM string to minutes
+  //so that times can be directly compared
+  function timeToMinutes(timeStr) {
+    const [hours, minutes] = timeStr.split(':').map(Number);
+    return hours * 60 + minutes;
+  }
 
   let nextClass, comingFrom;
 
   //get current Day/Time
   const currentDate = new Date();
-
   const currentDay = currentDate.toLocaleString("en-US", { weekday: "long" });
-
-  //set current time equal to the actual current time, but at Date(0,0,0) for comparison
-  const currentTime = new Date(0, 0, 0, currentDate.getHours(), currentDate.getMinutes());
+  const currentTime = currentDate.toTimeString().slice(0, 5);
 
   //get all events that occur today
-  let dayEvents = classes
+  let dayEvents = events
     .filter((c) => c.get('days').some((d) => d === currentDay))
-    .sort((a, b) => a.get('startTime') - b.get('startTime'));
+    .sort((a, b) => a.get('startTime').localeCompare(b.get('startTime')))
 
   //if there are no events today, or all events today have already ended, then the next event will occur on a differnet day
-  if (dayEvents.length === 0 || (dayEvents.length > 0 && dayEvents[dayEvents.length - 1].get('endTime') < currentTime)) {
+  if (dayEvents.length === 0 || (dayEvents.length > 0 && timeToMinutes(dayEvents[dayEvents.length - 1].get('endTime')) < timeToMinutes(currentTime))) {
     
     let dayInc = 1;
     do {
       //increment the day until you find a day that has at least one class
       currentDate.setDate(currentDate.getDate() + 1);
       const nextDay = currentDate.toLocaleString("en-US", { weekday: "long" });
-      dayEvents = [...classes
+      dayEvents = [...events
         .filter((c) => c.get('days').some((d) => d === nextDay))
-        .sort((a, b) => a.get('startTime') - b.get('startTime'))];
+        .sort((a, b) => a.get('startTime').localeCompare(b.get('startTime')))];
       dayInc++;
     } while (dayEvents.length === 0 && dayInc <= 7);
 
@@ -213,7 +215,7 @@ export const getNextClass = async (classes) => {
 
     //find the index of the next/current event to occur 
     let i = dayEvents.length - 1;
-    while (i > 0 && dayEvents[i - 1].get('startTime') > currentTime) {
+    while (i > 0 && timeToMinutes(dayEvents[i - 1].get('startTime')) > timeToMinutes(currentTime)) {
       i--;
     }
 
@@ -223,7 +225,7 @@ export const getNextClass = async (classes) => {
         nextClass = dayEvents[i];
     
     //if the next class is the last class of the day, nextClass will be the start/end Location for the day
-    } else if (i < 0 || ((i === dayEvents.length - 1) && dayEvents[i].get('startTime')) < currentTime) {
+    } else if (i < 0 || ((i === dayEvents.length - 1) && timeToMinutes(dayEvents[i].get('startTime')) < timeToMinutes(currentTime))) {
       comingFrom = dayEvents[dayEvents.length - 1];
       nextClass = "startEnd";
 
@@ -239,13 +241,39 @@ export const getNextClass = async (classes) => {
 };
 
 
-//displays the time for an event based in 12 hour HH:MM - HH:MM
+
+//displays the time for an event based in 12 hour HH:MM AM/PM - HH:MM AM/PM
 export const displayTime = (event) => {
 
-  const parameters = { hour: '2-digit', minute: '2-digit', hour12: true };
-  
-  const startTime = event.get('startTime').toLocaleString('en-US', parameters);
-  const endTime = event.get('endTime').toLocaleString('en-US', parameters);
-  
-  return `${startTime} - ${endTime}`;
+  //internal function that returns a string in HH:MM AM/PM format for a singel time string
+  const getString = (time) => {
+
+      //if the time is either the start or end of day, then just return time
+      //to handle the strings for Day Start/End event
+      if (time === "Start of Day" || time === "End of Day") {
+        return time;
+      }
+
+      //extract hours and minutes from time string
+      //convert hours to a number so it can be compared, but keep minutes a string
+      //so the mintues always appear as 2 digits
+      let [hours, minutes] = time.split(':');
+      hours = Number(hours);
+
+      //if the hour is 12 AM or 12 PM
+      if ((hours % 12) === 0) {
+        return `12:${minutes} ${(hours === 0) ? 'AM' : 'PM'}`
+
+      //if the hour is not 12 AM, but before 12 PM
+      } else if (hours < 12) {
+        return `${hours}:${minutes} AM`
+
+      // if the hour is after 12 PM
+      } else {
+        return `${hours - 12}:${minutes} PM`
+      }
+
+  }
+
+  return `${getString(event.get('startTime'))} - ${getString(event.get('endTime'))}`;
 }

@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react';
-import { removeClass } from "../../Common/Services/EventService.js";
-import RemoveClassForm from './RemoveClassForm.js';
+import { removeEvent } from "../../Common/Services/EventService.js";
+import RemoveEventForm from './RemoveEventForm.js';
 
 
 //component that allows user to dynamically remove an event to their schedule.
-export const RemoveClass = ({ events, classUpdateFunction }) => {
+export const RemoveEvent = ({ events, eventsUpdateFunction }) => {
 
 
   //funciton that handles removing a single event
@@ -16,7 +16,7 @@ export const RemoveClass = ({ events, classUpdateFunction }) => {
     }
 
     //remove event
-    return removeClass(eventCode);
+    return removeEvent(eventCode);
 
   }
 
@@ -35,6 +35,12 @@ export const RemoveClass = ({ events, classUpdateFunction }) => {
 
       //filter events to contain only classes, not study times or other events
       let allClasses = events.filter((event) => event.get('instructor'));
+
+      //check if there are no classes to remove
+      if (allClasses.length === 0) {
+        setStatus("You have no classes to remove.");
+        return;
+      }
 
       // Create a new array to hold events that were successfully removed
       let updatedEvents = [...events];
@@ -59,7 +65,7 @@ export const RemoveClass = ({ events, classUpdateFunction }) => {
       }
 
       //update events to reflect the events that were successfully removed
-      classUpdateFunction(updatedEvents);
+      eventsUpdateFunction(updatedEvents);
 
       // If all classes were removed successfully, update the status
       if (removalSuccess) {
@@ -79,7 +85,7 @@ export const RemoveClass = ({ events, classUpdateFunction }) => {
 
       //update events list so that the removed class dissapears from teh user's view
       if (result.startsWith("Event removed successfully")) {
-        classUpdateFunction(events.filter((e) => e.id !== selectedClassCode))
+        eventsUpdateFunction(events.filter((e) => e.id !== selectedClassCode))
       }
     }
 
@@ -106,7 +112,7 @@ export const RemoveClass = ({ events, classUpdateFunction }) => {
   //JSX
   return (
     <>
-        <RemoveClassForm
+        <RemoveEventForm
             events={events}
             selectedClass={selectedClassCode}
             onChange={handleInputChange}
@@ -118,4 +124,4 @@ export const RemoveClass = ({ events, classUpdateFunction }) => {
   );
 };
 
-export default RemoveClass;
+export default RemoveEvent;

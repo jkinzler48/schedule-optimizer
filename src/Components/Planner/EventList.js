@@ -2,12 +2,12 @@ import React from 'react';
 import { displayTime } from '../../Common/Services/EventService';
 
 
-const EventList = ({ classes, day, selectFunction }) => {
+const EventList = ({ events, day, selectFunction }) => {
   return (
     <>
-        <div>
+        <div className="section">
             This is your schedule for the selected day.
-            <select id="daySelect" className="daySelect" onChange={selectFunction}>
+            <select id="daySelect" className="daySelect" onChange={selectFunction} value={day}>
                 <option value="Today">Today</option>
                 <option value="Sunday">Sunday</option>
                 <option value="Monday">Monday</option>
@@ -19,21 +19,21 @@ const EventList = ({ classes, day, selectFunction }) => {
                 <option value="All Days">All Days</option>
             </select>
             <h4>{day}'s Schedule</h4>
-            <ol>
-                {/* if All days option is selected, then display all classes for user in order of start time */}
+            <ol className="eventList">
+                {/* if All days option is selected, then display all events for user in order of start time */}
                 {day === "All Days" ? (
                   <>
-                    {classes.length === 0 ? 
+                    {events.length === 0 ? 
                     (
-                      <p>No Events are on your schedule for any day.</p>
+                      <p>No Events are on your schedule fo any day.</p>
                     ) : (
-                    classes
-                        .sort((a, b) => a.get('startTime') - b.get('startTime'))
+                    events
+                        .sort((a, b) => a.get('startTime').localeCompare(b.get('startTime')))
                         .map((c) => (
                         <li key={c.id}>
                             {c.get('name')} ({c.get('building').get("name")})  
                             <br />
-                            {displayTime(c)} | {c.get('days').join('/')}
+                            {displayTime(c)} | {c.get('days').join(', ')}
                         </li>
                         ))
                     )}
@@ -41,18 +41,18 @@ const EventList = ({ classes, day, selectFunction }) => {
                 ) : ( 
                   // if an option other than "All Days" is selected, then only display events for that day
                   <> 
-                    {classes.filter((c) => c.get('days').some((d) => d === day)).length === 0 ? 
+                    {events.filter((c) => c.get('days').some((d) => d === day)).length === 0 ? 
                     (
                       <p>Nothing scheduled for {day}.</p>
                     ) : (
-                    classes
+                    events
                         .filter((c) => c.get('days').some((d) => d === day))
-                        .sort((a,b) => a.get('startTime') - b.get('startTime'))
+                        .sort((a, b) => a.get('startTime').localeCompare(b.get('startTime')))
                         .map((c) => (
                         <li key={c.id}>
                             {c.get('name')} ({c.get('building').get("name")})  
                             <br />
-                            {displayTime(c)} | {c.get('days').join('/')}
+                            {displayTime(c)} | {c.get('days').join(', ')}
                         </li>
                         ))
                     )}

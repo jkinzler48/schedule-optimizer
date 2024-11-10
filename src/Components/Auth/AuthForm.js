@@ -7,10 +7,10 @@ const AuthForm = ({ user, isLogin, onChange, onSubmit, status }) => {
     <>
         <div className = "module">
             {/* displays status message if one exists */}
-            {status && <div style={{color:'red'}}>{status}</div>}
+            {status && <div className="section" style={{color:'red'}}>{status}</div>}
 
             <form onSubmit={onSubmit}>
-            <div>
+            <div className="section">
                 {/* display "First Name" and "Last Name" input fields if it is not login */}
                 {!isLogin ?
                     <>

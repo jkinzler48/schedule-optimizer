@@ -6,8 +6,9 @@ import EventList from "./EventList.js";
 import AddStartEnd from './AddStartEnd.js';
 import AddClass from './AddClass.js';
 import AddStudyTime from './AddStudyTime.js';
-import RemoveClass from './RemoveClass.js';
+import RemoveEvent from './RemoveEvent.js';
 import Header from '../Header/Header.js';
+
 
 
 //In future, we will add user feautres, so that each user can have their own schedule,
@@ -52,7 +53,7 @@ const Planner = () => {
         <div className="module">
           <h2>Current Schedule</h2>
           <EventList
-            classes={classes}
+            events={events}
             day={daySelected}
             selectFunction={onDateChange}
           />
@@ -70,33 +71,33 @@ const Planner = () => {
         </div>
         <div className="module">
             <h2>Remove Event from Schedule</h2>
-            <RemoveClass
-              events={classes}
-              classUpdateFunction={setSchedule}
+            <RemoveEvent
+              events={events}
+              eventsUpdateFunction={setSchedule}
             />
         </div>
         <div className="module">
           <h2>Manually Add Class to Schedule</h2>
           <AddClass
-            events={classes}
+            events={events}
             buildings={buildings}
-            classUpdateFunction={setSchedule}
+            eventsUpdateFunction={setSchedule}
           />
 		    </div>
         <div className="module">
             <h2>Add Study time</h2>
             <AddStudyTime
-              events={classes}
+              events={events}
               buildings={buildings}
-              studyUpdateFunction={setSchedule}
+              eventsUpdateFunction={setSchedule}
         />
         </div>
         <div className="module">
           <h2>Add Day Starting/Ending Location</h2>
             <AddStartEnd 
-              events={classes}
+              events={events}
               buildings={buildings}
-              classUpdateFunction={setSchedule}
+              eventsUpdateFunction={setSchedule}
             />
 		    </div>
           {/* We may also add section for adding additional "special" events, such as
@@ -111,8 +112,8 @@ const Planner = () => {
   // initializes hooks for day dropdown so schedule can be updated
   const [daySelected, setDaySelected] = useState(getCurrentDay());
 
-  // initializes hooks for classes and building Parse object lists
-  const [classes, setSchedule] = useState([]);
+  // initializes hooks for events and building Parse object lists
+  const [events, setSchedule] = useState([]);
   const [buildings, setBuildings] = useState([]);
 
   // Fetch the schedule only once when the component mounts, otherwise refresh
@@ -120,8 +121,8 @@ const Planner = () => {
     if (Events.collection.length) {
       setSchedule(Events.collection);
     } else {
-      getEventsByUser().then((classes) => {
-        setSchedule(classes);
+      getEventsByUser().then((events) => {
+        setSchedule(events);
       });
     }
   }, []);
