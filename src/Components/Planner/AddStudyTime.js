@@ -1,12 +1,31 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { createClass } from "../../Common/Services/EventService.js";
-import AddStudyTimeForm from './AddStudyTimeForm.js';
+import AddForm from './AddForm.js';
 
 
 //component that allows user to dynamically add a study time to their schedule.
 export const AddStudyTime = ({ events, buildings, studyUpdateFunction }) => {
 
   //Functions
+
+  //function to handle change to the autocomplete input
+  const handleAutocompleteChange = (e, value) => {
+    //if a value is given, set the newClass building to the selected building's id,
+    //otherwise set it to an empty string
+    if (value) {
+      setAutoValue(value);
+      setNewStudyTime((prev) => ({
+        ...prev,
+        building: value.id
+      }));
+    } else {
+      setAutoValue(value);
+      setNewStudyTime((prev) => ({
+        ...prev,
+        building: ''
+      }));
+    }
+  }
 
   //function to handle change to input field
   const handleInputChange = (e) => {
@@ -25,7 +44,7 @@ export const AddStudyTime = ({ events, buildings, studyUpdateFunction }) => {
     e.preventDefault();
 
     //if all input fields are not filled out, don't attempt to create a new class
-    if (!newStudyTime.startTime || !newStudyTime.endTime) {
+    if ((newStudyTime.days.length === 0) || !newStudyTime.startTime || !newStudyTime.endTime || !newStudyTime.building) {
         setStatus("Please Enter information for all fields")
     } else {
         // Trigger add flag to create event and
@@ -55,6 +74,9 @@ export const AddStudyTime = ({ events, buildings, studyUpdateFunction }) => {
 
   //Main Code
 
+  //initializes hook to manage the value selected by autocomplete input
+  const  [autoValue, setAutoValue] = useState(null)
+
   //initializes hooks for status, the button to create new study time, and the new study time to create
   const [status, setStatus] = useState('');
   const [addStudyFlag, setFlag] = useState(false);
@@ -64,22 +86,6 @@ export const AddStudyTime = ({ events, buildings, studyUpdateFunction }) => {
     endTime: '',
     days: [],
   });
-
-
-  //if newStudyTime does not have a building attribute, then set the buliding attribute
-  //equal to the first building in teh Building list (sorted alphabetically)
-  //which keeps the attribute consistent with input fields.
-  useEffect(() => {
-    if (buildings.length > 0 && newStudyTime.building === '') {
-
-      setNewStudyTime({
-            building: buildings.sort((a, b) => a.get('name').localeCompare(b.get('name')))[0].id,
-            startTime: '',
-            endTime: '',
-            days: [],
-          });
-    }
-  }, [buildings, newStudyTime.building]);
 
 
   useEffect(() => {
@@ -99,7 +105,7 @@ export const AddStudyTime = ({ events, buildings, studyUpdateFunction }) => {
 
                 // Reset new study times's state and attributes
                 setNewStudyTime({
-                    building: buildings.sort((a, b) => a.get('name').localeCompare(b.get('name')))[0].id,
+                    building: '',
                     startTime: '',
                     endTime: '',
                     days: newStudyTime.days,
@@ -109,6 +115,8 @@ export const AddStudyTime = ({ events, buildings, studyUpdateFunction }) => {
                 if (formRef.current) {
                     formRef.current.reset();
                 }
+                // Clear autocomplete 
+                setAutoValue(null)
             })
             .catch((error) => {
                 setStatus("Failed to add class");
@@ -125,16 +133,20 @@ export const AddStudyTime = ({ events, buildings, studyUpdateFunction }) => {
   //reference to form html element, which allows the form to be reset in the JS code
   const formRef = useRef(null);
 
+
   return (
     <>
-        <AddStudyTimeForm
+        <AddForm
+            isAddFrom={false}
             buildings={buildings}
-            newStudyTime={newStudyTime}
+            newEvent={newStudyTime}
             onChange={handleInputChange}
+            onAutocompleteChange={handleAutocompleteChange}
             onCheckboxChange={handleCheckboxChange}
             onClick={handleAddSubmit}
             status={status}
             formRef={formRef}
+            autoCompleteValue={autoValue}
         />
     </>
   );

@@ -10,6 +10,7 @@ import RemoveClass from './RemoveClass.js';
 import Header from '../Header/Header.js';
 
 
+
 //In future, we will add user feautres, so that each user can have their own schedule,
 //and this will allow them to have personalized recommendations
 const Planner = () => {

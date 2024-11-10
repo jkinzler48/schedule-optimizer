@@ -1,12 +1,31 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { createClass } from "../../Common/Services/EventService.js";
-import AddClassForm from './AddClassForm.js';
+import AddForm from './AddForm.js';
 
 
 //component that allows user to dynamically add a class to their schedule.
 export const AddClass = ({ events, buildings, classUpdateFunction }) => {
 
   //Functions
+
+  //function to handle change to the autocomplete input
+  const handleAutocompleteChange = (e, value) => {
+    //if a value is given, set the newClass building to the selected building's id,
+    //otherwise set it to an empty string
+    if (value) {
+      setAutoValue(value);
+      setNewClass((prev) => ({
+        ...prev,
+        building: value.id
+      }));
+    } else {
+      setAutoValue(value)
+      setNewClass((prev) => ({
+        ...prev,
+        building: ''
+      }));
+    }
+  }
 
   //function to handle change to input field
   const handleInputChange = (e) => {
@@ -25,7 +44,7 @@ export const AddClass = ({ events, buildings, classUpdateFunction }) => {
     e.preventDefault();
 
     //if all input fields are not filled out, don't attempt to create a new class
-    if (!newClass.name || !newClass.code || !newClass.startTime || !newClass.endTime || !newClass.room || !newClass.instructor) {
+    if ((newClass.days.length === 0) || !newClass.name || !newClass.code || !newClass.startTime || !newClass.endTime || !newClass.room || !newClass.instructor || !newClass.building) {
         setStatus("Please Enter information for all fields")
     } else {
          // Trigger add flag to create event and
@@ -57,6 +76,8 @@ export const AddClass = ({ events, buildings, classUpdateFunction }) => {
 
   //Main Code
 
+  //initializes hook to manage the value selected by autocomplete input
+  const  [autoValue, setAutoValue] = useState(null)
   //initializes hooks for status, the button to create new class, and the new class to create
   const [status, setStatus] = useState('');
   const [addClassFlag, setFlag] = useState(false);
@@ -72,24 +93,6 @@ export const AddClass = ({ events, buildings, classUpdateFunction }) => {
   });
 
 
-//if newClass does not have a building attribute, then set the buliding attribute
-//equal to the first building in teh Building list (sorted alphabetically)
-//which keeps the attribute consistent with input fields.
-useEffect(() => {
-    if (buildings.length > 0 && newClass.building === '') {
-      setNewClass({
-            code: '',
-            name: '',
-            instructor: '',
-            building: buildings.sort((a, b) => a.get('name').localeCompare(b.get('name')))[0].id,
-            room: '',
-            startTime: '',
-            endTime: '',
-            days: [],
-          });
-    }
-}, [buildings, newClass.building]);
-
 
 useEffect(() => {
     // Check for add flag
@@ -97,7 +100,6 @@ useEffect(() => {
 
         const { code, name, instructor, building, room, startTime, endTime, days } = newClass;
 
-        //if no days have been selected for the class, default to make the new class occur on every day
         const classDays = days.length > 0 ? days : ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
         // Create class and handle response
@@ -113,7 +115,7 @@ useEffect(() => {
                     code: '',
                     name: '',
                     instructor: '',
-                    building: buildings.sort((a, b) => a.get('name').localeCompare(b.get('name')))[0].id,
+                    building: '',
                     room: '',
                     startTime: '',
                     endTime: '',
@@ -124,6 +126,8 @@ useEffect(() => {
                 if (formRef.current) {
                     formRef.current.reset();
                 }
+                // Clear autocomplete
+                setAutoValue(null)
             })
             .catch((error) => {
                 setStatus("Failed to add class");
@@ -140,18 +144,20 @@ useEffect(() => {
   //reference to form html element, which allows the form to be reset in the JS code
   const formRef = useRef(null);
 
-
   //returns JSX for component
   return (
     <>
-        <AddClassForm
+        <AddForm
+            isClassForm={true}
             buildings={buildings}
-            newClass={newClass}
+            newEvent={newClass}
             onChange={handleInputChange}
+            onAutocompleteChange={handleAutocompleteChange}
             onCheckboxChange={handleCheckboxChange}
             onClick={handleAddSubmit}
             status={status}
             formRef={formRef}
+            autoCompleteValue={autoValue}
         />
     </>
   );
