@@ -10,16 +10,18 @@ export const AddClass = ({ events, buildings, classUpdateFunction }) => {
 
   //function to handle change to the autocomplete input
   const handleAutocompleteChange = (e, value) => {
+
+    e.preventDefault();
+    setAutoValue(value);
+
     //if a value is given, set the newClass building to the selected building's id,
     //otherwise set it to an empty string
     if (value) {
-      setAutoValue(value);
       setNewClass((prev) => ({
         ...prev,
         building: value.id
       }));
     } else {
-      setAutoValue(value)
       setNewClass((prev) => ({
         ...prev,
         building: ''
@@ -78,6 +80,7 @@ export const AddClass = ({ events, buildings, classUpdateFunction }) => {
 
   //initializes hook to manage the value selected by autocomplete input
   const  [autoValue, setAutoValue] = useState(null)
+
   //initializes hooks for status, the button to create new class, and the new class to create
   const [status, setStatus] = useState('');
   const [addClassFlag, setFlag] = useState(false);

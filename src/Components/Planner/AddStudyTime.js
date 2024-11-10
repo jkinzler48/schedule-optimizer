@@ -10,16 +10,18 @@ export const AddStudyTime = ({ events, buildings, studyUpdateFunction }) => {
 
   //function to handle change to the autocomplete input
   const handleAutocompleteChange = (e, value) => {
+
+    e.preventDefault();
+    setAutoValue(value);
+
     //if a value is given, set the newClass building to the selected building's id,
     //otherwise set it to an empty string
     if (value) {
-      setAutoValue(value);
       setNewStudyTime((prev) => ({
         ...prev,
         building: value.id
       }));
     } else {
-      setAutoValue(value);
       setNewStudyTime((prev) => ({
         ...prev,
         building: ''
