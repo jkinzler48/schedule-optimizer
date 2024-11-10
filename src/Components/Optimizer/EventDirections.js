@@ -16,7 +16,7 @@ export const EventDirections = ({ events, source, destination, sourceChange, des
             .sort((a, b) => a.get('startTime') - b.get('startTime'))
             .map((c) => (
               <option key={c.id} value={c.get('building').get('mapId')}>
-                {`${c.get('name')} - ${c.get('building').get('name')} ${c.get('room')} (${c.get('days')} | ${displayTime(c)})`}
+                {displayTime(c)} | {c.get('days').join(', ')} | {c.get('name')} ({c.get('building').get('name')})
               </option>
             ))}
       </select>
@@ -30,7 +30,7 @@ export const EventDirections = ({ events, source, destination, sourceChange, des
             .sort((a, b) => a.get('startTime') - b.get('startTime'))
             .map((c) => (
               <option key={c.id} value={c.get('building').get('mapId')}>
-                {`${c.get('name')} - ${c.get('building').get('name')} ${c.get('room')} (${c.get('days')} | ${displayTime(c)})`}
+                {displayTime(c)} | {c.get('days').join(', ')} | {c.get('name')} ({c.get('building').get('name')})
               </option>
             ))}
       </select>

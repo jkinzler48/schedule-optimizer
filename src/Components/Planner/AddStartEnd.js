@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { createClass } from "../../Common/Services/EventService.js";
+import { createEvent } from "../../Common/Services/EventService.js";
 import AddStartEndForm from './AddStartEndForm.js';
 
 
-const AddStartEnd = ({ events, buildings, classUpdateFunction }) => {
+const AddStartEnd = ({ events, buildings, eventsUpdateFunction }) => {
 
   //Functions
 
@@ -21,7 +21,7 @@ const AddStartEnd = ({ events, buildings, classUpdateFunction }) => {
     e.preventDefault();
     setInputValue(value);
 
-    //if a value is given, set the newClass building to the selected building's id,
+    //if a value is given, set the newEvent building to the selected building's id,
     //otherwise set it to an empty string
     if (value) {
       setStartEnd(value.id);
@@ -68,12 +68,12 @@ const AddStartEnd = ({ events, buildings, classUpdateFunction }) => {
       if (startEnd) {
 
         //creates a new Event object used to store the day's start/end.
-        createClass("START/END", "Day Start/End", '', startEnd, '', "00:00", "00:00", ['Every Day'])
+        createEvent("START/END", "Day Start/End", '', startEnd, '', "00:00", "00:00", ['Every Day'])
           .then((newEvent) => {
             setAddDayStart(false);
             // Add the newly created event to the events array
             // to render the new list of lessons (thru spread/concatination)
-            classUpdateFunction([...events, newEvent]);
+            eventsUpdateFunction([...events, newEvent]);
         });
         setStatus("");
         setInputValue(null);
@@ -84,7 +84,7 @@ const AddStartEnd = ({ events, buildings, classUpdateFunction }) => {
       setAddDayStart(false)
     
     }
-  }, [events, startEnd, addDayStart, classUpdateFunction]);
+  }, [events, startEnd, addDayStart, eventsUpdateFunction]);
 
   // return the JSX for the main component
   return displayForm();

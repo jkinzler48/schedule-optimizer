@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { createClass } from "../../Common/Services/EventService.js";
+import { createEvent } from "../../Common/Services/EventService.js";
 import AddForm from './AddForm.js';
 
 
 //component that allows user to dynamically add a class to their schedule.
-export const AddClass = ({ events, buildings, classUpdateFunction }) => {
+export const AddClass = ({ events, buildings, eventsUpdateFunction }) => {
 
   //Functions
 
@@ -106,11 +106,11 @@ useEffect(() => {
         const classDays = days.length > 0 ? days : ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
         // Create class and handle response
-        createClass(code, name, instructor, building, room, startTime, endTime, classDays)
+        createEvent(code, name, instructor, building, room, startTime, endTime, classDays)
             .then((result) => {
                 
                 // Update class list and status message
-                classUpdateFunction([...events, result]);
+                eventsUpdateFunction([...events, result]);
                 setStatus("Class added");
 
                 // Reset new class's state and attributes
@@ -141,7 +141,7 @@ useEffect(() => {
                 setFlag(false);
             });
     }
-}, [classUpdateFunction, addClassFlag, events, newClass, buildings]);
+}, [eventsUpdateFunction, addClassFlag, events, newClass, buildings]);
 
 
   //reference to form html element, which allows the form to be reset in the JS code

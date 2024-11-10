@@ -2,7 +2,7 @@ import React from 'react';
 import { displayTime } from '../../Common/Services/EventService';
 
 
-const EventList = ({ classes, day, selectFunction }) => {
+const EventList = ({ events, day, selectFunction }) => {
   return (
     <>
         <div className="section">
@@ -20,20 +20,20 @@ const EventList = ({ classes, day, selectFunction }) => {
             </select>
             <h4>{day}'s Schedule</h4>
             <ol className="eventList">
-                {/* if All days option is selected, then display all classes for user in order of start time */}
+                {/* if All days option is selected, then display all events for user in order of start time */}
                 {day === "All Days" ? (
                   <>
-                    {classes.length === 0 ? 
+                    {events.length === 0 ? 
                     (
                       <p>No Events are on your schedule for any day.</p>
                     ) : (
-                    classes
+                    events
                         .sort((a, b) => a.get('startTime') - b.get('startTime'))
                         .map((c) => (
                         <li key={c.id}>
                             {c.get('name')} ({c.get('building').get("name")})  
                             <br />
-                            {displayTime(c)} | {c.get('days').join('/')}
+                            {displayTime(c)} | {c.get('days').join(', ')}
                         </li>
                         ))
                     )}
@@ -41,11 +41,11 @@ const EventList = ({ classes, day, selectFunction }) => {
                 ) : ( 
                   // if an option other than "All Days" is selected, then only display events for that day
                   <> 
-                    {classes.filter((c) => c.get('days').some((d) => d === day)).length === 0 ? 
+                    {events.filter((c) => c.get('days').some((d) => d === day)).length === 0 ? 
                     (
                       <p>Nothing scheduled for {day}.</p>
                     ) : (
-                    classes
+                    events
                         .filter((c) => c.get('days').some((d) => d === day))
                         .sort((a,b) => a.get('startTime') - b.get('startTime'))
                         .map((c) => (

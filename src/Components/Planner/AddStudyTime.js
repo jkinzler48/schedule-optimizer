@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { createClass } from "../../Common/Services/EventService.js";
+import { createEvent } from "../../Common/Services/EventService.js";
 import AddForm from './AddForm.js';
 
 
 //component that allows user to dynamically add a study time to their schedule.
-export const AddStudyTime = ({ events, buildings, studyUpdateFunction }) => {
+export const AddStudyTime = ({ events, buildings, eventsUpdateFunction }) => {
 
   //Functions
 
@@ -14,7 +14,7 @@ export const AddStudyTime = ({ events, buildings, studyUpdateFunction }) => {
     e.preventDefault();
     setAutoValue(value);
 
-    //if a value is given, set the newClass building to the selected building's id,
+    //if a value is given, set the newEvent building to the selected building's id,
     //otherwise set it to an empty string
     if (value) {
       setNewStudyTime((prev) => ({
@@ -45,7 +45,7 @@ export const AddStudyTime = ({ events, buildings, studyUpdateFunction }) => {
   const handleAddSubmit = (e) => {
     e.preventDefault();
 
-    //if all input fields are not filled out, don't attempt to create a new class
+    //if all input fields are not filled out, don't attempt to create a new event
     if ((newStudyTime.days.length === 0) || !newStudyTime.startTime || !newStudyTime.endTime || !newStudyTime.building) {
         setStatus("Please Enter information for all fields")
     } else {
@@ -95,14 +95,14 @@ export const AddStudyTime = ({ events, buildings, studyUpdateFunction }) => {
     if (addStudyFlag) {
 
         const { building, startTime, endTime, days } = newStudyTime;
-        const classDays = days.length > 0 ? days : ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        const studyDays = days.length > 0 ? days : ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
         // Create event and handle response
-        createClass('STUDY', 'Study Time', '', building, '', startTime, endTime, classDays)
+        createEvent('STUDY', 'Study Time', '', building, '', startTime, endTime, studyDays)
             .then((result) => {
 
                 // Update event list
-                studyUpdateFunction([...events, result]);
+                eventsUpdateFunction([...events, result]);
                 setStatus("Study Time added");
 
                 // Reset new study times's state and attributes
@@ -121,15 +121,15 @@ export const AddStudyTime = ({ events, buildings, studyUpdateFunction }) => {
                 setAutoValue(null)
             })
             .catch((error) => {
-                setStatus("Failed to add class");
+                setStatus("Failed to add Study Time");
                 console.error(error);
             })
             .finally(() => {
-                // After everything else is done, reset the add class flag
+                // After everything else is done, reset the add study time flag
                 setFlag(false);
             });
     }
-  }, [studyUpdateFunction, addStudyFlag, events, newStudyTime, buildings]);
+  }, [eventsUpdateFunction, addStudyFlag, events, newStudyTime, buildings]);
 
 
   //reference to form html element, which allows the form to be reset in the JS code
