@@ -103,10 +103,9 @@ useEffect(() => {
 
         const { code, name, instructor, building, room, startTime, endTime, days } = newClass;
 
-        const classDays = days.length > 0 ? days : ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
         // Create class and handle response
-        createEvent(code, name, instructor, building, room, startTime, endTime, classDays)
+        createEvent(code, name, instructor, building, room, startTime, endTime, days)
             .then((result) => {
                 
                 // Update class list and status message
@@ -122,7 +121,7 @@ useEffect(() => {
                     room: '',
                     startTime: '',
                     endTime: '',
-                    days: newClass.days,
+                    days: [],
                 });
                 
                 // Reset the form element

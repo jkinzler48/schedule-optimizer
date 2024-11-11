@@ -14,7 +14,7 @@ const Directions = () => {
     if (value) {
       setSource(value.mapId);
     } else {
-        setSource("");
+      setSource("");
     }
   };
 

@@ -20,7 +20,7 @@ const FileUpload = () => {
     
     //initialize react varaible
     const [file, setFile] = React.useState("");
-    const [flag, setFlag ] = React.useState(false);
+    const [uploadedFlag, setUploadedFlag] = React.useState(false);
     const [status, setStatus] = React.useState("");
 
     const formRef = React.useRef(null);
@@ -38,7 +38,7 @@ const FileUpload = () => {
           //After this occurs, the file is processed in the Parse Cloud Code
           File.save()
               .then((savedFile) => {
-                  setFlag(true);
+                  setUploadedFlag(true);
                   setStatus("File uploaded successfully.");
 
               })
@@ -72,14 +72,14 @@ const FileUpload = () => {
     <Header />
     <UploadForm 
       file={file}
-      uploadedFlag = {flag}
+      uploadedFlag = {uploadedFlag}
       handleFileUpload={handleFileUpload}
       onSubmit={onSubmit}
       formRef={formRef}
       status={status}
     />
     <UploadInstructions 
-      uploadedFlag = {flag}
+      uploadedFlag = {uploadedFlag}
     />
     </>
   );

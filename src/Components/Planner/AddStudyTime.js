@@ -95,10 +95,9 @@ export const AddStudyTime = ({ events, buildings, eventsUpdateFunction }) => {
     if (addStudyFlag) {
 
         const { building, startTime, endTime, days } = newStudyTime;
-        const studyDays = days.length > 0 ? days : ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-
+        
         // Create event and handle response
-        createEvent('STUDY', 'Study Time', '', building, '', startTime, endTime, studyDays)
+        createEvent('STUDY', 'Study Time', '', building, '', startTime, endTime, days)
             .then((result) => {
 
                 // Update event list
@@ -110,7 +109,7 @@ export const AddStudyTime = ({ events, buildings, eventsUpdateFunction }) => {
                     building: '',
                     startTime: '',
                     endTime: '',
-                    days: newStudyTime.days,
+                    days: [],
                 });
                 
                 // Reset the form element

@@ -20,7 +20,7 @@ const OptimizerMap = ({prevEvent, nextEvent, startEnd}) => {
         {/* shows user their next event */}
         {(!nextEvent)
             ? "You do not have any events scheduled."
-            :nextEvent.get('name') === 'Day Start/End'
+            : nextEvent.get('name') === 'Day Start/End'
               ? `Your Next Event is: ${nextEvent.get('name')} (${nextEvent.get('building').get('name')})`
               : `Your Next Event is: ${nextEvent.get('name')} in ${nextEvent.get('building').get('name')} ${nextEvent.get('room')} at ${displayTime(nextEvent)} (${nextEvent.get('days').join(', ')})`
         }

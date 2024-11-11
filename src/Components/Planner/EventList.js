@@ -25,16 +25,16 @@ const EventList = ({ events, day, selectFunction }) => {
                   <>
                     {events.length === 0 ? 
                     (
-                      <p>No Events are on your schedule fo any day.</p>
+                      <p>No Events are on your schedule for any day.</p>
                     ) : (
                     events
                         .sort((a, b) => a.get('startTime').localeCompare(b.get('startTime')))
                         .map((c) => (
-                        <li key={c.id}>
-                            {c.get('name')} ({c.get('building').get("name")})  
-                            <br />
-                            {displayTime(c)} | {c.get('days').join(', ')}
-                        </li>
+                          <li key={c.id}>
+                              {c.get('name')} ({c.get('building').get("name")})  
+                              <br />
+                              {displayTime(c)} | {c.get('days').join(', ')}
+                          </li>
                         ))
                     )}
                   </> 

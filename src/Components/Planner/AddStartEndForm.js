@@ -20,7 +20,7 @@ const AddStartEndForm = ({ events, buildings, onChange, onClick, autoCompleteVal
                 {buildings.length > 0 &&
                     //* //* Create a autocomplete option for every building, where the buildings are sorted in alphabetical order  */}
                     <Autocomplete
-                       value={autoCompleteValue}
+                      value={autoCompleteValue}
                       onChange={onChange}
                       className="autocomplete"
                       disablePortal
