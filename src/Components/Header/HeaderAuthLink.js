@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 const AuthLinks = ({ authorized, onLogoutPress }) => {
   return (
     <> 
-
-      {authorized ?  (
+      {authorized ? (
         <button onClick={onLogoutPress} className="navLink">Logout</button> 
       ) : (
         // If user is not  authorized/authenticated, then show options to login/register

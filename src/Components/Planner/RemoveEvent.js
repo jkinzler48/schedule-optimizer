@@ -78,8 +78,6 @@ export const RemoveEvent = ({ events, eventsUpdateFunction }) => {
       //remove the selected event
       let result = removeOneEvent(selectedClassCode);
 
-      
-
       //update status message
       setStatus(result);
 
@@ -92,7 +90,6 @@ export const RemoveEvent = ({ events, eventsUpdateFunction }) => {
     //reset the selected class code after submission
     setSelectedClassCode('none');
   };
-
 
 
   const handleInputChange = (e) => {	

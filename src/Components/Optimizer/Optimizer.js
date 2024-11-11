@@ -66,8 +66,8 @@ const Optimizer = () => {
   const [destination, setDestination] = useState("");
 
 
-// Fetch the schedule only once when the component mounts
-useEffect(() => {
+  // Fetch the schedule only once when the component mounts
+  useEffect(() => {
     if (Events.collection.length) {
       setSchedule(Events.collection);
     } else {

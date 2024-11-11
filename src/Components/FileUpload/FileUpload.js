@@ -19,18 +19,18 @@ const FileUpload = () => {
 
     
     //initialize react varaible
-    const [file, setFile] = React.useState("");
+    const [file, setFile] = React.useState(null);
+    const [addFile, setAddFile] = React.useState(false);
     const [uploadedFlag, setUploadedFlag] = React.useState(false);
     const [status, setStatus] = React.useState("");
 
     const formRef = React.useRef(null);
 
-    //handler for when the "Upload" button is clicked
-    const onSubmit = (event) => {
-        event.preventDefault();
 
-        if (file) {
+    //UseEffect to Upload the file to Parse Server
+    useEffect(() => {
 
+      if (addFile && file) {
           //create a new Parse.File
           const File = new Parse.File("userScheudle.ics", file);
             
@@ -51,13 +51,25 @@ const FileUpload = () => {
           if (formRef.current) {
               formRef.current.reset(); 
           }
+      }
+      setAddFile(false);
 
+    }, [addFile, file]);
+
+
+    //handler for when the "Upload" button is clicked
+    const onSubmit = (event) => {
+        event.preventDefault();
+
+        if (file) {
+          setAddFile(true);
         } else {
           //inform user that they tried to upload file without a file selected
           setStatus("Please Select the appropriate .ics file to upload.")
         };
 
-      }
+    }
+
 
     //handler for when user adds file to html file input
     const handleFileUpload = (event) => {
