@@ -34,7 +34,7 @@ export const RemoveEvent = ({ events, eventsUpdateFunction }) => {
     } else if (selectedClassCode === 'allClasses') {
 
       //filter events to contain only classes, not study times or other events
-      let allClasses = events.filter((event) => event.get('instructor'));
+      let allClasses = events.filter((event) => (event.get('code') !== "STUDY" && event.get('code') !== "START/END" ));
 
       //check if there are no classes to remove
       if (allClasses.length === 0) {
