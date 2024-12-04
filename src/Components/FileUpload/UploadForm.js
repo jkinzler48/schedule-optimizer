@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Button from '@mui/material/Button';
 
 
 const UploadForm = ({file, uploadedFlag, handleFileUpload, onSubmit, formRef, status}) => {
@@ -25,9 +26,10 @@ const UploadForm = ({file, uploadedFlag, handleFileUpload, onSubmit, formRef, st
                         />
                         <br />
                         <br />
-                        <button type="submit" onClick={onSubmit}>
+						<Button variant="contained" onClick={onSubmit}>Upload</Button>
+                        {/* <button type="submit" onClick={onSubmit}>
                             Upload
-                        </button>
+                        </button> */}
                     </form>
                 </>
                 ) : (

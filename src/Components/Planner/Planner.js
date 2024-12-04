@@ -8,6 +8,7 @@ import AddClass from './AddClass.js';
 import AddStudyTime from './AddStudyTime.js';
 import RemoveEvent from './RemoveEvent.js';
 import Header from '../Header/Header.js';
+import Button from '@mui/material/Button';
 
 
 
@@ -66,7 +67,7 @@ const Planner = () => {
               to accomplish this.
             </p>
             <Link to="/upload">
-                <button>Import Schedule</button>
+				<Button variant="contained" >Import Schedule</Button>
             </Link>
         </div>
         <div className="module">

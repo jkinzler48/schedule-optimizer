@@ -2,6 +2,7 @@ import React, {useEffect} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../Header/Header";
 import { isAuthenticated } from "../../Common/Services/AuthService";
+import Button from '@mui/material/Button';
 
 
 //Main Authorization Componenet that has links to login and register pages
@@ -25,12 +26,12 @@ export const Auth = () => {
                 <h3>Login/Register to access "Planner" and "Optimizer" pages</h3>
                 <div className="authButtons">
                     <Link to="/auth/register">
-                        <button>Register</button>
+						<Button variant="contained">Register</Button>
                     </Link>
                     <br />
                     <br />
                     <Link to="/auth/login">
-                        <button>Login</button>
+						<Button variant="contained">Login</Button>
                     </Link>
                 </div>
             </div>

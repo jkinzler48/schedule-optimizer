@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Button from '@mui/material/Button';
 
 const AuthForm = ({ user, isLogin, onChange, onSubmit, status }) => {
 
@@ -83,9 +84,10 @@ const AuthForm = ({ user, isLogin, onChange, onSubmit, status }) => {
                         <br />
                         <br />
                         </> : <></>}
-                    <button type="submit" onSubmit={onSubmit}>
+                    {/* <button type="submit" onSubmit={onSubmit}>
                     Submit
-                    </button>
+                    </button> */}
+					<Button variant="contained" onClick={onSubmit}>Submit</Button>
                 </div>
             </form>
         </div>
@@ -97,7 +99,8 @@ const AuthForm = ({ user, isLogin, onChange, onSubmit, status }) => {
             <div className="module">
                 <p>Don't Have an Account?</p>
                 <Link to="/auth/register">
-                    <button>Register</button>
+                    {/* <button>Register</button> */}
+					<Button variant="contained">Register</Button>
                 </Link>
             </div>
 
@@ -105,7 +108,8 @@ const AuthForm = ({ user, isLogin, onChange, onSubmit, status }) => {
             <div className="module">
                 <p>Already Have an Account?</p>
                 <Link to="/auth/login">
-                    <button>Login</button>
+                    {/* <button>Login</button> */}
+					<Button variant="contained">Login</Button>
                 </Link>
             </div> 
         )}

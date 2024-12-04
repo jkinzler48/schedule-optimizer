@@ -1,5 +1,6 @@
 import React from 'react';
 import { displayTime } from '../../Common/Services/EventService';
+import Button from '@mui/material/Button';
 
 
 
@@ -37,7 +38,8 @@ const RemoveEventForm = ({ events, selectedClass, onChange, onClick, status, for
           <br />
           <br />
           <br />
-          <button type="submit" value="Submit" onClick={onClick}>Submit</button>
+          {/* <button type="submit" value="Submit" onClick={onClick}>Submit</button> */}
+		  <Button variant="contained" onClick={onClick}>Submit</Button>
           
           {/* Display status message */}
           {status && <p>{status}</p>}

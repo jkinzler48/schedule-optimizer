@@ -1,6 +1,7 @@
 import React from 'react';
 import { Autocomplete } from '@mui/material';
 import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 const AddStartEndForm = ({ events, buildings, onChange, onClick, autoCompleteValue, status }) => {
     return (
@@ -34,9 +35,7 @@ const AddStartEndForm = ({ events, buildings, onChange, onClick, autoCompleteVal
                   }
                 <br />
                 <br />
-                <button type="submit" onClick={onClick}>
-                  Submit
-                </button>
+                <Button variant="contained" onClick={onClick}>Submit</Button>
               </form>
             </>
           )}

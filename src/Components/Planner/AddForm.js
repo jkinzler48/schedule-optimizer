@@ -1,6 +1,7 @@
 import React from 'react';
 import { Autocomplete } from '@mui/material';
 import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 
 //component for Add class and Add study time forms
@@ -82,7 +83,7 @@ const AddForm = ({ isClassForm, buildings, newEvent, onChange, onAutocompleteCha
                 <br />
                 <input type="checkbox" name="classDays" value="Sunday" checked={newEvent.days.includes('Sunday')} onChange={onCheckboxChange}/> Sunday
               </p>
-              <input type="submit" value="Submit" onClick={onClick}/>
+			  <Button variant="contained" onClick={onClick}>Submit</Button>
             </form>
 
             {/* Display status message */}
