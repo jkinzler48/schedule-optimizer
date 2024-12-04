@@ -36,7 +36,7 @@ const UploadForm = ({file, uploadedFlag, handleFileUpload, onSubmit, formRef, st
                 // if file has already been uploaded, then display button with link back to planner page
                 <>
                     <Link to="/">
-                        <button>Return to Planner</button>
+						<Button variant="contained">Return to Planner</Button>
                     </Link>
                 </>
             )

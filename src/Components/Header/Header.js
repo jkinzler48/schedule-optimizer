@@ -46,6 +46,7 @@ const AppBar = styled(MuiAppBar, {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
+  backgroundColor: '#565a89', // Header background color
   ...(open && {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: `${drawerWidth}px`,
@@ -54,6 +55,10 @@ const AppBar = styled(MuiAppBar, {
       duration: theme.transitions.duration.enteringScreen,
     }),
   }),
+  [theme.breakpoints.down('sm')]: {
+    width: '100%', // Full width on small screens
+    marginLeft: 0,
+  },
 }));
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -101,13 +106,32 @@ const Header = () => {
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            sx={{ mr: 2, ...(open && { display: 'none' }) }}
+            sx={{
+              mr: 2,
+              ...(open && { display: 'none' }),
+              [theme.breakpoints.up('sm')]: { display: 'none' }, // Hide on larger screens
+            }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            App Header
-          </Typography>
+          <Box
+            sx={{
+              position: 'fixed', // Make it fixed to the top
+              top: 0,
+              left: '50%',
+              transform: 'translateX(-50%)', // Centers the title horizontally
+              zIndex: 2000, // Ensures it sits on top of the AppBar
+              fontFamily: '"Roboto Flex", sans-serif',
+              fontWeight: 900,
+              color: '#c99700', // Standard Dome Gold
+              padding: '10px 20px',
+              borderRadius: '12px',
+            }}
+          >
+            <Typography variant="h4" noWrap component="div">
+              Schedule Optimizer
+            </Typography>
+          </Box>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -117,6 +141,9 @@ const Header = () => {
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
+            [theme.breakpoints.down('sm')]: {
+              width: '100%', // Full width on small screens
+            },
           },
         }}
         variant="persistent"

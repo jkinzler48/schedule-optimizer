@@ -1,9 +1,22 @@
 body {
     font-family: "Roboto Flex", sans-serif;
-    background-color: #8282dc; /* Light background to contrast */
+    /* background-color: #8282dc; */
     color: #0c2340; /* Notre Dame Blue */
     margin: 0;
     padding: 0;
+
+	background-image: url('./images/NDcampus.jpg');
+    background-attachment: fixed;
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    margin: 50px;
+    transition: background-position 0.5s ease-out;
+}
+
+body.scrolling {
+  background-position: 0 100%; /* Move the background to the bottom */
 }
 
 .headerBar {
@@ -45,7 +58,7 @@ h1, h2 {
 
 h1 {
     font-size: 2.5em;
-    margin-top: 20px;
+    margin-top: 0px;
     color: #c99700; /* Standard Dome Gold */
 }
 
@@ -133,13 +146,6 @@ input[type="radio"],
 input[type="checkbox"] {
     transform: scale(1.5);
     margin: 10px;
-}
-
-/* Buttons */
-button {
-    padding: 12px;
-    background-color: #8282fc;
-    border-radius: 6px;
 }
 
 button:hover {
