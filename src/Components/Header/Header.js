@@ -107,10 +107,9 @@ const Header = () => {
             onClick={handleDrawerOpen}
             edge="start"
             sx={{
-              mr: 2,
-              ...(open && { display: 'none' }),
-              [theme.breakpoints.up('sm')]: { display: 'none' }, // Hide on larger screens
-            }}
+				mr: 2,
+				...(open && { display: 'none' }), 
+			  }}
           >
             <MenuIcon />
           </IconButton>
