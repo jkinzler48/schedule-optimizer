@@ -35,7 +35,7 @@ const AddStartEndForm = ({ events, buildings, onChange, onClick, autoCompleteVal
                   }
                 <br />
                 <br />
-                <Button variant="contained" onClick={onClick}>Submit</Button>
+                <Button type="submit" variant="contained" onClick={onClick}>Submit</Button>
               </form>
             </>
           )}

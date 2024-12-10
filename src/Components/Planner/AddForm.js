@@ -82,7 +82,7 @@ const AddForm = ({ isClassForm, buildings, newEvent, onChange, onAutocompleteCha
                 <br />
                 <input type="checkbox" name="classDays" value="Sunday" checked={newEvent.days.includes('Sunday')} onChange={onCheckboxChange}/> Sunday
               </p>
-			  <Button variant="contained" onClick={onClick}>Submit</Button>
+			        <Button tye="submit" variant="contained" onClick={onClick}>Submit</Button>
             </form>
 
             {/* Display status message */}

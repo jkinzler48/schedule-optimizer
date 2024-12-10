@@ -26,7 +26,7 @@ const UploadForm = ({file, uploadedFlag, handleFileUpload, onSubmit, formRef, st
                         />
                         <br />
                         <br />
-						<Button variant="contained" onClick={onSubmit}>Upload</Button>
+						<Button type="submit" variant="contained" onClick={onSubmit}>Upload</Button>
                         {/* <button type="submit" onClick={onSubmit}>
                             Upload
                         </button> */}

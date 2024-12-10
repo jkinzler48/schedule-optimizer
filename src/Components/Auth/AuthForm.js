@@ -87,7 +87,7 @@ const AuthForm = ({ user, isLogin, onChange, onSubmit, status }) => {
                     {/* <button type="submit" onSubmit={onSubmit}>
                     Submit
                     </button> */}
-					<Button variant="contained" onClick={onSubmit}>Submit</Button>
+					<Button type="submit" variant="contained" onClick={onSubmit}>Submit</Button>
                 </div>
             </form>
         </div>

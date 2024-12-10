@@ -44,7 +44,7 @@ const RemoveEventForm = ({ events, selectedClass, onChange, onClick, status, for
 
           <br />
           {/* <button type="submit" value="Submit" onClick={onClick}>Submit</button> */}
-          <Button variant="contained" onClick={onClick}>Submit</Button>
+          <Button type="submit" variant="contained" onClick={onClick}>Submit</Button>
           
           {/* Display status message */}
           {status && <p>{status}</p>}
