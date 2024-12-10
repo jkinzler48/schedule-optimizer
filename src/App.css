@@ -5,7 +5,7 @@ body {
     margin: 0;
     padding: 0;
 
-	background-image: url('./images/NDcampus.jpg');
+	background-image: url('./images/ndDome.jpeg');
     background-attachment: fixed;
     background-position: top center;
     background-repeat: no-repeat;
@@ -13,10 +13,6 @@ body {
     height: 100vh;
     margin: 50px;
     transition: background-position 0.5s ease-out;
-}
-
-body.scrolling {
-  background-position: 0 100%; /* Move the background to the bottom */
 }
 
 .headerBar {
@@ -58,7 +54,7 @@ h1, h2 {
 
 h1 {
     font-size: 2.5em;
-    margin-top: 0px;
+    margin-top: 25px;
     color: #c99700; /* Standard Dome Gold */
 }
 
@@ -71,7 +67,7 @@ h2 {
 /* Divs and Modules */
 /* used to be css for all div */
 div#root, .section {
-    margin: 20px 20px 40px 20px;
+    margin: 15px;
     padding: 25px;
     background-color: #ffffff;
     border-radius: 5px;

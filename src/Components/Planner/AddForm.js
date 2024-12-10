@@ -51,7 +51,6 @@ const AddForm = ({ isClassForm, buildings, newEvent, onChange, onAutocompleteCha
                 value={autoCompleteValue}
                 onChange={onAutocompleteChange}
                 className="autocomplete"
-                disablePortal
                 options={buildings
                   .sort((a, b) => a.get('name').localeCompare(b.get('name')))
                   .map((b) => ({ name: b.get('name'), id: b.id }))}

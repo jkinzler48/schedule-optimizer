@@ -92,8 +92,8 @@ export const RemoveEvent = ({ events, eventsUpdateFunction }) => {
   };
 
 
-  const handleInputChange = (e) => {	
-    setSelectedClassCode(e.target.value);
+  const handleInputChange = (newValue) => {	
+    setSelectedClassCode(newValue);
   }
 
 
