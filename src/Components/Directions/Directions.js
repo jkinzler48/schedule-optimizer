@@ -8,18 +8,25 @@ const Directions = () => {
   ///Functions
 
   //dropdown functions for source and destination dropdown changes
-  const onSourceChange = (e) => {
-    let source = e.target.value;
-     
-    //set source equal to the id of the building selected by the dropdown
-    setSource(source);
+  const onSourceChange = (e, value) => {
+    //if a building is selected, update the destination mapId to be the selected
+    //building's mapId
+    if (value) {
+      setSource(value.mapId);
+    } else {
+      setSource("");
+    }
   };
 
-  const onDestinationChange = (e) => {
-    let destination = e.target.value;
-     
-    //set destination equal to the id of the building selected by the dropdown
-    setDestination(destination);
+  const onDestinationChange = (e, value) => {
+
+    //if a building is selected, update the destination mapId to be the selected
+    //building's mapId
+    if (value) {
+      setDestination(value.mapId);
+    } else {
+      setDestination("");
+    }
   };
 
 
@@ -61,15 +68,6 @@ const Directions = () => {
     }
   }, []);
 
-  //when buildings is updated, set the source and destination equal to the first building to keep the 
-  //directions map consistent with the dropdown values
-  useEffect(() => {
-    if (buildings.length > 0) {
-      let firstBuilding = buildings.sort((a, b) => a.get('name').localeCompare(b.get('name')))[0];
-      setSource(firstBuilding.get('mapId'));
-      setDestination(firstBuilding.get('mapId'));
-    }
-  }, [buildings]);
 
   // return the JSX for the main component
   return displayOptimizer();

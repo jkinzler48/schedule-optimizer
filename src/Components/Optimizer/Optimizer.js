@@ -1,29 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { getEventsByUser, getNextClass, getStartEnd, Events } from "../../Common/Services/EventService.js";
+import { getEventsByUser, getNextEvent, getStartEnd, Events } from "../../Common/Services/EventService.js";
 import OptimizerMap from "./OptimizerMap.js";
-import EventMap from './EventMap.js';
 import Header from '../Header/Header.js';
+import EventDirections from './EventDirections.js';
 
 
 //in the future, we will build out this section so that it provides recomendations to
 //the user about their schedule. This may include recommendations such as what specific time
-//they shoudl leave for a class or what specific supplies they should bring to a class
+//they shoudl leave for a event or what specific supplies they should bring to a event
 const Optimizer = () => {
   // Functions
 
-  // updates the schedule when the selected class changes in the dropdown
-  const onClassChange = (e) => {
-    let classSelected = e.target.value;
-
-    // if the selected class is next, then get the next class's mapId
-    if (classSelected === "next" && nextClass) {
-      classSelected = nextClass.get('building').get('mapId');
-    }
-
-    //updates schedule that will be shown on screen
-    setClassSelected(classSelected);
+  //dropdown functions for source and destination dropdown changes
+  const onSourceChange = (e) => {
+    let source = e.target.value;
+     
+    //set source equal to the id of the building for the event selected by the dropdown
+    setSource(source);
   };
 
+  const onDestinationChange = (e) => {
+    let destination = e.target.value;
+     
+    //set destination equal to the id of the building for the eventselected by the dropdown
+    setDestination(destination);
+  };
 
   // Main component JSX
   function displayOptimizer() {
@@ -33,18 +34,20 @@ const Optimizer = () => {
         <h1>Optimizer</h1>
         <div className="module">
           <OptimizerMap
-            prevClass={prevClass}
-            nextClass={nextClass}
+            prevEvent={prevEvent}
+            nextEvent={nextEvent}
             startEnd={startEnd}
           />
         </div>
         <div className="module">
-          <h2>Display Any Event Location</h2>
-          <EventMap
-              classes={classes}
-              selectedMapId={classSelected}
-              selectFunction={onClassChange}
-            />
+          <h2>Display Directions Between Event Locations</h2>
+          <EventDirections 
+            events={events}
+            source={source}
+            destination={destination}
+            sourceChange={onSourceChange}
+            destChange={onDestinationChange}
+          />
         </div>
       </>
     );
@@ -53,68 +56,72 @@ const Optimizer = () => {
 
   // Main code
 
-  // initializes hooks for dropdown so it can be updated
-  const [classSelected, setClassSelected] = useState("");
-
-  // initializes hooks for classes and next/previous class to occur
-  const [classes, setSchedule] = useState([]);
+  // initializes hooks for events and next/previous event to occur
+  const [events, setSchedule] = useState([]);
   const [startEnd, setStartEnd] = useState(null);
-  const [nextClass, setNextClass] = useState(null);
-  const [prevClass, setPrevClass] = useState(null);
+  const [nextEvent, setNextEvent] = useState(null);
+  const [prevEvent, setPrevEvent] = useState(null);
+
+  const [source, setSource] = useState("");
+  const [destination, setDestination] = useState("");
 
 
-// Fetch the schedule only once when the component mounts
-useEffect(() => {
+  // Fetch the schedule only once when the component mounts
+  useEffect(() => {
     if (Events.collection.length) {
       setSchedule(Events.collection);
     } else {
-      getEventsByUser().then((classes) => {
-        setSchedule(classes);
+      getEventsByUser().then((events) => {
+        setSchedule(events);
       });
     }
   }, []);
 
 
-  //when classes changes, set the starting/ending location
+  //when events changes, set the starting/ending location
   useEffect(() => {
-    getStartEnd(classes).then((c) => {setStartEnd(c);});
-  }, [classes]);
+    getStartEnd(events).then((c) => {setStartEnd(c);});
+  }, [events]);
 
 
-  // Determine the next class after the schedule is fetched
-  // and the location/class the user will be coming from to get to their next class
+  //when events is updated, set the source and destination for the events directions equal to the first event to keep the 
+  //event directions consistent with the dropdown values
   useEffect(() => {
-    if (classes.length) {
-      getNextClass(classes).then((results) => {
+    if (events.length > 0) {
+      let firstEvent = events.sort((a, b) => a.get('startTime').localeCompare(b.get('startTime')))[0]
+      setSource(firstEvent.get('building').get('mapId'));
+      setDestination(firstEvent.get('building').get('mapId'));
+    }
+  }, [events]);
+
+
+  // Determine the next event after the schedule is fetched
+  // and the location/event the user will be coming from to get to their next event
+  useEffect(() => {
+    if (events.length) {
+      getNextEvent(events).then((results) => {
 
         //if the user is coming from their starting/ending location, set their
-        //previous class equal to this location for directions/optimzer purposes
+        //previous event equal to this location for directions/optimzer purposes
         if (results[0] === "startEnd") {
-          setPrevClass(startEnd);
+          setPrevEvent(startEnd);
         } else {
-          setPrevClass(results[0]);
+          setPrevEvent(results[0]);
         }
 
         //if the user's next event is going to their starting/ending location, set their
-        //next class equal to this location for directions/optimzer purposes
+        //next event equal to this location for directions/optimzer purposes
         if (results[1] === "startEnd") {
-          setNextClass(startEnd);
+          setNextEvent(startEnd);
         } else {
-          setNextClass(results[1]);
+          setNextEvent(results[1]);
         }
 
       });
 
     }
-  }, [classes, startEnd]);
+  }, [events, startEnd]);
 
-
-  // Update `classSelected`, which stores a mapId, when `nextClass` changes
-  useEffect(() => {
-    if (nextClass) {
-      setClassSelected(nextClass.get('building').get('mapId'));
-    }
-  }, [nextClass]);
 
 
   // return the JSX for the main component

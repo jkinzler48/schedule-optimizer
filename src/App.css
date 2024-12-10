@@ -1,9 +1,18 @@
 body {
     font-family: "Roboto Flex", sans-serif;
-    background-color: #8282dc; /* Light background to contrast */
+    /* background-color: #8282dc; */
     color: #0c2340; /* Notre Dame Blue */
     margin: 0;
     padding: 0;
+
+	background-image: url('./images/ndDome.jpeg');
+    background-attachment: fixed;
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    margin: 50px;
+    transition: background-position 0.5s ease-out;
 }
 
 .headerBar {
@@ -16,6 +25,7 @@ body {
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
+
 
 .navLink {
     border: none;
@@ -44,7 +54,7 @@ h1, h2 {
 
 h1 {
     font-size: 2.5em;
-    margin-top: 20px;
+    margin-top: 25px;
     color: #c99700; /* Standard Dome Gold */
 }
 
@@ -55,8 +65,9 @@ h2 {
 }
 
 /* Divs and Modules */
-div {
-    margin: 20px 20px 40px 20px;
+/* used to be css for all div */
+div#root, .section {
+    margin: 15px;
     padding: 25px;
     background-color: #ffffff;
     border-radius: 5px;
@@ -67,6 +78,12 @@ div {
 
 .module {
     background-color: #efefff; /* Source of light background div color */
+    margin: 20px 20px 40px 20px;
+    padding: 25px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-flow: column;
 }
 
 /* Lists */
@@ -76,7 +93,7 @@ ol {
     color: #0c2340; /* Notre Dame Blue */
 }
 
-li {
+.eventList li {
     margin-bottom: 10px;
 }
 
@@ -107,15 +124,9 @@ li:hover {
 /* Inputs */
 input {
     padding: 5px;
-    margin: 5px;
-}
-
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="checkbox"] {
     margin: 10px;
 }
+
 
 input[type="submit"] {
     padding: 12px;
@@ -131,13 +142,6 @@ input[type="radio"],
 input[type="checkbox"] {
     transform: scale(1.5);
     margin: 10px;
-}
-
-/* Buttons */
-button {
-    padding: 12px;
-    background-color: #8282fc;
-    border-radius: 6px;
 }
 
 button:hover {
@@ -159,3 +163,4 @@ select {
     flex-wrap: wrap;
     flex-direction: row;
 }
+

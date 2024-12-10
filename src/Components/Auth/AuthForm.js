@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Button from '@mui/material/Button';
 
 const AuthForm = ({ user, isLogin, onChange, onSubmit, status }) => {
 
@@ -7,86 +8,87 @@ const AuthForm = ({ user, isLogin, onChange, onSubmit, status }) => {
     <>
         <div className = "module">
             {/* displays status message if one exists */}
-            {status && <div style={{color:'red'}}>{status}</div>}
+            {status && <div className="section" style={{color:'red'}}>{status}</div>}
 
             <form onSubmit={onSubmit}>
-            <div>
-                {/* display "First Name" and "Last Name" input fields if it is not login */}
-                {!isLogin ?
-                    <>
-                    <label>First Name</label>
+                <div className="section">
+                    {/* display "First Name" and "Last Name" input fields if it is not login */}
+                    {!isLogin ?
+                        <>
+                        <label>First Name</label>
+                        <br />
+                        <input
+                            type="text"
+                            value={user.firstName}
+                            onChange={onChange}
+                            name="firstName"
+                            placeholder="Your First Name"
+                            required
+                        />
+                        <br />
+                        <br />
+                        <label>Last Name</label>
+                        <br />
+                        <input
+                            type="text"
+                            value={user.lastName}
+                            onChange={onChange}
+                            name="lastName"
+                            placeholder="Your Last Name"
+                            required
+                        />
+                        <br />
+                        <br />
+                        </> : <></>
+                    }
+
+                    {/* Username(Email)/Password text fields always displayed */}
+                    <label>Username (Email)</label>
                     <br />
                     <input
-                        type="text"
-                        value={user.firstName}
+                        type="email"
+                        value={user.email}
                         onChange={onChange}
-                        name="firstName"
-                        placeholder="Your First Name"
+                        name="email"
+                        placeholder="Your Email"
                         required
                     />
                     <br />
                     <br />
-                    <label>Last Name</label>
-                    <br />
-                    <input
-                        type="text"
-                        value={user.lastName}
-                        onChange={onChange}
-                        name="lastName"
-                        placeholder="Your Last Name"
-                        required
-                    />
-                    <br />
-                    <br />
-                    </> : <></>
-                }
-
-                {/* Username(Email)/Password text fields always displayed */}
-                <label>Username (Email)</label>
-                <br />
-                <input
-                    type="email"
-                    value={user.email}
-                    onChange={onChange}
-                    name="email"
-                    placeholder="Your Email"
-                    required
-                />
-                <br />
-                <br />
-                <label>Password</label>
-                <br />
-                <input
-                    type="password"
-                    value={user.password}
-                    onChange={onChange}
-                    name="password"
-                    placeholder="Your Password"
-                    required
-                />
-                <br />
-                <br />
-
-                {/* displays "Confirm Password" text field if it is not login */}
-                {!isLogin ? 
-                    <>
-                    <label>Confirm Password</label>
+                    <label>Password</label>
                     <br />
                     <input
                         type="password"
-                        value={user.confirmPassword}
+                        value={user.password}
                         onChange={onChange}
-                        name="confirmPassword"
-                        placeholder="Confirm Password"
+                        name="password"
+                        placeholder="Your Password"
                         required
                     />
                     <br />
                     <br />
-                    </> : <></>}
-                <button type="submit" onSubmit={onSubmit}>
-                Submit
-                </button>
-            </div>
+
+                    {/* displays "Confirm Password" text field if it is not login */}
+                    {!isLogin ? 
+                        <>
+                        <label>Confirm Password</label>
+                        <br />
+                        <input
+                            type="password"
+                            value={user.confirmPassword}
+                            onChange={onChange}
+                            name="confirmPassword"
+                            placeholder="Confirm Password"
+                            required
+                        />
+                        <br />
+                        <br />
+                        </> : <></>}
+                    {/* <button type="submit" onSubmit={onSubmit}>
+                    Submit
+                    </button> */}
+					<Button type="submit" variant="contained" onClick={onSubmit}>Submit</Button>
+                </div>
             </form>
         </div>
 
@@ -97,7 +99,8 @@ const AuthForm = ({ user, isLogin, onChange, onSubmit, status }) => {
             <div className="module">
                 <p>Don't Have an Account?</p>
                 <Link to="/auth/register">
-                    <button>Register</button>
+                    {/* <button>Register</button> */}
+					<Button variant="contained">Register</Button>
                 </Link>
             </div>
 
@@ -105,7 +108,8 @@ const AuthForm = ({ user, isLogin, onChange, onSubmit, status }) => {
             <div className="module">
                 <p>Already Have an Account?</p>
                 <Link to="/auth/login">
-                    <button>Login</button>
+                    {/* <button>Login</button> */}
+					<Button variant="contained">Login</Button>
                 </Link>
             </div> 
         )}

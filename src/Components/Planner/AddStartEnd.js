@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { createClass } from "../../Common/Services/EventService.js";
+import { createEvent } from "../../Common/Services/EventService.js";
 import AddStartEndForm from './AddStartEndForm.js';
 
 
-const AddStartEnd = ({ events, buildings, classUpdateFunction }) => {
+const AddStartEnd = ({ events, buildings, eventsUpdateFunction }) => {
 
   //Functions
 
@@ -16,10 +16,19 @@ const AddStartEnd = ({ events, buildings, classUpdateFunction }) => {
   };
   
   // Handler to track changes to the child input text
-  const onChangeStartEnd = (e) => {
-      e.preventDefault();
-      // Continuously updating name to be added on submit
-      setStartEnd(e.target.value);
+  const onChangeStartEnd = (e, value) => {
+
+    e.preventDefault();
+    setInputValue(value);
+
+    //if a value is given, set the newEvent building to the selected building's id,
+    //otherwise set it to an empty string
+    if (value) {
+      setStartEnd(value.id);
+    } else {
+      setStartEnd(null);
+    }
+
   };
 
 
@@ -32,6 +41,8 @@ const AddStartEnd = ({ events, buildings, classUpdateFunction }) => {
             buildings={buildings}
             onChange={onChangeStartEnd}
             onClick={onAddStartEndClick}
+            autoCompleteValue={inputValue}
+            status={status}
           />
       </>
     );
@@ -40,36 +51,40 @@ const AddStartEnd = ({ events, buildings, classUpdateFunction }) => {
 
   // Main code
 
-  //initializes hooks for input field and sumbit button
+  //initializes hooks for input field, sumbit button, and status message
   const [startEnd, setStartEnd] = useState(null);
   const [addDayStart, setAddDayStart] = useState(false);
+  const [inputValue, setInputValue] = useState(null);
+  const [status, setStatus] = useState("");
 
 
-  //initialize the start/End location equal to the first building (in alphabetical order)
-  //keeps code consisitent with the dropdown
-  useEffect(() => {
-    if (buildings.length > 0) {
-      // Set startEnd to the first building's id
-      setStartEnd(buildings.sort((a, b) => a.get('name').localeCompare(b.get('name')))[0].id);
-    }
-  }, [buildings]);
 
 
 
   useEffect(() => {
     // Check for add flag and make sure name state variable is defined
-    if (startEnd && addDayStart) {
+    if (addDayStart) {
 
-      //creates a new Event object used to store the day's start/end.
-      createClass("START/END", "Day Start/End", '', startEnd, '', "start/end of day", ['Every Day'])
-        .then((newEvent) => {
-          setAddDayStart(false);
-          // Add the newly created event to the events array
-          // to render the new list of lessons (thru spread/concatination)
-          classUpdateFunction([...events, newEvent]);
-      });
+      if (startEnd) {
+
+        //creates a new Event object used to store the day's start/end.
+        createEvent("START/END", "Day Start/End", '', startEnd, '', "Start of Day", "End of Day", ['Every Day'])
+          .then((newEvent) => {
+            setAddDayStart(false);
+            // Add the newly created event to the events array
+            // to render the new list of lessons (thru spread/concatination)
+            eventsUpdateFunction([...events, newEvent]);
+        });
+        setStatus("");
+        setInputValue(null);
+        setStartEnd(null);
+      } else {
+        setStatus("Please select a location for day Start/End");
+      }
+      setAddDayStart(false)
+    
     }
-  }, [events, startEnd, addDayStart, classUpdateFunction]);
+  }, [events, startEnd, addDayStart, eventsUpdateFunction]);
 
   // return the JSX for the main component
   return displayForm();
