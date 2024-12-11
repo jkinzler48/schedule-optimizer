@@ -66,111 +66,111 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 const Header = () => {
-const theme = useTheme();
-const navigate = useNavigate();
-const [logout, setLogout] = useState(false);
-const [open, setOpen] = useState(false);
+	const theme = useTheme();
+	const navigate = useNavigate();
+	const [logout, setLogout] = useState(false);
+	const [open, setOpen] = useState(false);
 
-useEffect(() => {
-if (logout) {
-	logoutUser().then((result) => {
-	if (result === "success") {
-		console.log("Successfully Logged Out.");
-		navigate("/auth");
-	} else {
-		console.log(result);
-	}
-	});
-	setLogout(false);
-}
-}, [logout, navigate]);
+	useEffect(() => {
+		if (logout) {
+			logoutUser().then((result) => {
+			if (result === "success") {
+				console.log("Successfully Logged Out.");
+				navigate("/auth");
+			} else {
+				console.log(result);
+			}
+			});
+			setLogout(false);
+		}
+	}, [logout, navigate]);
 
-const logoutButtonHandler = (e) => {
-e.preventDefault();
-setLogout(true);
-};
+	const logoutButtonHandler = (e) => {
+		e.preventDefault();
+		setLogout(true);
+	};
 
-const handleDrawerOpen = () => setOpen(true);
-const handleDrawerClose = () => setOpen(false);
+	const handleDrawerOpen = () => setOpen(true);
+	const handleDrawerClose = () => setOpen(false);
 
-return (
-<Box sx={{ display: 'flex'}}>
-	<AppBar position="fixed" open={open}>
-	<Toolbar>
-		<IconButton
-		color="inherit"
-		aria-label="open drawer"
-		onClick={handleDrawerOpen}
-		edge="start"
-		sx={{ mr: 2, ...(open && { display: 'none' }) }}
-		>
-		<MenuIcon />
-		</IconButton>
-		<Box
-	sx={{
-		position: 'fixed',  // Make it fixed to the top
-		top: 0,
-		left: '50%',
-		transform: 'translateX(-50%)', // Centers the title horizontally
-		zIndex: 2000, // Ensures it sits on top of the AppBar
-		fontFamily: '"Roboto Flex", sans-serif',
-		fontWeight: 900,
-		color: '#c99700', // Standard Dome Gold
-		padding: '10px 20px',
-		borderRadius: '12px',
-	}}
-	>
-	<Typography variant="h4" noWrap component="div">
-		Schedule Optimizer
-	</Typography>
-	</Box>
-	</Toolbar>
-	</AppBar>
-	<Drawer
-	sx={{
-		width: drawerWidth,
-		flexShrink: 0,
-		'& .MuiDrawer-paper': {
-		width: drawerWidth,
-		boxSizing: 'border-box',
-		},
-	}}
-	variant="persistent"
-	anchor="left"
-	open={open}
-	>
-	<DrawerHeader>
-		<IconButton onClick={handleDrawerClose}>
-		{theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-		</IconButton>
-	</DrawerHeader>
-	<List>
-		<ListItem disablePadding>
-		<ListItemButton component={Link} to="/">
-			<ListItemText primary="Planner" />
-		</ListItemButton>
-		</ListItem>
-		<ListItem disablePadding>
-		<ListItemButton component={Link} to="/optimizer">
-			<ListItemText primary="Optimizer" />
-		</ListItemButton>
-		</ListItem>
-		<ListItem disablePadding>
-		<ListItemButton component={Link} to="/directions">
-			<ListItemText primary="Directions" />
-		</ListItemButton>
-		</ListItem>
-	</List>
-	<Divider />
-	<HeaderAuthLink 
-		authorized={isAuthenticated()}
-		onLogoutPress={logoutButtonHandler}
-	/>
-	</Drawer>
-	<Main open={open}>
-	</Main>
-</Box>
-);
+	return (
+		<Box sx={{ display: 'flex'}}>
+			<AppBar position="fixed" open={open}>
+			<Toolbar>
+				<IconButton
+					color="inherit"
+					aria-label="open drawer"
+					onClick={handleDrawerOpen}
+					edge="start"
+					sx={{ mr: 2, ...(open && { display: 'none' }) }}
+				>
+				<MenuIcon />
+				</IconButton>
+				<Box
+			sx={{
+				position: 'fixed',  // Make it fixed to the top
+				top: 0,
+				left: '50%',
+				transform: 'translateX(-50%)', // Centers the title horizontally
+				zIndex: 2000, // Ensures it sits on top of the AppBar
+				fontFamily: '"Roboto Flex", sans-serif',
+				fontWeight: 900,
+				color: '#c99700', // Standard Dome Gold
+				padding: '10px 20px',
+				borderRadius: '12px',
+			}}
+			>
+			<Typography variant="h4" noWrap component="div">
+				Schedule Optimizer
+			</Typography>
+			</Box>
+			</Toolbar>
+			</AppBar>
+			<Drawer
+			sx={{
+				width: drawerWidth,
+				flexShrink: 0,
+				'& .MuiDrawer-paper': {
+				width: drawerWidth,
+				boxSizing: 'border-box',
+				},
+			}}
+			variant="persistent"
+			anchor="left"
+			open={open}
+			>
+			<DrawerHeader>
+				<IconButton onClick={handleDrawerClose}>
+				{theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+				</IconButton>
+			</DrawerHeader>
+			<List>
+				<ListItem disablePadding>
+				<ListItemButton component={Link} to="/">
+					<ListItemText primary="Planner" />
+				</ListItemButton>
+				</ListItem>
+				<ListItem disablePadding>
+				<ListItemButton component={Link} to="/optimizer">
+					<ListItemText primary="Optimizer" />
+				</ListItemButton>
+				</ListItem>
+				<ListItem disablePadding>
+				<ListItemButton component={Link} to="/directions">
+					<ListItemText primary="Directions" />
+				</ListItemButton>
+				</ListItem>
+			</List>
+			<Divider />
+			<HeaderAuthLink 
+				authorized={isAuthenticated()}
+				onLogoutPress={logoutButtonHandler}
+			/>
+			</Drawer>
+			<Main open={open}>
+			</Main>
+		</Box>
+	);
 };
 
 export default Header;

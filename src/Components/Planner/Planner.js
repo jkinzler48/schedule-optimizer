@@ -67,7 +67,7 @@ const Planner = () => {
               to accomplish this.
             </p>
             <Link to="/upload">
-				<Button variant="contained" >Import Schedule</Button>
+			      	<Button variant="contained" >Import Schedule</Button>
             </Link>
         </div>
         <div className="module">

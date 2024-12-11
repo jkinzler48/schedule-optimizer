@@ -13,7 +13,7 @@ const OptimizerMap = ({prevEvent, nextEvent, startEnd}) => {
         reccommend they add one */}
         {!startEnd && (
           <>
-          <p>You have not selected a Starting/Ending location for your day. Please visit the Planner page to add a Starting/Ending location to your schedule.</p>
+            <p>You have not selected a Starting/Ending location for your day. Please visit the Planner page to add a Starting/Ending location to your schedule.</p>
           </>
         )}
 

@@ -9,15 +9,15 @@ import { isAuthenticated } from "../../Common/Services/AuthService.js";
 //Login component that uses athentication methods from AuthService
 const AuthLogin = () => {
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    // redirect already authenticated users back to home
-    //prevents user from routing to auth if already logged in
-    useEffect(() => {
-        if (isAuthenticated()) {
-            navigate("/");
-        }
-    }, [navigate]);
+  // redirect already authenticated users back to home
+  //prevents user from routing to auth if already logged in
+  useEffect(() => {
+      if (isAuthenticated()) {
+          navigate("/");
+      }
+  }, [navigate]);
 
   const [userInfo, setUserInfo] = useState({
     email: "",

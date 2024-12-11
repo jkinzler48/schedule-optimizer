@@ -9,15 +9,15 @@ import { isAuthenticated, createUser } from "../../Common/Services/AuthService.j
 const AuthRegister = () => {
 
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    // redirect already authenticated users back to home
-    //prevents user from routing to auth if already logged in
-    useEffect(() => {
-        if (isAuthenticated()) {
-            navigate("/");
-        }
-    }, [navigate]);
+  // redirect already authenticated users back to home
+  //prevents user from routing to auth if already logged in
+  useEffect(() => {
+      if (isAuthenticated()) {
+          navigate("/");
+      }
+  }, [navigate]);
 
 
   const [newUser, setNewUser] = useState({

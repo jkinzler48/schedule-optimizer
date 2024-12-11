@@ -81,18 +81,18 @@ const FileUpload = () => {
 
   return (
     <>
-    <Header />
-    <UploadForm 
-      file={file}
-      uploadedFlag = {uploadedFlag}
-      handleFileUpload={handleFileUpload}
-      onSubmit={onSubmit}
-      formRef={formRef}
-      status={status}
-    />
-    <UploadInstructions 
-      uploadedFlag = {uploadedFlag}
-    />
+      <Header />
+      <UploadForm 
+        file={file}
+        uploadedFlag = {uploadedFlag}
+        handleFileUpload={handleFileUpload}
+        onSubmit={onSubmit}
+        formRef={formRef}
+        status={status}
+      />
+      <UploadInstructions 
+        uploadedFlag = {uploadedFlag}
+      />
     </>
   );
 }

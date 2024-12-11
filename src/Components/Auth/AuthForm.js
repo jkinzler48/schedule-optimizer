@@ -84,9 +84,6 @@ const AuthForm = ({ user, isLogin, onChange, onSubmit, status }) => {
                         <br />
                         <br />
                         </> : <></>}
-                    {/* <button type="submit" onSubmit={onSubmit}>
-                    Submit
-                    </button> */}
 					<Button type="submit" variant="contained" onClick={onSubmit}>Submit</Button>
                 </div>
             </form>
@@ -99,7 +96,6 @@ const AuthForm = ({ user, isLogin, onChange, onSubmit, status }) => {
             <div className="module">
                 <p>Don't Have an Account?</p>
                 <Link to="/auth/register">
-                    {/* <button>Register</button> */}
 					<Button variant="contained">Register</Button>
                 </Link>
             </div>
@@ -108,7 +104,6 @@ const AuthForm = ({ user, isLogin, onChange, onSubmit, status }) => {
             <div className="module">
                 <p>Already Have an Account?</p>
                 <Link to="/auth/login">
-                    {/* <button>Login</button> */}
 					<Button variant="contained">Login</Button>
                 </Link>
             </div> 

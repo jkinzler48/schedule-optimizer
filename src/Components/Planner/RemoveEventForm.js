@@ -8,13 +8,13 @@ import TextField from '@mui/material/TextField';
 
 const RemoveEventForm = ({ events, selectedClass, onChange, onClick, status, formRef }) => {
     const options = [
-		...events
-		  .sort((a, b) => a.get('startTime').localeCompare(b.get('startTime')))
-		  .map((c) => ({
-			label: `${displayTime(c)} | ${c.get('days').join(', ')} | ${c.get('name')} (${c.get('building').get('name')})`,
-			value: c.id,
-		  })),
-		{ label: 'All Classes (Remove all CLASSES, not any Study Times or other events)', value: 'allClasses' },
+      ...events
+        .sort((a, b) => a.get('startTime').localeCompare(b.get('startTime')))
+        .map((c) => ({
+        label: `${displayTime(c)} | ${c.get('days').join(', ')} | ${c.get('name')} (${c.get('building').get('name')})`,
+        value: c.id,
+        })),
+      { label: 'All Classes (Remove all CLASSES, not any Study Times or other events)', value: 'allClasses' },
 	  ];
 
 	const selectedOption = options.find((option) => option.value === selectedClass) || null;
