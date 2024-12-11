@@ -20,10 +20,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 - All web pages were styled using Material UI. Stylings were changed for HTML elements, such as buttons, on each page
-- Navigation bar was moved from top of screen to the side of the screen, and it no longer shows all the time. Navigation bar is now default to be hidden
+- Navigation bar was moved from top of screen to the side of the screen, and it is no longer displayed all the time. Navigation bar is now hidden by default.
 - Website title and icon were changed from the default React App options
 - Dropdowns for selecting a building on campus were changed to Autocomlete elements, so users are now able to filter building data using Autocomplete
-- Dropdown for selecting event to remove wa changed to be an Autocomplete element
+- Dropdown for selecting event to remove was changed to be an Autocomplete element
 - The "time" attribute for the Event class was changed to be two separate "startTime" and "endTime" attributes
 - time input(s) for forms changed from type="text" to type="time"
 - Removed the section within the Optimizer page that allows the user to display the location of any event in their schedule 
