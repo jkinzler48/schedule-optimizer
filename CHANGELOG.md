@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
+
+## [0.4.0] - 2024-12-14
+ 
+### Added
+
+- Material UI styling was added to all of the webpages
+- Background image of the Golden Dome
+- Website was published using Netlify, so it can now be accessed at "https://schedule-optimizer.netlify.app/"
+- Import Schedule page
+- Upload section on the import schedule page that allows user upload a .ics file exported from NOVO that contains a class schedule.
+- Instructions section on the import schedule page that details how to obtain the appropriate .ics file for uploading class schedule.
+- Cloud Code on the Back4app server interacts with the application to create an Event object in the user's schedule for every class in the appropriate .ics file when the user uploads the .ics file on the import schedule page.
+- Section within the Optimizer page that allows the user to display directions between any two events in their schedule
+ 
+### Changed
+
+- All web pages were styled using Material UI. Stylings were changed for HTML elements, such as buttons, on each page
+- Navigation bar was moved from top of screen to the side of the screen, and it no longer shows all the time. Navigation bar is now default to be hidden
+- Website title and icon were changed from the default React App options
+- Dropdowns for selecting a building on campus were changed to Autocomlete elements, so users are now able to filter building data using Autocomplete
+- Dropdown for selecting event to remove wa changed to be an Autocomplete element
+- The "time" attribute for the Event class was changed to be two separate "startTime" and "endTime" attributes
+- time input(s) for forms changed from type="text" to type="time"
+- Removed the section within the Optimizer page that allows the user to display the location of any event in their schedule 
+
+### Fixed
+
+ 
+
  
 ## [0.3.0] - 2024-11-06
  
