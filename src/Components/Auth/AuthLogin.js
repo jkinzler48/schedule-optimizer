@@ -34,7 +34,6 @@ const AuthLogin = () => {
     if (userInfo && login) {
       loginUser(userInfo).then((result) => {
         if (result === "success") {
-            //alert(` you successfully logged in!`);
             // Reset the form element
             setUserInfo({
                 email: "",

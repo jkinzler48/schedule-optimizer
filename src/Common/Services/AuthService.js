@@ -13,8 +13,6 @@ export const createUser = (newUser) => {
   user.set("password", newUser.password);
   user.set("email", newUser.email);
 
-  //console.log("User: ", user);
-
   return user
     .signUp()
     .then((newUserSaved) => {
@@ -34,7 +32,6 @@ export const loginUser = (userInfo) => {
       return "success";
     })
     .catch((error) => {
-      //console.log("Error: " + error.code + " " + error.message);
       return error.message;
     });
 };
@@ -52,7 +49,6 @@ export const logoutUser = () => {
       return "success";
     })
     .catch((error) => {
-      //console.log("Error: " + error.code + " " + error.message);
       return error.message;
     });
 };

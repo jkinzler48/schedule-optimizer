@@ -44,8 +44,6 @@ const Planner = () => {
     setDaySelected(daySelected);
   };
 
-
-  // Main component JSX
   function displayPlanner() {
     return (
       <>
@@ -108,8 +106,6 @@ const Planner = () => {
   }
 
 
-  // Main code
-
   // initializes hooks for day dropdown so schedule can be updated
   const [daySelected, setDaySelected] = useState(getCurrentDay());
 
@@ -140,8 +136,6 @@ const Planner = () => {
     }
   }, []);
 
-
-  // return the JSX for the main component
   return displayPlanner();
 
 };

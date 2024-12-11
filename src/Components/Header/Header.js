@@ -44,7 +44,7 @@ const AppBar = styled(MuiAppBar, {shouldForwardProp: (prop) => prop !== 'open',}
 		easing: theme.transitions.easing.sharp,
 		duration: theme.transitions.duration.leavingScreen,
 	}),
-	backgroundColor: '#565a89', // Header background color
+	backgroundColor: '#565a89',
 	...(open && {
 		width: `calc(100% - ${drawerWidth}px)`,
 		marginLeft: `${drawerWidth}px`,
@@ -62,7 +62,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 	...theme.mixins.toolbar,
 	justifyContent: 'flex-end',
 	backgroundColor: '#565a89',
-	// EDIT HERE
 }));
 
 const Header = () => {
@@ -108,14 +107,14 @@ const Header = () => {
 				</IconButton>
 				<Box
 			sx={{
-				position: 'fixed',  // Make it fixed to the top
+				position: 'fixed',  
 				top: 0,
 				left: '50%',
-				transform: 'translateX(-50%)', // Centers the title horizontally
-				zIndex: 2000, // Ensures it sits on top of the AppBar
+				transform: 'translateX(-50%)', 
+				zIndex: 2000,
 				fontFamily: '"Roboto Flex", sans-serif',
 				fontWeight: 900,
-				color: '#c99700', // Standard Dome Gold
+				color: '#c99700', 
 				padding: '10px 20px',
 				borderRadius: '12px',
 			}}

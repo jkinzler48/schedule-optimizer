@@ -6,8 +6,6 @@ import AddForm from './AddForm.js';
 //component that allows user to dynamically add a study time to their schedule.
 export const AddStudyTime = ({ events, buildings, eventsUpdateFunction }) => {
 
-  //Functions
-
   //function to handle change to the autocomplete input
   const handleAutocompleteChange = (e, value) => {
 
@@ -74,8 +72,6 @@ export const AddStudyTime = ({ events, buildings, eventsUpdateFunction }) => {
   };
 
 
-  //Main Code
-
   //initializes hook to manage the value selected by autocomplete input
   const  [autoValue, setAutoValue] = useState(null)
 
@@ -91,7 +87,6 @@ export const AddStudyTime = ({ events, buildings, eventsUpdateFunction }) => {
 
 
   useEffect(() => {
-    // Check for add flag
     if (addStudyFlag) {
 
         const { building, startTime, endTime, days } = newStudyTime;
@@ -116,7 +111,6 @@ export const AddStudyTime = ({ events, buildings, eventsUpdateFunction }) => {
                 if (formRef.current) {
                     formRef.current.reset();
                 }
-                // Clear autocomplete 
                 setAutoValue(null)
             })
             .catch((error) => {
@@ -124,7 +118,6 @@ export const AddStudyTime = ({ events, buildings, eventsUpdateFunction }) => {
                 console.error(error);
             })
             .finally(() => {
-                // After everything else is done, reset the add study time flag
                 setFlag(false);
             });
     }

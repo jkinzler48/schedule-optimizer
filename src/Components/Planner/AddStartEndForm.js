@@ -29,7 +29,7 @@ const AddStartEndForm = ({ events, buildings, onChange, onClick, autoCompleteVal
                         .sort((a, b) => a.get('name').localeCompare(b.get('name')))
                         .map((b) => ({ name: b.get('name'), id: b.id }))}
                       sx ={{width: 350}}
-                      getOptionLabel={(option) => option.name} // Display the name as the label
+                      getOptionLabel={(option) => option.name} // Display name as label
                       renderInput={(params) => <TextField {...params} label="Select Location" />}
                     />
                   }

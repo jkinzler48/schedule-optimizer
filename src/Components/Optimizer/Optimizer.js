@@ -9,7 +9,6 @@ import EventDirections from './EventDirections.js';
 //the user about their schedule. This may include recommendations such as what specific time
 //they shoudl leave for a event or what specific supplies they should bring to a event
 const Optimizer = () => {
-  // Functions
 
   //dropdown functions for source and destination dropdown changes
   const onSourceChange = (e) => {
@@ -26,7 +25,6 @@ const Optimizer = () => {
     setDestination(destination);
   };
 
-  // Main component JSX
   function displayOptimizer() {
     return (
       <>
@@ -54,7 +52,6 @@ const Optimizer = () => {
   }
 
 
-  // Main code
 
   // initializes hooks for events and next/previous event to occur
   const [events, setSchedule] = useState([]);
@@ -123,8 +120,6 @@ const Optimizer = () => {
   }, [events, startEnd]);
 
 
-
-  // return the JSX for the main component
   return displayOptimizer();
 };
 

@@ -9,7 +9,7 @@ export const EventDirections = ({ events, source, destination, sourceChange, des
 
     <div className='section'>
       <p>Select Source Event</p>
-      {/* Create a dropdown option for every event, where the event are sorted in order of the time they start */}
+      {/* dropdown of events ordered by time */}
       <select className="classSelect" onChange={sourceChange}>
       {events.length > 0 &&
           events
@@ -23,7 +23,7 @@ export const EventDirections = ({ events, source, destination, sourceChange, des
 
 
       <p>Select Destination Event</p>
-      {/* Create a dropdown option for every event, where the event are sorted in order of the time they start */}
+      {/* dropdown of events ordered by time */}
       <select className="classSelect" onChange={destChange}>
       {events.length > 0 &&
           events

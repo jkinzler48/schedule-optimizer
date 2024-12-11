@@ -5,8 +5,6 @@ import AddStartEndForm from './AddStartEndForm.js';
 
 const AddStartEnd = ({ events, buildings, eventsUpdateFunction }) => {
 
-  //Functions
-
   //Handler to handle event passed from child submit button
   const onAddStartEndClick = (e) => {
       e.preventDefault();
@@ -32,7 +30,6 @@ const AddStartEnd = ({ events, buildings, eventsUpdateFunction }) => {
   };
 
 
-  // Main component JSX
   function displayForm() {
     return (
       <>
@@ -49,7 +46,6 @@ const AddStartEnd = ({ events, buildings, eventsUpdateFunction }) => {
   }
   
 
-  // Main code
 
   //initializes hooks for input field, sumbit button, and status message
   const [startEnd, setStartEnd] = useState(null);
@@ -86,7 +82,6 @@ const AddStartEnd = ({ events, buildings, eventsUpdateFunction }) => {
     }
   }, [events, startEnd, addDayStart, eventsUpdateFunction]);
 
-  // return the JSX for the main component
   return displayForm();
   
 };

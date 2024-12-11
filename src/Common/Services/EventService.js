@@ -1,9 +1,6 @@
 import Parse from 'parse';
 
-
-// const SCHEDULE = 'test';
 const SCHEDULE = 'Event';
-
 
 //CREATE: function to create a new Event in the parse class
 export const createEvent = (code, name, instructor, building, room, startTime, endTime, days) => {
@@ -116,7 +113,6 @@ export const getEventsByUser = () => {
   return query
     .find()
     .then((results) => {
-      // console.log("results: ", results);
       // returns array of Lesson objects
       return results;
     })

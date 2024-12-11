@@ -92,7 +92,6 @@ const AuthForm = ({ user, isLogin, onChange, onSubmit, status }) => {
         {/* Display button with link to register page if it is login, otherwise display btton
         with link to login */}
         {isLogin? (
-             //* Link to Register page
             <div className="module">
                 <p>Don't Have an Account?</p>
                 <Link to="/auth/register">

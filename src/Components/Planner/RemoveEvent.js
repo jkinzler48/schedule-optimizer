@@ -97,7 +97,6 @@ export const RemoveEvent = ({ events, eventsUpdateFunction }) => {
   }
 
 
-  //Main Code
 
   //initializises hooks for selected class and status
   const [status, setStatus] = useState('');
@@ -105,8 +104,6 @@ export const RemoveEvent = ({ events, eventsUpdateFunction }) => {
   
   const formRef = useRef(null);
 
-
-  //JSX
   return (
     <>
         <RemoveEventForm

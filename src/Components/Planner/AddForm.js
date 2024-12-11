@@ -85,7 +85,6 @@ const AddForm = ({ isClassForm, buildings, newEvent, onChange, onAutocompleteCha
 			        <Button tye="submit" variant="contained" onClick={onClick}>Submit</Button>
             </form>
 
-            {/* Display status message */}
             {status && <p>{status}</p>}
           </div>
         </>

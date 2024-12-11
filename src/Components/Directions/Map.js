@@ -10,7 +10,7 @@ export const Map = ({ buildings, source, destination, sourceChange, destChange }
     <div className='section'>
       <p>Select Source Location</p>
       {buildings.length > 0 &&
-          //* Create a autocomplete option for every building, where the buildings are sorted in alphabetical order 
+          // autocomplete option for every building, buildings sorted in alphabetical order 
           <Autocomplete
             onChange={sourceChange}
             className="autocomplete"
@@ -18,7 +18,7 @@ export const Map = ({ buildings, source, destination, sourceChange, destChange }
             options={buildings
               .sort((a, b) => a.get('name').localeCompare(b.get('name')))
               .map((b) => ({ name: b.get('name'), mapId: b.get('mapId') }))}
-            getOptionLabel={(option) => option.name} // Display the name as the label
+            getOptionLabel={(option) => option.name}
             renderInput={(params) => <TextField {...params} label="Select Location" />}
           />
 
@@ -29,7 +29,7 @@ export const Map = ({ buildings, source, destination, sourceChange, destChange }
       
         <p>Select Destination Location</p>
         {buildings.length > 0 &&
-          //* Create a autocomplete option for every building, where the buildings are sorted in alphabetical order 
+            // autocomplete option for every building, buildings sorted in alphabetical order 
           <Autocomplete
             onChange={destChange}
             className="autocomplete"
@@ -37,7 +37,7 @@ export const Map = ({ buildings, source, destination, sourceChange, destChange }
             options={buildings
               .sort((a, b) => a.get('name').localeCompare(b.get('name')))
               .map((b) => ({ name: b.get('name'), mapId: b.get('mapId') }))}
-            getOptionLabel={(option) => option.name} // Display the name as the label
+            getOptionLabel={(option) => option.name}
             renderInput={(params) => <TextField {...params} label="Select Location" />}
           />
 

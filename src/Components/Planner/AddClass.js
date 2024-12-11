@@ -6,8 +6,6 @@ import AddForm from './AddForm.js';
 //component that allows user to dynamically add a class to their schedule.
 export const AddClass = ({ events, buildings, eventsUpdateFunction }) => {
 
-  //Functions
-
   //function to handle change to the autocomplete input
   const handleAutocompleteChange = (e, value) => {
 
@@ -37,7 +35,7 @@ export const AddClass = ({ events, buildings, eventsUpdateFunction }) => {
     //update the newclass variable's attribute whose corresponding input was altered
     setNewClass(() => ({
       ...newClass,  // Spread the previous state object
-      [name]: value  // Dynamically update the specific field by name
+      [name]: value  // dynamically update the field by name
     }));
   };
 
@@ -76,7 +74,6 @@ export const AddClass = ({ events, buildings, eventsUpdateFunction }) => {
   };
 
 
-  //Main Code
 
   //initializes hook to manage the value selected by autocomplete input
   const  [autoValue, setAutoValue] = useState(null)
@@ -104,7 +101,6 @@ useEffect(() => {
         const { code, name, instructor, building, room, startTime, endTime, days } = newClass;
 
 
-        // Create class and handle response
         createEvent(code, name, instructor, building, room, startTime, endTime, days)
             .then((result) => {
                 
@@ -146,7 +142,6 @@ useEffect(() => {
   //reference to form html element, which allows the form to be reset in the JS code
   const formRef = useRef(null);
 
-  //returns JSX for component
   return (
     <>
         <AddForm
