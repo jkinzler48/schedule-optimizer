@@ -36,6 +36,13 @@ const AuthRegister = () => {
   useEffect(() => {
     if (newUser && add) {
 
+      //checks if all fields are filled out for registration form
+      if (!newUser.firstName || !newUser.lastName || !newUser.email || !newUser.password || !newUser.confirmPassword) {
+        setStatus("Please Enter information for all fields");
+        setAdd(false);
+        return;
+      }
+
       //checks if password and confirm password fields match before attempting to create user
       if (newUser.password !== newUser.confirmPassword) {
         setStatus("Error: Passwords do not match.")
