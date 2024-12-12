@@ -30,6 +30,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+- Bug on register page that would cause application to crash if the user attempted to submit registration form with an empty field
+
 
  
 ## [0.3.0] - 2024-11-06
@@ -51,8 +53,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Moved the Header component out of Components.js and into componenets individually to enable dynamically updated navigation bar based on if the user is logged in
 
 ### Fixed
-
-- Bug on register page that would cause application to crash if the user attempted to submit registration form with an empty field
 
  
 
