@@ -52,6 +52,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+- Bug on register page that would cause application to crash if the user attempted to submit registration form with an empty field
+
  
 
 ## [0.2.0] - 2024-10-18
